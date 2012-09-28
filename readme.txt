@@ -24,6 +24,12 @@ This plugin adds a widget to your WordPress installation which you can use to li
 **Demo**
 [Recent FB Posts demo](http://wpdemo.dannyvankooten.com/), the widget is located in the right sidebar. As you can see, you can make the widget blend in with your theme perfectly.
 
+**Coming up**
+* Option to show a Like button
+* Option to show "photo" updates
+* Option to show number of likes / comments
+* Suggestions, anyone? Drop me a line if you do.
+
 **More info:**
 
 * [Recent Facebook Posts for WordPress](http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/)
