@@ -22,9 +22,11 @@ This plugin adds a widget to your WordPress installation which you can use to li
 * SEO friendly, your Facebook page / profile content becomes part of your website content. No iframes or JavaScript is involved.
 
 **Demo**
+
 [Recent FB Posts demo](http://wpdemo.dannyvankooten.com/), the widget is located in the right sidebar. As you can see, you can make the widget blend in with your theme perfectly.
 
 **Coming up**
+
 * Option to show a Like button
 * Option to show "photo" updates
 * Option to show number of likes / comments
