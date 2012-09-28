@@ -1,14 +1,14 @@
 === Plugin Name ===
 Contributors: DvanKooten
 Donate link: http://dannyvankooten.com/donate/
-Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets
+Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.0.1
 Tested up to: 3.4.2
 Stable tag: 0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Widget that lists your recent Facebook (profile or page) posts, an alternative to FB's likebox.
+Widget that lists your recent Facebook profile or page updates / posts. It is a faster / prettier / more customizable alternative to Facebooks Like Box.
 
 == Description ==
 
@@ -46,10 +46,10 @@ If you're still in doubt, have a look at the [screenshots](http://wordpress.org/
 This plugin adds a widget to your WordPress installation which you can use to list your X most recent Facebook posts. This can be either posts from your personal profile or from one of your fanpages.
 
 = Why not simply use FB's likebox? =
-This plugin gives you the freedom to style your most recent facebook posts, thus giving you much more freedom. Also, this plugin outputs valid HTML and cached your facebook updates, so it is faster too.
+This plugin gives you the freedom to style your most recent facebook posts using plain old CSS, thus giving you much more freedom. Also, this plugin outputs valid HTML. Iframes are a thing of the past. Your Facebook posts are cached on your server so it is somewhat faster too.
 
 = How to configure this plugin? =
-Create a new Facebook application and fill in your website URL and domain. Then go to the configuration page of Recent Facebook Posts and fill in your app id and app secret. Have a look at the screenshots if you're not clear about which fields you need.
+Create a new Facebook application and fill in the field where it asks for your website URL. Then go to the configuration page of Recent Facebook Posts and copy-paste your App ID and App Secret. Have a look at the screenshots if you're not clear about which fields you need.
 
 == Screenshots ==
 
