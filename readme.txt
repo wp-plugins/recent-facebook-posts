@@ -61,6 +61,9 @@ In order to query content on Facebook an application is needed. Facebook doesn't
 = Do you have a working demo I can take a look at? =
 Sure, [here](http://wpdemo.dannyvankooten.com/). The widget is located in the right sidebar and shows posts from [my Facebook page](http://www.facebook.com/DannyvanKootenCOM). "Like" it, while you're at it!
 
+= Facebook gives me this error when renewing the access token: The specified URL is not owned by the application =
+You are running the plugin on a different (sub)domain then specified in your FB app configuration. Fix it by correctly setting your "Site URL" or by adding an App Domain if you are running the plugin on a subdomain.
+
 == Screenshots ==
 
 1. The black bordered circles are the fields you'll need to provide to Facebook, at a minimum. The green circled fields are the values you'll need to provide to Recent Facebook Posts.
