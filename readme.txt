@@ -14,7 +14,7 @@ Widget that lists your recent Facebook (profile or page) posts, an alternative t
 
 This plugin adds a widget to your WordPress installation which you can use to list your X most recent Facebook posts. This can be either posts from your personal profile or posts from your fanpage.
 
-** Benefits of using Recent Facebook Posts: **
+**Benefits of using Recent Facebook Posts**
 
 * More freedom then Facebooks Like Box, easier to customize and/or style.
 * Outputs valid HTML, no more iframes.
@@ -58,3 +58,4 @@ Create a new Facebook application and fill in your website URL and domain. Then 
 
 = 0.1 =
 * Initial release
+
