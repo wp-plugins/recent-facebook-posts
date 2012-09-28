@@ -8,7 +8,7 @@ Stable tag: 0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Widget that lists your recent Facebook profile or page updates / posts. It is a faster / prettier / more customizable alternative to Facebooks Like Box.
+Widget that lists your recent Facebook page or profile updates / posts. A faster/prettier/more customizable alternative to Facebooks Like Box.
 
 == Description ==
 
