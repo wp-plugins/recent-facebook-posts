@@ -38,7 +38,7 @@ This plugin adds a widget to your WordPress installation which you can use to li
 1. Drag the 'Recent FB Posts Widget' to one of your widget areas.
 1. (optional) Apply some custom CSS rules to style your recent FB posts widget. Just add them to your theme's CSS file.
 
-If you're still in doubt, have a look at the screenshots.
+If you're still in doubt, have a look at the [screenshots](http://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/).
 
 == Frequently Asked Questions ==
 
