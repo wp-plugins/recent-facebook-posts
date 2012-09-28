@@ -12,13 +12,14 @@ Widget that lists your recent Facebook page or profile updates / posts. A faster
 
 == Description ==
 
-This plugin adds a widget to your WordPress installation which you can use to list your X most recent Facebook posts. This can be either posts from your personal profile or posts from your fanpage.
+This plugin adds a widget to your WordPress installation which you can use to list your recent Facebook posts / updates. This can be either posts from your personal profile or posts from your fanpage.
 
 **Benefits of using Recent Facebook Posts**
 
-* More freedom then Facebooks Like Box, easier to customize and/or style.
+* More freedom then Facebooks Like Box, easier to customize and/or style by using plain old CSS.
 * Outputs valid HTML, no more iframes.
-* Faster then Facebooks like box, because the result is properly cached.
+* Faster then Facebooks like box, because the result is properly cached on your server.
+* SEO friendly, your Facebook page / profile content becomes part of your website content. No iframes or JavaScript is involved.
 
 **More info:**
 
@@ -50,6 +51,9 @@ This plugin gives you the freedom to style your most recent facebook posts using
 
 = How to configure this plugin? =
 Create a new Facebook application and fill in the field where it asks for your website URL. Then go to the configuration page of Recent Facebook Posts and copy-paste your App ID and App Secret. Have a look at the screenshots if you're not clear about which fields you need.
+
+= Why do I need to create a Facebook application? =
+In order to query content on Facebook an application is needed. Facebook doesn't allow their content publicly to anyone, they want to know "who is asking". You don't need to submit your app to the App Center in order for it to work though.
 
 == Screenshots ==
 
