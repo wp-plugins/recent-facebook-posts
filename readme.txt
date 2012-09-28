@@ -21,6 +21,9 @@ This plugin adds a widget to your WordPress installation which you can use to li
 * Faster then Facebooks like box, because the result is properly cached on your server.
 * SEO friendly, your Facebook page / profile content becomes part of your website content. No iframes or JavaScript is involved.
 
+**Demo**
+[Recent FB Posts demo](http://wpdemo.dannyvankooten.com/), the widget is located in the right sidebar. As you can see, you can make the widget blend in with your theme perfectly.
+
 **More info:**
 
 * [Recent Facebook Posts for WordPress](http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/)
@@ -44,7 +47,7 @@ If you're still in doubt, have a look at the [screenshots](http://wordpress.org/
 == Frequently Asked Questions ==
 
 = What does this plugin do? =
-This plugin adds a widget to your WordPress installation which you can use to list your X most recent Facebook posts. This can be either posts from your personal profile or from one of your fanpages.
+This plugin adds a widget to your WordPress installation which you can use to list your X most recent Facebook posts. This can be either posts from your personal profile or from one of your fanpages. An example of the widget can be found [here](http://wpdemo.dannyvankooten.com/).
 
 = Why not simply use FB's likebox? =
 This plugin gives you the freedom to style your most recent facebook posts using plain old CSS, thus giving you much more freedom. Also, this plugin outputs valid HTML. Iframes are a thing of the past. Your Facebook posts are cached on your server so it is somewhat faster too.
@@ -54,6 +57,9 @@ Create a new Facebook application and fill in the field where it asks for your w
 
 = Why do I need to create a Facebook application? =
 In order to query content on Facebook an application is needed. Facebook doesn't allow their content publicly to anyone, they want to know "who is asking". You don't need to submit your app to the App Center in order for it to work though.
+
+= Do you have a working demo I can take a look at? =
+Sure, [here](http://wpdemo.dannyvankooten.com/). The widget is located in the right sidebar and shows posts from [my Facebook page](http://www.facebook.com/DannyvanKootenCOM). "Like" it, while you're at it!
 
 == Screenshots ==
 
