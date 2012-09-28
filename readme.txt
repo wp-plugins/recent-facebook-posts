@@ -47,6 +47,7 @@ This plugin adds a widget to your WordPress installation which you can use to li
 1. Copy your "App ID" and "App Secret" (see screenshot 1)
 1. Go to your WordPress Admin panel and open the Recent Facebook Posts options screen. (Settings > Recent Facebook Posts)
 1. Paste your Facebook App id and App Secret.
+1. Test your configuration by clicking the button "Renew access token".
 1. Drag the 'Recent FB Posts Widget' to one of your widget areas.
 1. (optional) Apply some custom CSS rules to style your recent FB posts widget. Just add them to your theme's CSS file.
 
