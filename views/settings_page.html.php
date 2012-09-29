@@ -3,10 +3,22 @@
 <div id="rfb" class="wrap">
 	<div class="column" style="width:70%;">
 
+		<?php if($fb->getUser() && !$access_token) { ?>
+			<div id="setting-error-settings_updated" class="updated settings-error"> 
+				<p>
+					<strong>Your API settings seem fine but there is no valid access token available. </strong>
+					<a class="button-primary" href="<?php echo $fb->getLoginUrl(array('redirect_uri' => get_admin_url() . 'options-general.php?page=rfb-settings&rfb_renew_access_token')); ?>">Request Access Token</a>
+</p>
+
+			</div>
+		<?php } ?>
+
 		<h3>Configuration</h3>
 		<form method="post" action="options.php">
 				<?php settings_fields( 'rfb_settings_group' ); ?>
 
+				<p class="status">Facebook API status: <span class="<?php echo ($connected) ? 'connected' : 'disconnected'; ?>"><?php echo ($connected) ? 'Connected' : 'Not Connected'; ?></span></p>
+				
 				<table class="form-table">
 
 					<tr valign="top">
@@ -29,6 +41,11 @@
 					    <td><input type="text" size="50" id="rfb_cache_time" name="rfb_settings[cache_time]" value="<?php echo $opts['cache_time']; ?>" /></td>
 					</tr>
 
+					<tr valign="top">
+					    <th scope="row"><label for="rfb_load_css">Load some default CSS?</label></th>
+					    <td><input type="checkbox" id="rfb_load_css" name="rfb_settings[load_css]" value="1" <?php if(isset($opts['load_css']) && $opts['load_css']) { ?>checked="1" <?php } ?>/></td>
+					</tr>
+
 				</table>
 
 				<p class="submit">
@@ -38,8 +55,8 @@
 		</form>
 
 		<h3 title="<?php echo get_option('rfb_access_token'); ?>">Access Token</h3>
-		<p>Although this should be taken care of automatically every time you log into WordPress, it can't hurt to hit this button every month or so. Tokens are valid for 2 months by default.</p>
-		<a class="button-primary" href="<?php echo $fb->getLoginUrl(array('redirect_uri' => get_admin_url() . 'options-general.php?page=rfb-settings&rfb_renew_access_token')); ?>">Renew Access Token</a>
+		<p>Use this button to test your configuration. It also won't hurt to hit this button once in a month or so to renew your access token, although this should be taken care of automatically everytime you log into WordPress.</p>
+		<a class="button-primary" href="<?php echo $fb->getLoginUrl(array('redirect_uri' => get_admin_url() . 'options-general.php?page=rfb-settings&rfb_renew_access_token')); ?>">Test / Renew Access Token</a>
 
 		<h3>Cache</h3>
 		<p>Because fetching posts from Facebook is "expensive", this will only happen every <?php echo $opts['cache_time']; ?> seconds (as configured above). You can manually renew the cache using the button below.</p>

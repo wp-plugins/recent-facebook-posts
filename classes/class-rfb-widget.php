@@ -15,6 +15,9 @@ class RFB_Widget extends WP_Widget {
  		$title = (isset($instance['title'])) ? $instance['title'] : 'Recent Facebook posts';
  		$number_of_posts = (isset($instance['number_of_posts'])) ? $instance['number_of_posts'] : 5;
  		$excerpt_length = (isset($instance['excerpt_length'])) ? $instance['excerpt_length'] : 140;
+ 		$show_like_count = (isset($instance['show_like_count']) && $instance['show_like_count']);
+ 		$show_comment_count = (isset($instance['show_comment_count']) && $instance['show_comment_count']);
+
 
  		global $RFB;
  		$rfb_options = $RFB->get_options();
@@ -36,6 +39,16 @@ class RFB_Widget extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'excerpt_length' ); ?>"><?php _e( 'Excerpt length:' ); ?></label> 
 			<input class="widefat" id="<?php echo $this->get_field_id( 'excerpt_length' ); ?>" name="<?php echo $this->get_field_name( 'excerpt_length' ); ?>" type="text" value="<?php echo esc_attr( $excerpt_length ); ?>" />
 		</p>
+
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id( 'show_like_count' ); ?>" name="<?php echo $this->get_field_name( 'show_like_count' ); ?>" value="1" <?php if($show_like_count) { ?>checked="1"<?php } ?> />
+			<label for="<?php echo $this->get_field_id( 'show_like_count' ); ?>"><?php _e( 'Show Like count?' ); ?></label> 
+		</p>
+
+		<p>
+			<input type="checkbox" id="<?php echo $this->get_field_id( 'show_comment_count' ); ?>" name="<?php echo $this->get_field_name( 'show_comment_count' ); ?>" value="1" <?php if($show_comment_count) { ?>checked="1"<?php } ?> />
+			<label for="<?php echo $this->get_field_id( 'show_comment_count' ); ?>"><?php _e( 'Show Comment count?' ); ?></label> 
+		</p>
 		<?php 
 	}
 
@@ -44,6 +57,8 @@ class RFB_Widget extends WP_Widget {
 		$instance['title'] = strip_tags( $new_instance['title'] );
 		$instance['number_of_posts'] = (int) strip_tags( $new_instance['number_of_posts'] );
 		$instance['excerpt_length'] = (int) strip_tags($new_instance['excerpt_length']);
+		$instance['show_like_count'] = isset($new_instance['show_like_count']);
+		$instance['show_comment_count'] = isset($new_instance['show_comment_count']);
 		return $instance;
 	}
 
@@ -59,13 +74,21 @@ class RFB_Widget extends WP_Widget {
 		echo $before_widget;
 		if ( ! empty( $title ) )
 			echo $before_title . $title . $after_title; ?>
-			<ul>
+			<ul class="rfb_posts">
 			<?php foreach($posts as $post) { ?>
-				<li><?php echo make_clickable(substr($post['content'], 0, $instance['excerpt_length'])); if(strlen($post['content']) > $instance['excerpt_length']) echo '..'; ?> <a target="_blank" class="timestamp" href="<?php echo $post['link']; ?>"><?php echo $this->time_ago($post['timestamp']); ?></a></li>
+				<li><?php echo nl2br(make_clickable(substr($post['content'], 0, $instance['excerpt_length']))); if(strlen($post['content']) > $instance['excerpt_length']) echo '..'; ?> 
+					<a target="_blank" class="fb_link" href="<?php echo $post['link']; ?>" rel="nofollow">
+						<?php if($instance['show_like_count'] || $instance['show_comment_count']) { ?><span class="like_count_and_comment_count"><?php } ?>
+						<?php if($instance['show_like_count']) { ?><span class="like_count"><?php echo $post['like_count']; ?> <span>likes</span></span> <?php } ?>
+						<?php if($instance['show_comment_count']) { ?><span class="comment_count"><?php echo $post['comment_count']; ?> <span>comments</span></span> <?php } ?>
+						<?php if($instance['show_like_count'] || $instance['show_comment_count']) { ?></span><?php } ?>
+						<span class="timestamp" title="<?php echo date('l, F j, Y', $post['timestamp']) . ' at ' . date('G:i', $post['timestamp']); ?>" ><?php if($instance['show_like_count'] || $instance['show_comment_count']) { ?> · <?php } ?><span><?php echo $this->time_ago($post['timestamp']); ?></span></span>
+					</a>
+				</li>
 			<?php } 
 
 			if(empty($posts)) { ?>
-				<li>No recent Facebook posts to show.<?php if(current_user_can('manage_options')) { ?> Did you <a href="<?php echo get_admin_url(null,'options-general.php?page=rfb-settings'); ?>">configure the plugin</a> properly? (only admins see this sentence)<?php } ?></li>
+				<li>No recent Facebook status updates to show.<?php if(current_user_can('manage_options')) { ?> Did you <a href="<?php echo get_admin_url(null,'options-general.php?page=rfb-settings'); ?>">configure the plugin</a> properly? (only admins see this sentence)<?php } ?></li>
 
 			<?php } ?>
 			</ul>

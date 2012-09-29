@@ -50,7 +50,27 @@ class RFB_Admin {
 	public function  settings_page () {
 
 		$opts = $this->RFB->get_options();
+
 		$fb = $this->RFB->get_fb_instance();
+		//update_option('rfb_access_token', '');
+		$access_token = get_option('rfb_access_token');
+		$connected = false;
+
+		if($access_token) {
+			$fb->setAccessToken(get_option('rfb_access_token'));
+
+			$connected = $fb->getUser();
+
+			if($connected) {
+				try {
+					$try = $fb->api('/' . $opts['fb_id'] . '/posts?limit=1');
+				} catch(Exception $e) {
+					$connected = false;
+				}
+			}
+		}
+		
+		
 
 		require dirname(__FILE__) . '/../views/settings_page.html.php';
 	}

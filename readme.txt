@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.0.1
 Tested up to: 3.4.2
-Stable tag: 0.1
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,12 @@ You are running the plugin on a different (sub)domain then specified in your FB 
 2. The green circled fields are the fields where you'll need to provide your Facebook app id and app secret (as shown in screenshot 1).
 
 == Changelog ==
+
+= 1.0 =
+* Added option to load some default CSS
+* Added option to show like count
+* Added option to show comment count
+* Improved usability. Configuring Recent Facebook Posts should be much easier now due to testing options.
 
 = 0.1 =
 * Initial release

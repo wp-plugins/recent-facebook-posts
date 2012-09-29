@@ -10,6 +10,10 @@
 #rfb-donatebox{ border:2px solid green; background:#CFC; }
 #rfb-donatebox h3{ color:green; margin:0; }
 #rfb-donatebox li{ line-height:22px; }
+#rfb p.status{ font-weight:bold;}
+#rfb span.connected, #rfb span.disconnected{ font-weight:bold; display:inline-block; color:white; padding:3px; }
+#rfb span.connected{ background:green; }
+#rfb span.disconnected{ background:lightGrey; }
 
 #rfb .clearfix:after {
 	visibility: hidden;

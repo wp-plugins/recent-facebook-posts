@@ -8,7 +8,8 @@ class RFB {
 		'app_id' => '',
 		'app_secret' => '',
 		'fb_id' => 'DannyvanKootenCOM',
-		'cache_time' => 1800
+		'cache_time' => 1800,
+		'load_css' => 0
 	);
 	private $options;
 
@@ -20,12 +21,25 @@ class RFB {
 	public function __construct() {
 		add_action('wp_login', array($this, 'renew_access_token'));
 		add_action('init', array(&$this, 'on_init'));
+
+		// only on frontend
+		if(!is_admin()) {
+			$opts = $this->get_options();
+			if($opts['load_css']) {
+				add_action( 'wp_enqueue_scripts', array(&$this, 'load_css'));
+			}
+		}
 	}
 
 	public function on_init() {
 		if(!session_id() && !headers_sent()) {
 			session_start();
 		}
+	}
+
+	public function load_css() {
+		wp_register_style('rfb_css', plugins_url('recent-facebook-posts/css/rfb.css') );
+        wp_enqueue_style('rfb_css' );
 	}
 
 	public function get_options() {
