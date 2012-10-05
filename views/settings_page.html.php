@@ -8,8 +8,26 @@
 				<p>
 					<strong>Your API settings seem fine but there is no valid access token available. </strong>
 					<a class="button-primary" href="<?php echo $fb->getLoginUrl(array('redirect_uri' => get_admin_url() . 'options-general.php?page=rfb-settings&rfb_renew_access_token')); ?>">Request Access Token</a>
-</p>
+				</p>
+			</div>
+		<?php } ?>
 
+		<?php if(!$connected && isset($error)) { ?>
+			<div id="setting-error" class="error settings-error">
+				<p>The following error occured when trying to fetch a test post from <a target="_blank" href="http://www.facebook.com/<?php echo $opts['fb_id']; ?>">facebook.com/<?php echo $opts['fb_id']; ?></a></p>
+				<p>
+					<strong><?php echo $error->getType(); ?>:</strong>
+					<?php echo $error->getMessage(); ?>
+				</p>
+			</div>
+		<?php } ?>
+
+		<?php if(isset($cache_error)) { ?>
+			<div id="setting-error" class="error settings-error">
+				<p>
+					<strong>Cache error:</strong>
+					<?php echo $cache_error; ?>
+				</p>
 			</div>
 		<?php } ?>
 

@@ -56,8 +56,9 @@ class RFB_Admin {
 		$access_token = get_option('rfb_access_token');
 		$connected = false;
 
+		// try to fetch a test post
 		if($access_token) {
-			$fb->setAccessToken(get_option('rfb_access_token'));
+			$fb->setAccessToken($access_token);
 
 			$connected = $fb->getUser();
 
@@ -66,10 +67,20 @@ class RFB_Admin {
 					$try = $fb->api('/' . $opts['fb_id'] . '/posts?limit=1');
 				} catch(Exception $e) {
 					$connected = false;
+					$error = $e;
 				}
 			}
 		}
-		
+
+		// check if cache directory is writable
+		$cache_dir = dirname(__FILE__) . '/../cache/';
+		$cache_file = dirname(__FILE__) . '/../cache/posts.cache';
+
+		if(!is_writable($cache_dir)) {
+			$cache_error = 'The cache directory (<i>'. ABSPATH . 'wp-content/plugins/recent-facebook-posts/cache/</i>) is not writable.';
+		} elseif(file_exists($cache_file) && !is_writable($cache_file)) {
+			$cache_error = 'The cache directory (<i>'. ABSPATH . 'wp-content/plugins/recent-facebook-posts/cache/posts.cache</i>) exists but is not writable.';
+		}
 		
 
 		require dirname(__FILE__) . '/../views/settings_page.html.php';
