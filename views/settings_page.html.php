@@ -60,9 +60,16 @@
 					</tr>
 
 					<tr valign="top">
+					    <th scope="row"><label for="rfb_link_text">Link text</label></th>
+					    <td><input type="text" size="50" id="rfb_link_text" name="rfb_settings[link_text]" value="<?php echo $opts['link_text']; ?>" /></td>
+					</tr>
+
+					<tr valign="top">
 					    <th scope="row"><label for="rfb_load_css">Load some default CSS?</label></th>
 					    <td><input type="checkbox" id="rfb_load_css" name="rfb_settings[load_css]" value="1" <?php if(isset($opts['load_css']) && $opts['load_css']) { ?>checked="1" <?php } ?>/></td>
 					</tr>
+
+
 
 				</table>
 

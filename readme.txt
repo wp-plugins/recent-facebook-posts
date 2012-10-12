@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.0.1
 Tested up to: 3.4.2
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,7 +29,6 @@ This plugin adds a widget to your WordPress installation which you can use to li
 
 * Option to show a Like button
 * Option to show "photo" updates
-* Option to show number of likes / comments
 * Suggestions, anyone? Drop me a line if you do.
 
 **More info:**
@@ -73,12 +72,19 @@ Sure, [here](http://wpdemo.dannyvankooten.com/). The widget is located in the ri
 = Facebook gives me this error when renewing the access token: The specified URL is not owned by the application =
 You are running the plugin on a different (sub)domain then specified in your FB app configuration. Fix it by correctly setting your "Site URL" or by adding an App Domain if you are running the plugin on a subdomain.
 
+= The plugin says it is connected, renewing my access token works but still there are no status updates to be shown. =
+Please check if the page you are trying to fetch posts from has publicly available posts. The privacy setting of your status updates has to be "everyone" in order for the plugin to "see" your posts.
+
 == Screenshots ==
 
 1. The black bordered circles are the fields you'll need to provide to Facebook, at a minimum. The green circled fields are the values you'll need to provide to Recent Facebook Posts.
 2. The green circled fields are the fields where you'll need to provide your Facebook app id and app secret (as shown in screenshot 1).
 
 == Changelog ==
+= 1.0.2 =
+* Fixed a PHP notice in the backend area when renewing cache and fetching shared status updates.
+* Added option to show link to Facebook page, with customizable text.
+
 = 1.0.1 =
 * Added error messages for easier debugging.
 

@@ -9,7 +9,8 @@ class RFB {
 		'app_secret' => '',
 		'fb_id' => 'DannyvanKootenCOM',
 		'cache_time' => 1800,
-		'load_css' => 0
+		'load_css' => 0,
+		'link_text' => 'Find us on Facebook'
 	);
 	private $options;
 
@@ -125,7 +126,6 @@ class RFB {
 
 		$data = array();
 		foreach($posts['data'] as $p) {
-			if(isset($p['privacy']) && $p['privacy']['value'] != 'EVERYONE') continue;
 			if(!isset($p['message'])) continue;
 
 			$post = array();
@@ -134,7 +134,7 @@ class RFB {
 			$post['timestamp'] = strtotime($p['created_time']);
 			$post['like_count'] = (isset($p['likes'])) ? $p['likes']['count'] : 0;
 			$post['comment_count'] = (isset($p['comments'])) ? $p['comments']['count'] : 0;
-			$post['link'] = $p['actions'][0]['link'];
+			$post['link'] = (isset($p['actions'])) ? $p['actions'][0]['link'] : $p['link'];
 			$data[] = $post;
 
 		}
