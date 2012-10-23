@@ -113,7 +113,7 @@
         <div class="box">
         	<h3>Looking for support?</h3>
         	<p>Having trouble configuring Recent Facebook Posts? Experiencing an error or just having a great idea on how to further
-        		improve the plugin? Please post your question / idea / problem in the <a href="http://wordpress.org/tags/recent-facebook-posts">support forums</a> on WordPress.org.</p>
+        		improve the plugin? Please post your question / idea / problem in the <a href="http://wordpress.org/support/plugin/recent-facebook-posts">support forums</a> on WordPress.org.</p>
         </div>
 
         <div class="box">

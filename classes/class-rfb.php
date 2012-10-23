@@ -120,13 +120,20 @@ class RFB {
 
 		if(!$fb->getUser()) return false;
 
-		$posts = $fb->api($opts['fb_id'].'/posts?type=status');
+		$apiResult = $fb->api($opts['fb_id'].'/posts', "GET", array(
+				'limit' => 250,
+				'fields' => array('from', 'message', 'created_time', 'likes', 'comments')
+			)
+		);
 		
-		if(!$posts or !is_array($posts) or !isset($posts['data']) or !is_array($posts['data'])) { return false; }
+		if(!$apiResult or !is_array($apiResult) or !isset($apiResult['data']) or !is_array($apiResult['data'])) { return false; }
 
 		$data = array();
-		foreach($posts['data'] as $p) {
-			if(!isset($p['message'])) continue;
+		foreach($apiResult['data'] as $p) {
+			if(!isset($p['message']) || empty($p['message'])) continue;
+
+			//split user and post ID (userID_postID)
+			$idArray = explode("_", $p['id']);
 
 			$post = array();
 			$post['author'] = $p['from'];
@@ -134,7 +141,7 @@ class RFB {
 			$post['timestamp'] = strtotime($p['created_time']);
 			$post['like_count'] = (isset($p['likes'])) ? $p['likes']['count'] : 0;
 			$post['comment_count'] = (isset($p['comments'])) ? $p['comments']['count'] : 0;
-			$post['link'] = (isset($p['actions'])) ? $p['actions'][0]['link'] : $p['link'];
+			$post['link'] = "http://www.facebook.com/".$opts['fb_id']."/posts/".$idArray[1];
 			$data[] = $post;
 
 		}
