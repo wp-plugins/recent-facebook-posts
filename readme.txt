@@ -81,11 +81,10 @@ Please check if the page you are trying to fetch posts from has publicly availab
 2. The green circled fields are the fields where you'll need to provide your Facebook app id and app secret (as shown in screenshot 1).
 
 == Changelog ==
-
 = 1.0.4 =
 * Improved: The way the excerpt is created, words (or links) won't be cut off now
 * Fixed: FB API Error for unknown fields.
-* Added: Facebook images can now be shown too
+* Added: Images from FB will now be shown too. Drop me a line if you think this should be optional.
 
 = 1.0.3 = 
 * Improved the way the link to the actual status update is created (thanks Nepumuk84).
