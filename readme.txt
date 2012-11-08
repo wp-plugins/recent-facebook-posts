@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.0.1
 Tested up to: 3.4.2
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,7 +41,7 @@ This plugin adds a widget to your WordPress installation which you can use to li
 
 1. Upload the contents of the .zip-file to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. [Create a new Facebook application here](http://developers.facebook.com/apps).
+1. [Create a new Facebook application here](http://developers.facebook.com/apps). Fill in ANY name you'd like (it won't be visible to the public), leave the namespace field blank and the hosting checkbox unchecked.
 1. Select "Website with Facebook login" and set your `Site URL`
 1. Copy your `App ID` and `App Secret` (see screenshot 1)
 1. Go to your WordPress Admin panel and open the Recent Facebook Posts options screen. (Settings > Recent Facebook Posts)
@@ -81,6 +81,11 @@ Please check if the page you are trying to fetch posts from has publicly availab
 2. The green circled fields are the fields where you'll need to provide your Facebook app id and app secret (as shown in screenshot 1).
 
 == Changelog ==
+
+= 1.0.4 =
+* Improved: The way the excerpt is created, words (or links) won't be cut off now
+* Fixed: FB API Error for unknown fields.
+* Added: Facebook images can now be shown too
 
 = 1.0.3 = 
 * Improved the way the link to the actual status update is created (thanks Nepumuk84).

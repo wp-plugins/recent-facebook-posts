@@ -121,8 +121,7 @@ class RFB {
 		if(!$fb->getUser()) return false;
 
 		$apiResult = $fb->api($opts['fb_id'].'/posts', "GET", array(
-				'limit' => 250,
-				'fields' => array('from', 'message', 'created_time', 'likes', 'comments')
+				'limit' => 250
 			)
 		);
 		
@@ -134,10 +133,18 @@ class RFB {
 
 			//split user and post ID (userID_postID)
 			$idArray = explode("_", $p['id']);
-
+			
 			$post = array();
 			$post['author'] = $p['from'];
 			$post['content'] = $p['message'];
+			
+
+			if($p['type'] == 'photo') { 
+				$post['image'] = $p['picture'];
+			} else {
+				$post['image'] = null;
+			}
+
 			$post['timestamp'] = strtotime($p['created_time']);
 			$post['like_count'] = (isset($p['likes'])) ? $p['likes']['count'] : 0;
 			$post['comment_count'] = (isset($p['comments'])) ? $p['comments']['count'] : 0;

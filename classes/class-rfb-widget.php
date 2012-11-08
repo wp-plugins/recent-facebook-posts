@@ -59,6 +59,9 @@ class RFB_Widget extends WP_Widget {
 			<input type="checkbox" id="<?php echo $this->get_field_id( 'show_link' ); ?>" name="<?php echo $this->get_field_name( 'show_link' ); ?>" value="1" <?php if($show_link) { ?>checked="1"<?php } ?> />
 			<label for="<?php echo $this->get_field_id( 'show_link' ); ?>"><?php _e( 'Show a link to Facebook page?' ); ?></label> 
 		</p>
+
+		<p style="border: 2px solid green; font-weight:bold; background: #CFC; padding:5px; ">I spent countless hours developing (and offering support) for this plugin for FREE. If you like it, consider <a href="http://dannyvankooten.com/donate/">donating $10, $20 or $50</a> as a token of your appreciation.</p>       
+
 		<?php 
 	}
 
@@ -91,14 +94,29 @@ class RFB_Widget extends WP_Widget {
 			echo $before_title . $title . $after_title; ?>
 			<ul class="rfb_posts">
 			<?php foreach($posts as $post) { ?>
-				<li><?php echo nl2br(make_clickable(substr($post['content'], 0, $instance['excerpt_length']))); if(strlen($post['content']) > $instance['excerpt_length']) echo '..'; ?> 
-					<a target="_blank" class="fb_link" href="<?php echo $post['link']; ?>" rel="nofollow">
+				<?php 
+					$content = $post['content'];
+					$shortened = false;
+
+					if(strlen($content) > $instance['excerpt_length']) {
+						$limit = strpos($post['content'], ' ',$instance['excerpt_length']); 
+						if($limit) {
+							$content = substr($post['content'], 0, $limit);
+							$shortened = true;
+						}
+					}
+				
+				?>
+				<li>
+					<p class="rfb_text"><?php echo nl2br(make_clickable($content)); if($shortened) echo '..'; ?></p>
+					<?php if(isset($post['image']) && $post['image']) { ?><p class="rfb_image"><a target="_blank" href="<?php echo $post['link']; ?>" rel="nofollow"><img src="<?php echo $post['image']; ?>" alt="" /></a></p><?php } ?>
+					<p><a target="_blank" class="rfb_link" href="<?php echo $post['link']; ?>" rel="nofollow">
 						<?php if($show_like_count || $show_comment_count) { ?><span class="like_count_and_comment_count"><?php } ?>
 						<?php if($show_like_count) { ?><span class="like_count"><?php echo $post['like_count']; ?> <span>likes</span></span> <?php } ?>
 						<?php if($show_comment_count) { ?><span class="comment_count"><?php echo $post['comment_count']; ?> <span>comments</span></span> <?php } ?>
 						<?php if($show_like_count || $show_comment_count) { ?></span><?php } ?>
 						<span class="timestamp" title="<?php echo date('l, F j, Y', $post['timestamp']) . ' at ' . date('G:i', $post['timestamp']); ?>" ><?php if($show_like_count || $show_comment_count) { ?> · <?php } ?><span><?php echo $this->time_ago($post['timestamp']); ?></span></span>
-					</a>
+					</a></p>
 				</li>
 			<?php } 
 
