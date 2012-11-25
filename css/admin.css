@@ -1,0 +1,27 @@
+
+#rfb{ clear:both; }
+#rfb div.column{ float:left; }
+#rfb label.error{ color:red; }
+
+#rfb div.box{ padding:5px; }
+#rfb div.box ul{ list-style:square; margin-left:25px; }
+#rfb div.box li{ margin:0; }
+
+#rfb-donatebox{ border:2px solid green; background:#CFC; }
+#rfb-donatebox h3{ color:green; margin:0; }
+#rfb-donatebox li{ line-height:22px; }
+#rfb p.status{ font-weight:bold;}
+#rfb span.connected, #rfb span.disconnected{ font-weight:bold; display:inline-block; color:white; padding:3px; }
+#rfb span.connected{ background:green; }
+#rfb span.disconnected{ background:lightGrey; }
+
+#rfb .clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+	}
+* html #rfb .clearfix             { zoom: 1; } /* IE6 */
+*:first-child+html #rfb .clearfix { zoom: 1; } /* IE7 */
