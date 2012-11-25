@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.0.1
 Tested up to: 3.4.2
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,7 +73,10 @@ Sure, [here](http://wpdemo.dannyvankooten.com/). The widget is located in the ri
 You are running the plugin on a different (sub)domain then specified in your FB app configuration. Fix it by correctly setting your "Site URL" or by adding an App Domain if you are running the plugin on a subdomain.
 
 = The plugin says it is connected, renewing my access token works but still there are no status updates to be shown. =
-Please check if the page you are trying to fetch posts from has publicly available posts. The privacy setting of your status updates has to be "everyone" in order for the plugin to "see" your posts.
+Please check if the page you are trying to fetch posts from has **publicly** available posts. The privacy setting of your status updates has to be "everyone" in order for the plugin to "see" your posts.
+
+= Where to add custom CSS =
+IMO, appearance should be handled by the theme you are using. This is why your custom CSS rules should be added to your theme's stylesheet file. You can find this file by browsing (over FTP) to `/wp-content/themes/your-theme-name/style.css`, or you can just use the WP Editor under Appearance > Editor.
 
 == Screenshots ==
 
@@ -81,6 +84,9 @@ Please check if the page you are trying to fetch posts from has publicly availab
 2. The green circled fields are the fields where you'll need to provide your Facebook app id and app secret (as shown in screenshot 1).
 
 == Changelog ==
+= 1.0.5 =
+* Added: More user-friendly error message when cURL is not enabled on your server.
+
 = 1.0.4 =
 * Improved: The way the excerpt is created, words (or links) won't be cut off now
 * Fixed: FB API Error for unknown fields.

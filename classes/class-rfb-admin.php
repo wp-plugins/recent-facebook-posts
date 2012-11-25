@@ -50,14 +50,14 @@ class RFB_Admin {
 	public function  settings_page () {
 
 		$opts = $this->RFB->get_options();
-
+		$curl = extension_loaded('curl');
 		$fb = $this->RFB->get_fb_instance();
 		//update_option('rfb_access_token', '');
 		$access_token = get_option('rfb_access_token');
 		$connected = false;
 
 		// try to fetch a test post
-		if($access_token) {
+		if($curl && $access_token) {
 			$fb->setAccessToken($access_token);
 
 			$connected = $fb->getUser();

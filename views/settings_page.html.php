@@ -10,9 +10,17 @@
 					<a class="button-primary" href="<?php echo $fb->getLoginUrl(array('redirect_uri' => get_admin_url() . 'options-general.php?page=rfb-settings&rfb_renew_access_token')); ?>">Request Access Token</a>
 				</p>
 			</div>
-		<?php } ?>
+		<?php }
 
-		<?php if(!$connected && isset($error)) { ?>
+		if(!$curl) { ?>
+			<div id="setting-error" class="error settings-error">
+				<p>
+					<strong>Error:</strong> Recent Facebook Posts needs the PHP cURL extension to be installed on your server.
+				</p>
+			</div>
+		<?php } 
+
+		if(!$connected && isset($error)) { ?>
 			<div id="setting-error" class="error settings-error">
 				<p>The following error occured when trying to fetch a test post from <a target="_blank" href="http://www.facebook.com/<?php echo $opts['fb_id']; ?>">facebook.com/<?php echo $opts['fb_id']; ?></a></p>
 				<p>
@@ -20,9 +28,9 @@
 					<?php echo $error->getMessage(); ?>
 				</p>
 			</div>
-		<?php } ?>
+		<?php } 
 
-		<?php if(isset($cache_error)) { ?>
+		if(isset($cache_error)) { ?>
 			<div id="setting-error" class="error settings-error">
 				<p>
 					<strong>Cache error:</strong>
