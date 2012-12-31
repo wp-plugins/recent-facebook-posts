@@ -79,12 +79,12 @@ Please check if the page you are trying to fetch posts from has **publicly** ava
 IMO, appearance should be handled by the theme you are using. This is why your custom CSS rules should be added to your theme's stylesheet file. You can find this file by browsing (over FTP) to `/wp-content/themes/your-theme-name/style.css`, or you can just use the WP Editor under Appearance > Editor.
 
 = Can I show a list of recent facebook updates in my posts or pages? =
-Yes, you can use the '[recent-facebook-posts]' shortcode. Optionally, add the following attributes: 'likes', 'comments', 'excerpt_length'. Example: '[recent-facebook-posts likes=0 comments=0 excerpt_length=250]'
+Yes, you can use the `[recent-facebook-posts]` shortcode. Optionally, add the following attributes: `likes`, `comments`, `excerpt_length`. Example: `[recent-facebook-posts likes=0 comments=0 excerpt_length=250]`
 
 Valid attribute values are as follows:
-'likes' : 0 (don't show like count), 1 (show like count)
-'comments' : 0 (don't show comment count), 1 (show comment count)
-'excerpt_length' : 1 - 9999 (sets the length of the excerpt)
+`likes` : 0 (don't show like count), 1 (show like count)
+`comments` : 0 (don't show comment count), 1 (show comment count)
+`excerpt_length` : 1 - 9999 (sets the length of the excerpt)
 
 == Screenshots ==
 
