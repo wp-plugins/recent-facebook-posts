@@ -20,8 +20,11 @@ class RFB {
 	}
 
 	public function __construct() {
+
 		add_action('wp_login', array($this, 'renew_access_token'));
-		add_action('init', array(&$this, 'on_init'));
+		add_action('init', array($this, 'on_init'));
+
+		add_shortcode('recent-facebook-posts', array($this, 'shortcode_output'));
 
 		// only on frontend
 		if(!is_admin()) {
@@ -161,6 +164,84 @@ class RFB {
 		file_put_contents($cache_file, $data);
 
 		return true;
+	}
+
+	public function shortcode_output($atts)
+	{
+		 extract(shortcode_atts(array(
+	      'number' => '5',
+	      'likes' => 1,
+	      'comments' => 1,
+	      'excerpt_length' => 140
+    	 ), $atts));
+
+		$posts = $this->get_posts();
+		$posts = array_slice($posts, 0, $number);
+
+		$output = '<div class="recent-facebook-posts rfb_posts shortcode">';
+		foreach($posts as $post) { 
+			$content = $post['content'];
+			$shortened = false;
+
+			if(strlen($content) > $excerpt_length) {
+				$limit = strpos($post['content'], ' ',$excerpt_length); 
+				if($limit) {
+					$content = substr($post['content'], 0, $limit);
+					$shortened = true;
+				}
+			}
+		
+		
+			$output .= '<div class="rfb-post">';
+			$output .= '<p class="rfb_text">'. nl2br(make_clickable($content));
+				if ($shortened) $output .= '..';
+			$output .= '</p>';
+			if(isset($post['image']) && $post['image']) { 
+				$output .= '<p class="rfb_image"><a target="_blank" href="'. $post['link'] . '" rel="nofollow"><img src="'. $post['image'] . '" alt="" /></a></p>';
+			}
+			$output .= '<p><a target="_blank" class="rfb_link" href="'. $post['link'] .'" rel="nofollow">';
+			if($likes || $comments) { $output .= '<span class="like_count_and_comment_count">'; }
+			if($likes) { $output .= '<span class="like_count">'. $post['like_count'] . ' <span>likes</span></span>'; }
+			if($comments) { $output .= '<span class="comment_count">' . $post['comment_count'] . ' <span>comments</span></span>'; }
+			if($likes || $comments) { $output .= '</span>'; }
+			$output .= '<span class="timestamp" title="'. date('l, F j, Y', $post['timestamp']) . ' at ' . date('G:i', $post['timestamp']) . '" >';
+			if($likes || $comments) { $output .= ' · '; }
+			$output .= '<span>' . $this->time_ago($post['timestamp']) . '</span></span>';
+			$output .= '</a></p></div>' ;
+		
+		} 
+
+		if(empty($posts)) {
+			$output .= '<p>No recent Facebook status updates to show.</p>';
+			if(current_user_can('manage_options')) { 
+				$output .= '<p><strong>Admins only notice:</strong> Did you <a href="' . get_admin_url(null,'options-general.php?page=rfb-settings') . '">configure the plugin</a> properly?</p>';
+			}
+		}
+
+		$output .= "</div>";
+		return $output;
+	}
+
+	public function time_ago($timestamp) {
+		$diff = time() - (int) $timestamp;
+
+	    if ($diff == 0) 
+	         return 'just now';
+
+	    $intervals = array
+	    (
+	        1                   => array('year',    31556926),
+	        $diff < 31556926    => array('month',   2628000),
+	        $diff < 2629744     => array('week',    604800),
+	        $diff < 604800      => array('day',     86400),
+	        $diff < 86400       => array('hour',    3600),
+	        $diff < 3600        => array('minute',  60),
+	        $diff < 60          => array('second',  1)
+	    );
+
+	    $value = floor($diff/$intervals[1][1]);
+	    return $value.' '.$intervals[1][0].($value > 1 ? 's' : '').' ago';
+		    
 	}	
 	
 }

@@ -115,7 +115,7 @@ class RFB_Widget extends WP_Widget {
 						<?php if($show_like_count) { ?><span class="like_count"><?php echo $post['like_count']; ?> <span>likes</span></span> <?php } ?>
 						<?php if($show_comment_count) { ?><span class="comment_count"><?php echo $post['comment_count']; ?> <span>comments</span></span> <?php } ?>
 						<?php if($show_like_count || $show_comment_count) { ?></span><?php } ?>
-						<span class="timestamp" title="<?php echo date('l, F j, Y', $post['timestamp']) . ' at ' . date('G:i', $post['timestamp']); ?>" ><?php if($show_like_count || $show_comment_count) { ?> · <?php } ?><span><?php echo $this->time_ago($post['timestamp']); ?></span></span>
+						<span class="timestamp" title="<?php echo date('l, F j, Y', $post['timestamp']) . ' at ' . date('G:i', $post['timestamp']); ?>" ><?php if($show_like_count || $show_comment_count) { ?> · <?php } ?><span><?php echo $RFB->time_ago($post['timestamp']); ?></span></span>
 					</a></p>
 				</li>
 			<?php } 
@@ -138,26 +138,6 @@ class RFB_Widget extends WP_Widget {
 		echo $after_widget;
 	}
 
-	private function time_ago($timestamp) {
-		$diff = time() - (int) $timestamp;
-
-	    if ($diff == 0) 
-	         return 'just now';
-
-	    $intervals = array
-	    (
-	        1                   => array('year',    31556926),
-	        $diff < 31556926    => array('month',   2628000),
-	        $diff < 2629744     => array('week',    604800),
-	        $diff < 604800      => array('day',     86400),
-	        $diff < 86400       => array('hour',    3600),
-	        $diff < 3600        => array('minute',  60),
-	        $diff < 60          => array('second',  1)
-	    );
-
-	    $value = floor($diff/$intervals[1][1]);
-	    return $value.' '.$intervals[1][0].($value > 1 ? 's' : '').' ago';
-		    
-	}
+	
 
 }

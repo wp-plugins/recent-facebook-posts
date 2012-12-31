@@ -3,8 +3,8 @@ Contributors: DvanKooten
 Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.0.1
-Tested up to: 3.4.2
-Stable tag: 1.0.5
+Tested up to: 3.5
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,12 +78,23 @@ Please check if the page you are trying to fetch posts from has **publicly** ava
 = Where to add custom CSS =
 IMO, appearance should be handled by the theme you are using. This is why your custom CSS rules should be added to your theme's stylesheet file. You can find this file by browsing (over FTP) to `/wp-content/themes/your-theme-name/style.css`, or you can just use the WP Editor under Appearance > Editor.
 
+= Can I show a list of recent facebook updates in my posts or pages? =
+Yes, you can use the '[recent-facebook-posts]' shortcode. Optionally, add the following attributes: 'likes', 'comments', 'excerpt_length'. Example: '[recent-facebook-posts likes=0 comments=0 excerpt_length=250]'
+
+Valid attribute values are as follows:
+'likes' : 0 (don't show like count), 1 (show like count)
+'comments' : 0 (don't show comment count), 1 (show comment count)
+'excerpt_length' : 1 - 9999 (sets the length of the excerpt)
+
 == Screenshots ==
 
 1. The black bordered circles are the fields you'll need to provide to Facebook, at a minimum. The green circled fields are the values you'll need to provide to Recent Facebook Posts.
 2. The green circled fields are the fields where you'll need to provide your Facebook app id and app secret (as shown in screenshot 1).
 
 == Changelog ==
+= 1.1 =
+* Added: Shortcode to show a list of recent facebook updates in your posts: '[recent-facebook-posts]'
+
 = 1.0.5 =
 * Added: More user-friendly error message when cURL is not enabled on your server.
 

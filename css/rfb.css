@@ -12,3 +12,8 @@
 .rfb_posts span.like_count span{ display:none; }
 .rfb_posts span.comment_count span{ display:none; }
 
+/* shortcode */
+.rfb_posts.shortcode div.rfb-post{ border-bottom:1px solid #E9E9E9; padding-top:15px; margin-bottom:15px; margin-top:0; padding-bottom:0;  }
+
+/* widget */
+.widget .rfb_posts { }
