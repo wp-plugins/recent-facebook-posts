@@ -96,6 +96,7 @@ Valid attribute values are as follows:
 == Changelog ==
 = 1.1.1 =
 * Updated: Expanded installation instructions.
+* Changed: Some code improvements
 * Added: Link to Facebook numeric ID helper website.
 * Added: Check if cache directory exists. If not the plugin will now automatically try to create it with the right permissions.
 * Added: option to open link to Facebook Page in a new window.

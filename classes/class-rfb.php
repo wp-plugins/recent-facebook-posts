@@ -85,8 +85,8 @@ class RFB {
 			require dirname(__FILE__) . '/facebook-php-sdk/facebook.php';
 			$opts = $this->get_options();
 			self::$fb_instance = new Facebook(array(
-		   	 	'appId'  => $opts['app_id'],
-		    	'secret' => $opts['app_secret'],
+		   	 	'appId'  => trim($opts['app_id']),
+		    	'secret' => trim($opts['app_secret']),
 			));
 		}
 		return self::$fb_instance;
@@ -124,7 +124,7 @@ class RFB {
 
 		if(!$fb->getUser()) return false;
 
-		$apiResult = $fb->api($opts['fb_id'].'/posts', "GET", array(
+		$apiResult = $fb->api(trim($opts['fb_id']) . '/posts', "GET", array(
 				'limit' => 250
 			)
 		);
