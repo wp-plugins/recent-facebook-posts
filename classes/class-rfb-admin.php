@@ -76,10 +76,12 @@ class RFB_Admin {
 		$cache_dir = dirname(__FILE__) . '/../cache/';
 		$cache_file = dirname(__FILE__) . '/../cache/posts.cache';
 
-		if(!is_writable($cache_dir)) {
+		if(!file_exists($cache_dir)) {
+			$cache_error = 'The cache directory (<i>'. ABSPATH . 'wp-content/plugins/recent-facebook-posts/cache/</i>) does not exist.';
+		} elseif(!is_writable($cache_dir)) {
 			$cache_error = 'The cache directory (<i>'. ABSPATH . 'wp-content/plugins/recent-facebook-posts/cache/</i>) is not writable.';
 		} elseif(file_exists($cache_file) && !is_writable($cache_file)) {
-			$cache_error = 'The cache directory (<i>'. ABSPATH . 'wp-content/plugins/recent-facebook-posts/cache/posts.cache</i>) exists but is not writable.';
+			$cache_error = 'The cache file (<i>'. ABSPATH . 'wp-content/plugins/recent-facebook-posts/cache/posts.cache</i>) exists but is not writable.';
 		}
 		
 

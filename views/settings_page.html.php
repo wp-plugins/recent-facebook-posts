@@ -58,7 +58,7 @@
 					</tr>
 
 					<tr valign="top">
-					    <th scope="row"><label for="rfb_fb_id" <?php if(empty($opts['fb_id'])) echo 'class="error"'; ?>>Facebook user id, page id or slug</label></th>
+					    <th scope="row"><label for="rfb_fb_id" <?php if(empty($opts['fb_id'])) echo 'class="error"'; ?>>Facebook numeric ID <small><a target="_blank" href="http://findmyfacebookid.com/">(?)</a></small></label></th>
 					    <td><input type="text" size="50" id="rfb_fb_id" name="rfb_settings[fb_id]" value="<?php echo $opts['fb_id']; ?>" /></td>
 					</tr>
 
@@ -70,6 +70,11 @@
 					<tr valign="top">
 					    <th scope="row"><label for="rfb_link_text">Link text</label></th>
 					    <td><input type="text" size="50" id="rfb_link_text" name="rfb_settings[link_text]" value="<?php echo $opts['link_text']; ?>" /></td>
+					</tr>
+
+					<tr valign="top">
+					    <th scope="row"><label for="rfb_link_new_window">Open link in new window?</label></th>
+					    <td><input type="checkbox" id="rfb_link_new_window" name="rfb_settings[link_new_window]" value="1" <?php if(isset($opts['link_new_window']) && $opts['link_new_window']) { ?>checked="1" <?php } ?>/></td>
 					</tr>
 
 					<tr valign="top">

@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.0.1
 Tested up to: 3.5
-Stable tag: 1.1
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,7 +28,6 @@ This plugin adds a widget to your WordPress installation which you can use to li
 **Coming up**
 
 * Option to show a Like button
-* Option to show "photo" updates
 * Suggestions, anyone? Drop me a line if you do.
 
 **More info:**
@@ -42,11 +41,14 @@ This plugin adds a widget to your WordPress installation which you can use to li
 1. Upload the contents of the .zip-file to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. [Create a new Facebook application here](http://developers.facebook.com/apps). Fill in ANY name you'd like (it won't be visible to the public), leave the namespace field blank and the hosting checkbox unchecked.
-1. Select "Website with Facebook login" and set your `Site URL`
+1. In the Basic Application settings screen, scroll down a bit and select "Website with Facebook login" and set your `Site URL` to the URL of your WordPress installation.
 1. Copy your `App ID` and `App Secret` (see screenshot 1)
 1. Go to your WordPress Admin panel and open the Recent Facebook Posts options screen. (Settings > Recent Facebook Posts)
-1. Paste your Facebook `App id` and `App Secret`.
+1. Paste your Facebook `App id` and `App Secret`.  [screenshot 1](http://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/)
+1. Find the numeric Facebook ID of your public Facebook page with [this website](http://findmyfacebookid.com/).
+1. Fill in your Facebook ID in the RFB options screen.
 1. Test your configuration by clicking the button "Renew access token".
+1. Test if caching works by clicking the "Renew cache" button.
 1. Drag the 'Recent FB Posts Widget' to one of your widget areas.
 1. (optional) Apply some custom CSS rules to style your recent FB posts widget. Just add them to your theme's CSS file.
 
@@ -92,6 +94,12 @@ Valid attribute values are as follows:
 2. The green circled fields are the fields where you'll need to provide your Facebook app id and app secret (as shown in screenshot 1).
 
 == Changelog ==
+= 1.1.1 =
+* Updated: Expanded installation instructions.
+* Added: Link to Facebook numeric ID helper website.
+* Added: Check if cache directory exists. If not the plugin will now automatically try to create it with the right permissions.
+* Added: option to open link to Facebook Page in a new window.
+
 = 1.1 =
 * Added: Shortcode to show a list of recent facebook updates in your posts: '[recent-facebook-posts]'
 

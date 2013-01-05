@@ -10,7 +10,8 @@ class RFB {
 		'fb_id' => 'DannyvanKootenCOM',
 		'cache_time' => 1800,
 		'load_css' => 0,
-		'link_text' => 'Find us on Facebook'
+		'link_text' => 'Find us on Facebook',
+		'link_new_window' => 0
 	);
 	private $options;
 
@@ -157,9 +158,16 @@ class RFB {
 		}
 
 		$data = json_encode($data);
+		$cache_dir = dirname(__FILE__) . '/../cache/';
 		$cache_file = dirname(__FILE__) . '/../cache/posts.cache';
 		
-		if(!is_writable(dirname(__FILE__) . '/../cache/')) return false;
+		if(!file_exists($cache_dir)) {
+			@mkdir($cache_dir, 0777);
+		}
+
+		if(!is_writable(dirname(__FILE__) . '/../cache/')) {
+			return false;
+		}
 
 		file_put_contents($cache_file, $data);
 

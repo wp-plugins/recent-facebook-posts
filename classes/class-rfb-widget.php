@@ -130,7 +130,7 @@ class RFB_Widget extends WP_Widget {
 			</ul>
 
 			<?php if($show_link) { ?>
-				<p><a href="http://www.facebook.com/<?php echo $opts['fb_id']; ?>/" rel="external nofollow"><?php echo strip_tags($opts['link_text']); ?></a>.</p>
+				<p><a href="http://www.facebook.com/<?php echo $opts['fb_id']; ?>/" rel="external nofollow" <?php if($opts['link_new_window']) { ?>target="_blank"<?php } ?>><?php echo strip_tags($opts['link_text']); ?></a>.</p>
 			<?php } ?>
 
 			<?php 
