@@ -84,12 +84,13 @@ IMO, appearance should be handled by the theme you are using. This is why your c
 Currently, no. This plugin currently only works with pages and personal profiles.
 
 = Can I show a list of recent facebook updates in my posts or pages? =
-Yes, you can use the `[recent-facebook-posts]` shortcode. Optionally, add the following attributes: `likes`, `comments`, `excerpt_length`. Example: `[recent-facebook-posts likes=0 comments=0 excerpt_length=250]`
+Yes, you can use the `[recent-facebook-posts]` shortcode. Optionally, add the following attributes: `likes`, `comments`, `excerpt_length`, `number`. Example: `[recent-facebook-posts number=10 likes=0 comments=0 excerpt_length=250]`
 
 Valid attribute values are as follows:
 `likes` : 0 (don't show like count), 1 (show like count)
 `comments` : 0 (don't show comment count), 1 (show comment count)
 `excerpt_length` : 1 - 9999 (sets the length of the excerpt)
+`number` : 1 - 99 (set the number of posts to show)
 
 == Screenshots ==
 
