@@ -97,7 +97,7 @@ class RFB {
 		$opts = $this->get_options();
 
 		// check if cache file exists 
-		// check if cache file is exists for longer then the given expiration time
+		// check if cache file exists for longer then the given expiration time
 		if(!file_exists($cache_file) || (filemtime($cache_file) < (time() - $opts['cache_time']))) {
 			$this->renew_cache_file();
 
@@ -124,27 +124,25 @@ class RFB {
 
 		if(!$fb->getUser()) return false;
 
-		$apiResult = $fb->api(trim($opts['fb_id']) . '/posts', "GET", array(
-				'limit' => 250
-			)
-		);
+		$apiResult = $fb->api(trim($opts['fb_id']) . '/feed?with=message&limit=250');
 		
 		if(!$apiResult or !is_array($apiResult) or !isset($apiResult['data']) or !is_array($apiResult['data'])) { return false; }
 
 		$data = array();
 		foreach($apiResult['data'] as $p) {
-			if(!isset($p['message']) || empty($p['message'])) continue;
-
+			if(!in_array($p['type'], array('status', 'photo', 'video'))) { continue; }
 			//split user and post ID (userID_postID)
 			$idArray = explode("_", $p['id']);
 			
 			$post = array();
 			$post['author'] = $p['from'];
-			$post['content'] = $p['message'];
+			$post['content'] = isset($p['message']) ? $p['message'] : '';
 			
-
 			if($p['type'] == 'photo') { 
 				$post['image'] = $p['picture'];
+			} elseif($p['type'] == 'video') {
+				$post['image'] = $p['picture'];
+				$post['content'] .= "\n\n {$p['link']}";
 			} else {
 				$post['image'] = null;
 			}
@@ -209,8 +207,8 @@ class RFB {
 			}
 			$output .= '<p><a target="_blank" class="rfb_link" href="'. $post['link'] .'" rel="nofollow">';
 			if($likes || $comments) { $output .= '<span class="like_count_and_comment_count">'; }
-			if($likes) { $output .= '<span class="like_count">'. $post['like_count'] . ' <span>likes</span></span>'; }
-			if($comments) { $output .= '<span class="comment_count">' . $post['comment_count'] . ' <span>comments</span></span>'; }
+			if($likes) { $output .= '<span class="like_count">'. $post['like_count'] . ' <span>likes</span></span> '; }
+			if($comments) { $output .= '<span class="comment_count">' . $post['comment_count'] . ' <span>comments</span></span> '; }
 			if($likes || $comments) { $output .= '</span>'; }
 			$output .= '<span class="timestamp" title="'. date('l, F j, Y', $post['timestamp']) . ' at ' . date('G:i', $post['timestamp']) . '" >';
 			if($likes || $comments) { $output .= ' · '; }

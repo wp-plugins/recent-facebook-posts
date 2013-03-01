@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.0.1
 Tested up to: 3.5
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Widget that lists your recent Facebook page or profile updates / posts. A faster
 
 == Description ==
 
-This plugin adds a widget to your WordPress installation which you can use to list your recent Facebook posts / updates. This can be either posts from your personal profile or posts from your fanpage.
+This plugin adds a widget (and a shortcode `[recent-facebook-posts]`) to your WordPress installation which you can use to list your recent Facebook posts / updates. This can be either posts from your personal profile or posts from your fanpage.
 
 **Benefits of using Recent Facebook Posts**
 
@@ -80,6 +80,9 @@ Please check if the page you are trying to fetch posts from has **publicly** ava
 = Where to add custom CSS =
 IMO, appearance should be handled by the theme you are using. This is why your custom CSS rules should be added to your theme's stylesheet file. You can find this file by browsing (over FTP) to `/wp-content/themes/your-theme-name/style.css`, or you can just use the WP Editor under Appearance > Editor.
 
+= Does this plugin work with group posts? =
+Currently, no. This plugin currently only works with pages and personal profiles.
+
 = Can I show a list of recent facebook updates in my posts or pages? =
 Yes, you can use the `[recent-facebook-posts]` shortcode. Optionally, add the following attributes: `likes`, `comments`, `excerpt_length`. Example: `[recent-facebook-posts likes=0 comments=0 excerpt_length=250]`
 
@@ -94,6 +97,9 @@ Valid attribute values are as follows:
 2. The green circled fields are the fields where you'll need to provide your Facebook app id and app secret (as shown in screenshot 1).
 
 == Changelog ==
+= 1.1.2 =
+* Fixed: Added spaces after the like and comment counts in the shortcode output
+
 = 1.1.1 =
 * Updated: Expanded installation instructions.
 * Changed: Some code improvements
