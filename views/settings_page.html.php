@@ -3,7 +3,7 @@
 <div id="rfb" class="wrap">
 	<div class="column" style="width:70%;">
 
-		<?php if($fb->getUser() && !$access_token) { ?>
+		<?php if(isset($fb) && $fb->getUser() && !$access_token) { ?>
 			<div id="setting-error-settings_updated" class="updated settings-error"> 
 				<p>
 					<strong>Your API settings seem fine but there is no valid access token available. </strong>
@@ -92,13 +92,16 @@
 
 		</form>
 
-		<h3 title="<?php echo get_option('rfb_access_token'); ?>">Access Token</h3>
-		<p>Use this button to test your configuration. It also won't hurt to hit this button once in a month or so to renew your access token, although this should be taken care of automatically everytime you log into WordPress.</p>
-		<a class="button-primary" href="<?php echo $fb->getLoginUrl(array('redirect_uri' => get_admin_url() . 'options-general.php?page=rfb-settings&rfb_renew_access_token')); ?>">Test / Renew Access Token</a>
-
-		<h3>Cache</h3>
-		<p>Because fetching posts from Facebook is "expensive", this will only happen every <?php echo $opts['cache_time']; ?> seconds (as configured above). You can manually renew the cache using the button below.</p>
-		<form action="" method="post"><input type="submit" name="renew_cache" class="button-primary" value="<?php _e('Renew Cache'); ?>" /></form>
+			<?php if($curl) { ?>
+				<h3 title="<?php echo get_option('rfb_access_token'); ?>">Access Token</h3>
+				<p>Use this button to test your configuration. It also won't hurt to hit this button once in a month or so to renew your access token, although this should be taken care of automatically everytime you log into WordPress.</p>
+				<a class="button-primary" href="<?php echo $fb->getLoginUrl(array('redirect_uri' => get_admin_url() . 'options-general.php?page=rfb-settings&rfb_renew_access_token')); ?>">Test / Renew Access Token</a>
+			<?php } ?>
+			<?php if($connected) { ?>
+				<h3>Cache</h3>
+				<p>Because fetching posts from Facebook is "expensive", this will only happen every <?php echo $opts['cache_time']; ?> seconds (as configured above). You can manually renew the cache using the button below.</p>
+			<form action="" method="post"><input type="submit" name="renew_cache" class="button-primary" value="<?php _e('Renew Cache'); ?>" /></form>
+		<?php } ?>
 	</div>
 
 	<div class="column clearfix" style="width:26%;  margin-left:3%;">

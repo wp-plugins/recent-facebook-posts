@@ -51,26 +51,36 @@ class RFB_Admin {
 
 		$opts = $this->RFB->get_options();
 		$curl = extension_loaded('curl');
-		$fb = $this->RFB->get_fb_instance();
+
 		//update_option('rfb_access_token', '');
 		$access_token = get_option('rfb_access_token');
 		$connected = false;
 
-		// try to fetch a test post
-		if($curl && $access_token) {
-			$fb->setAccessToken($access_token);
+		if($curl) {
 
-			$connected = $fb->getUser();
-
-			if($connected) {
-				try {
-					$try = $fb->api('/' . $opts['fb_id'] . '/posts?limit=1');
-				} catch(Exception $e) {
-					$connected = false;
-					$error = $e;
+			if($access_token) {
+				$fb = $this->RFB->get_fb_instance();
+				$fb->setAccessToken($access_token);
+				$connected = $fb->getUser();
+				
+				if($connected) {
+					// try to fetch a test pos
+					try {
+						$try = $fb->api('/' . $opts['fb_id'] . '/posts?limit=1');
+					} catch(Exception $e) {
+						$connected = false;
+						$error = $e;
+					}
 				}
 			}
+			
+			if(!$connected && !isset($_GET['rfb_renew_access_token'])) {
+				// try to renew access token
+				$this->RFB->renew_access_token(get_admin_url() . 'options-general.php?page=rfb-settings&rfb_renew_access_token');
+			}
+
 		}
+
 
 		// check if cache directory is writable
 		$cache_dir = dirname(__FILE__) . '/../cache/';

@@ -55,35 +55,41 @@ class RFB {
 		return $this->options;
 	}
 
-	public function renew_access_token() {
-		// only run if this is an administrator.
+	public function renew_access_token($redirect_uri = null) {
+
+		// only renew when the visitor is an administrator
 		$user = wp_get_current_user();
-		
 		if(!user_can($user, 'manage_options')) return false;
+
+		if(!$redirect_uri) {
+			$redirect_uri = get_admin_url() . '?rfb_renew_access_token';
+		}
 
 		$fb = $this->get_fb_instance();
 
 		// Get Facebook User ID
 		$fb_user = $fb->getUser();
 
-		if(!$fb_user) {
+		$location = $fb->getLoginUrl(array('redirect_uri' => $redirect_uri));
 
-			if(!headers_sent()) {
-		    	header("Location: ".$fb->getLoginUrl(array('redirect_uri' => get_admin_url() . '?rfb_renew_access_token')));
-		    	exit;
-			} else {
-				echo '<script type="text/javascript">window.location = \''. $fb->getLoginUrl(array('redirect_uri' => get_admin_url() . '?rfb_renew_access_token')) .'\';</script>';
-				exit;
-			}
+		if(!headers_sent()) {
+		    header("Location: $location");
+		    exit;
+		} else {
+			echo '<script type="text/javascript">window.location = \''. $location .'\';</script>';
+			exit;
 		}
 
-		return;
+		return ;
 	}
 
 	public function get_fb_instance() {
 		if(!self::$fb_instance) {
+
 			require dirname(__FILE__) . '/facebook-php-sdk/facebook.php';
+			
 			$opts = $this->get_options();
+			
 			self::$fb_instance = new Facebook(array(
 		   	 	'appId'  => trim($opts['app_id']),
 		    	'secret' => trim($opts['app_secret']),
@@ -98,7 +104,7 @@ class RFB {
 
 		// check if cache file exists 
 		// check if cache file exists for longer then the given expiration time
-		if(!file_exists($cache_file) || (filemtime($cache_file) < (time() - $opts['cache_time']))) {
+		if(!file_exists($cache_file) || ($this->get_time_of_last_file_change($cache_file) < (time() - $opts['cache_time']))) {
 			$this->renew_cache_file();
 
 			if(!file_exists($cache_file)) return array();
@@ -113,8 +119,8 @@ class RFB {
 		if(empty($opts['app_id']) || empty($opts['fb_id'])) return false;
 
 		$access_token = get_option('rfb_access_token'); 
-		if(!$access_token) {
 
+		if(!$access_token) {
 			$access_token = $this->renew_access_token();
 			if(!$access_token) return false;
 		}
@@ -124,13 +130,21 @@ class RFB {
 
 		if(!$fb->getUser()) return false;
 
-		$apiResult = $fb->api(trim($opts['fb_id']) . '/feed?with=message&limit=250');
+		$apiResult = $fb->api(trim($opts['fb_id']) . '/posts?with=message&limit=250');
 		
 		if(!$apiResult or !is_array($apiResult) or !isset($apiResult['data']) or !is_array($apiResult['data'])) { return false; }
 
 		$data = array();
 		foreach($apiResult['data'] as $p) {
-			if(!in_array($p['type'], array('status', 'photo', 'video'))) { continue; }
+			
+			// skip this "post" if it is not of one of the following types
+			if(!in_array($p['type'], array('status', 'photo', 'video', 'link'))) { 
+				continue;
+			}
+
+			// skip empty status updates
+			if($p['type'] == 'status' && empty($p['message'])) { continue; }
+
 			//split user and post ID (userID_postID)
 			$idArray = explode("_", $p['id']);
 			
@@ -138,6 +152,7 @@ class RFB {
 			$post['author'] = $p['from'];
 			$post['content'] = isset($p['message']) ? $p['message'] : '';
 			
+			// set post content and image
 			if($p['type'] == 'photo') { 
 				$post['image'] = $p['picture'];
 			} elseif($p['type'] == 'video') {
@@ -147,9 +162,30 @@ class RFB {
 				$post['image'] = null;
 			}
 
+			// calculate post like and comment counts
+			if(isset($p['likes'])) {
+				if(isset($p['likes']['count'])) {
+					$like_count = $p['likes']['count'];
+				} elseif(isset($p['likes']['data']) && is_array($p['likes']['data'])) {
+					$like_count = count($p['likes']['data']);
+				}
+			} else {
+				$like_count = 0;
+			}
+
+			if(isset($p['comments'])) {
+				if(isset($p['comments']['count'])) {
+					$comment_count = $p['comments']['count'];
+				} elseif(isset($p['comments']['data']) && is_array($p['comments']['data'])) {
+					$comment_count = count($p['comments']['data']);
+				}
+			} else {
+				$comment_count = 0;
+			}
+
 			$post['timestamp'] = strtotime($p['created_time']);
-			$post['like_count'] = (isset($p['likes'])) ? $p['likes']['count'] : 0;
-			$post['comment_count'] = (isset($p['comments'])) ? $p['comments']['count'] : 0;
+			$post['like_count'] = $like_count;
+			$post['comment_count'] = $comment_count;
 			$post['link'] = "http://www.facebook.com/".$opts['fb_id']."/posts/".$idArray[1];
 			$data[] = $post;
 
@@ -159,10 +195,12 @@ class RFB {
 		$cache_dir = dirname(__FILE__) . '/../cache/';
 		$cache_file = dirname(__FILE__) . '/../cache/posts.cache';
 		
+		// create cache directory if not exists
 		if(!file_exists($cache_dir)) {
 			@mkdir($cache_dir, 0777);
 		}
 
+		// abandon if cache folder is not writable
 		if(!is_writable(dirname(__FILE__) . '/../cache/')) {
 			return false;
 		}
@@ -247,7 +285,28 @@ class RFB {
 
 	    $value = floor($diff/$intervals[1][1]);
 	    return $value.' '.$intervals[1][0].($value > 1 ? 's' : '').' ago';
-		    
 	}	
+
+	private function get_time_of_last_file_change($filePath) 
+	{ 
+		clearstatcache();
+	    $time = filemtime($filePath); 
+
+	    $isDST = (date('I', $time) == 1); 
+	    $systemDST = (date('I') == 1); 
+
+	    $adjustment = 0; 
+
+	    if($isDST == false && $systemDST == true) 
+	        $adjustment = 3600; 
+	    
+	    else if($isDST == true && $systemDST == false) 
+	        $adjustment = -3600; 
+
+	    else 
+	        $adjustment = 0; 
+
+	    return ($time + $adjustment); 
+	} 
 	
 }
