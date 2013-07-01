@@ -74,7 +74,7 @@ class RFB_Admin {
 				}
 			}
 			
-			if(!$connected && !isset($_GET['rfb_renew_access_token'])) {
+			if(!$connected && !isset($_GET['rfb_renew_access_token']) && !empty($opts['app_id']) && !empty($opts['app_secret'])) {
 				// try to renew access token
 				$this->RFB->renew_access_token(get_admin_url() . 'options-general.php?page=rfb-settings&rfb_renew_access_token');
 			}
