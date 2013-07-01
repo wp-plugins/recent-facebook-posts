@@ -92,7 +92,7 @@
 
 		</form>
 
-			<?php if($curl) { ?>
+			<?php if($curl && !empty($opts['app_id']) && !empty($opts['app_secret'])) { ?>
 				<h3 title="<?php echo get_option('rfb_access_token'); ?>">Access Token</h3>
 				<p>Use this button to test your configuration. It also won't hurt to hit this button once in a month or so to renew your access token, although this should be taken care of automatically everytime you log into WordPress.</p>
 				<a class="button-primary" href="<?php echo $fb->getLoginUrl(array('redirect_uri' => get_admin_url() . 'options-general.php?page=rfb-settings&rfb_renew_access_token')); ?>">Test / Renew Access Token</a>

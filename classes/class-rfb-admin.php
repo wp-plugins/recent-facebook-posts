@@ -52,7 +52,7 @@ class RFB_Admin {
 		$opts = $this->RFB->get_options();
 		$curl = extension_loaded('curl');
 
-		//update_option('rfb_access_token', '');
+		update_option('rfb_access_token', '');
 		$access_token = get_option('rfb_access_token');
 		$connected = false;
 
