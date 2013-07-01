@@ -52,14 +52,16 @@ class RFB_Admin {
 		$opts = $this->RFB->get_options();
 		$curl = extension_loaded('curl');
 
-		update_option('rfb_access_token', '');
+		//update_option('rfb_access_token', '');
 		$access_token = get_option('rfb_access_token');
 		$connected = false;
 
 		if($curl) {
 
+			$fb = $this->RFB->get_fb_instance();
+
 			if($access_token) {
-				$fb = $this->RFB->get_fb_instance();
+				
 				$fb->setAccessToken($access_token);
 				$connected = $fb->getUser();
 				
@@ -72,11 +74,6 @@ class RFB_Admin {
 						$error = $e;
 					}
 				}
-			}
-			
-			if(!$connected && !isset($_GET['rfb_renew_access_token']) && !empty($opts['app_id']) && !empty($opts['app_secret'])) {
-				// try to renew access token
-				$this->RFB->renew_access_token(get_admin_url() . 'options-general.php?page=rfb-settings&rfb_renew_access_token');
 			}
 
 		}
