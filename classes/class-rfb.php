@@ -11,7 +11,10 @@ class RFB {
 		'cache_time' => 1800,
 		'load_css' => 0,
 		'link_text' => 'Find us on Facebook',
-		'link_new_window' => 0
+		'link_new_window' => 0,
+		'img_size' => 'thumbnail',
+		'img_width' => 100,
+		'img_height' => 100
 	);
 	private $options;
 
@@ -149,18 +152,22 @@ class RFB {
 			$idArray = explode("_", $p['id']);
 			
 			$post = array();
+			$post['type'] = $p['type'];
 			$post['author'] = $p['from'];
 			$post['content'] = isset($p['message']) ? $p['message'] : '';
 			
+
 			// set post content and image
 			if($p['type'] == 'photo') { 
-				$post['image'] = $p['picture'];
+				$post['image'] = "http://graph.facebook.com/".$p['object_id']."/picture";
 			} elseif($p['type'] == 'video') {
-				$post['image'] = $p['picture'];
+				//$post['image'] = $p['picture'];
+				$post['image'] = "http://graph.facebook.com/".$p['object_id']."/picture";
 				$post['content'] .= "\n\n {$p['link']}";
 			} else {
 				$post['image'] = null;
 			}
+
 
 			// calculate post like and comment counts
 			if(isset($p['likes'])) {
@@ -219,10 +226,12 @@ class RFB {
 	      'excerpt_length' => 140
     	 ), $atts));
 
+		$opts = $this->get_options();
 		$posts = $this->get_posts();
 		$posts = array_slice($posts, 0, $number);
 
 		$output = '<div class="recent-facebook-posts rfb_posts shortcode">';
+
 		foreach($posts as $post) { 
 			$content = $post['content'];
 			$shortened = false;
@@ -238,11 +247,19 @@ class RFB {
 		
 			$output .= '<div class="rfb-post">';
 			$output .= '<p class="rfb_text">'. nl2br(make_clickable($content));
-				if ($shortened) $output .= '..';
+			if ($shortened) $output .= '..';
 			$output .= '</p>';
-			if(isset($post['image']) && $post['image']) { 
-				$output .= '<p class="rfb_image"><a target="_blank" href="'. $post['link'] . '" rel="nofollow"><img src="'. $post['image'] . '" alt="" /></a></p>';
+
+			if($opts['img_size'] != 'dont_show' && isset($post['image']) && $post['image']) { 
+				if(isset($post['type']) && $post['type'] == 'photo') {
+					$img_atts = 'src="'. $post['image'] .'?type='. $opts['img_size'] .'" style="max-width: '. $opts['img_width'] .'px; max-height: '. $opts['img_width'] .'px;"';	
+				} else {
+					$img_atts = 'src="'. $post['image'] .'" style="max-width: '. $opts['img_width'] .'px; max-height: '. $opts['img_width'] .'px;"';	
+				}
+
+				$output .= '<p class="rfb_image"><a target="_blank" href="'. $post['link'] . '" rel="nofollow"><img '. $img_atts .' alt="" /></a></p>';
 			}
+
 			$output .= '<p><a target="_blank" class="rfb_link" href="'. $post['link'] .'" rel="nofollow">';
 			if($likes || $comments) { $output .= '<span class="like_count_and_comment_count">'; }
 			if($likes) { $output .= '<span class="like_count">'. $post['like_count'] . ' <span>likes</span></span> '; }

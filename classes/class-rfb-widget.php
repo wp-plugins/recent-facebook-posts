@@ -109,7 +109,24 @@ class RFB_Widget extends WP_Widget {
 				?>
 				<li>
 					<p class="rfb_text"><?php echo nl2br(make_clickable($content)); if($shortened) echo '..'; ?></p>
-					<?php if(isset($post['image']) && $post['image']) { ?><p class="rfb_image"><a target="_blank" href="<?php echo $post['link']; ?>" rel="nofollow"><img src="<?php echo $post['image']; ?>" alt="" /></a></p><?php } ?>
+					<?php 
+					if($opts['img_size'] != 'dont_show' && isset($post['image']) && $post['image']) { 
+
+						if(isset($post['type']) && $post['type'] == 'photo') {
+							$img_atts = "src=\"{$post['image']}?type={$opts['img_size']}\" style=\"max-height: {$opts['img_height']}px;\"";
+						} else {
+							$img_atts = "src=\"{$post['image']}\" style=\"\"";
+						}
+						?>
+						<p class="rfb_image">
+							<a target="_blank" href="<?php echo $post['link']; ?>" rel="nofollow">
+
+								<img <?php echo $img_atts; ?> alt="" />
+							</a>
+						</p>
+					<?php } ?>
+
+					
 					<p><a target="_blank" class="rfb_link" href="<?php echo $post['link']; ?>" rel="nofollow">
 						<?php if($show_like_count || $show_comment_count) { ?><span class="like_count_and_comment_count"><?php } ?>
 						<?php if($show_like_count) { ?><span class="like_count"><?php echo $post['like_count']; ?> <span>likes</span></span> <?php } ?>

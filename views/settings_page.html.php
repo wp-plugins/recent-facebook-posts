@@ -68,6 +68,26 @@
 					</tr>
 
 					<tr valign="top">
+					    <th scope="row"><label for="rfb_img_size">Image source size</label></th>
+					    <td>
+					    	<select id="rfb_img_size" name="rfb_settings[img_size]">
+					    		<option value="dont_show" <?php if($opts['img_size'] == 'dont_show') { echo 'selected'; } ?>>Don't show images</option>
+					    		<option value="thumbnail" <?php if($opts['img_size'] == 'thumbnail') { echo 'selected'; } ?>>Thumbnail</option>
+					    		<option value="normal" <?php if($opts['img_size'] == 'normal') { echo 'selected'; } ?>>Normal</option>
+					    	</select>
+					</tr>
+
+					<tr valign="top">
+					    <th scope="row"><label for="rfb_img_width">Image width <small>(in px)</small></label></th>
+					    <td><input type="text" size="50" id="rfb_img_width" name="rfb_settings[img_width]" value="<?php echo $opts['img_width']; ?>" /></td>
+					</tr>
+
+					<tr valign="top">
+					    <th scope="row"><label for="rfb_img_width">Image height <small>(in px)</small></label></th>
+					    <td><input type="text" size="50" id="rfb_img_height" name="rfb_settings[img_height]" value="<?php echo $opts['img_height']; ?>" /></td>
+					</tr>
+
+					<tr valign="top">
 					    <th scope="row"><label for="rfb_link_text">Link text</label></th>
 					    <td><input type="text" size="50" id="rfb_link_text" name="rfb_settings[link_text]" value="<?php echo $opts['link_text']; ?>" /></td>
 					</tr>
