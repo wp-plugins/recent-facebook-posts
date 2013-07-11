@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.0.1
 Tested up to: 3.5.2
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,8 +98,12 @@ Valid attribute values are as follows:
 2. The green circled fields are the fields where you'll need to provide your Facebook app id and app secret (as shown in screenshot 1).
 
 == Changelog ==
+= 1.2.3 =
+* Changed the way thumbnail and normal image links are generated, now works with shared photos as well.
+* Added read_stream permission, please update your access token.
+* Added cache succesfully updated notice
 
-= 1.2.1 =
+= 1.2.2 =
 * Added option to hide images
 * Added option to load either thumbnail or normal size images from Facebook's CDN
 * Added border to image links

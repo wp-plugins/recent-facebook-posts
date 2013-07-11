@@ -12,6 +12,15 @@
 			</div>
 		<?php }
 
+		if($cache_renewed) { ?>
+			<div id="setting-error-settings_updated" class="updated settings-error"> 
+				<p>
+					Your cache file has been succesfully renewed.
+				</p>
+			</div>
+		<?php 
+		}
+
 		if(!$curl) { ?>
 			<div id="setting-error" class="error settings-error">
 				<p>
@@ -20,7 +29,7 @@
 			</div>
 		<?php } 
 
-		if(!$connected && isset($error)) { ?>
+		if(isset($error)) { ?>
 			<div id="setting-error" class="error settings-error">
 				<p>The following error occured when trying to fetch a test post from <a target="_blank" href="http://www.facebook.com/<?php echo $opts['fb_id']; ?>">facebook.com/<?php echo $opts['fb_id']; ?></a></p>
 				<p>
@@ -115,7 +124,7 @@
 			<?php if($curl && !empty($opts['app_id']) && !empty($opts['app_secret'])) { ?>
 				<h3 title="<?php echo get_option('rfb_access_token'); ?>">Access Token</h3>
 				<p>Use this button to test your configuration. It also won't hurt to hit this button once in a month or so to renew your access token, although this should be taken care of automatically everytime you log into WordPress.</p>
-				<a class="button-primary" href="<?php echo $fb->getLoginUrl(array('redirect_uri' => get_admin_url() . 'options-general.php?page=rfb-settings&rfb_renew_access_token')); ?>">Test / Renew Access Token</a>
+				<a class="button-primary" href="<?php echo $fb->getLoginUrl(array('scope' => array('read_stream'), 'redirect_uri' => get_admin_url() . 'options-general.php?page=rfb-settings&rfb_renew_access_token')); ?>">Test / Renew Access Token</a>
 			<?php } ?>
 			<?php if($connected) { ?>
 				<h3>Cache</h3>

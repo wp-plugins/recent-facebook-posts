@@ -1,6 +1,8 @@
 <?php
 
 class RFB_Admin {
+
+	private $RFB;
 	
 	public function __construct($RFB) {
 		global $pagenow;
@@ -58,7 +60,7 @@ class RFB_Admin {
 
 		if($curl) {
 
-			$fb = $this->RFB->get_fb_instance();
+			$fb = $this->getRFB()->get_fb_instance();
 
 			if($access_token) {
 				
@@ -91,8 +93,14 @@ class RFB_Admin {
 			$cache_error = 'The cache file (<i>'. ABSPATH . 'wp-content/plugins/recent-facebook-posts/cache/posts.cache</i>) exists but is not writable.';
 		}
 		
+		$cache_renewed = $this->getRFB()->cache_renewed;
 
 		require dirname(__FILE__) . '/../views/settings_page.html.php';
+	}
+
+	public function getRFB()
+	{
+		return $this->RFB;
 	}
 
 	public function handle_requests() {

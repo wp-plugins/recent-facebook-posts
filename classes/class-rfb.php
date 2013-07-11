@@ -17,6 +17,7 @@ class RFB {
 		'img_height' => 100
 	);
 	private $options;
+	public $cache_renewed = false;
 
 	public static function get_instance() {
 		if(!self::$instance) self::$instance = new RFB();
@@ -71,9 +72,9 @@ class RFB {
 		$fb = $this->get_fb_instance();
 
 		// Get Facebook User ID
-		$fb_user = $fb->getUser();
+		//$fb_user = $fb->getUser();
 
-		$location = $fb->getLoginUrl(array('redirect_uri' => $redirect_uri));
+		$location = $fb->getLoginUrl(array('scope' => array('read_stream'), 'redirect_uri' => $redirect_uri));
 
 		if(!headers_sent()) {
 		    header("Location: $location");
@@ -133,13 +134,13 @@ class RFB {
 
 		if(!$fb->getUser()) return false;
 
-		$apiResult = $fb->api(trim($opts['fb_id']) . '/posts?with=message&limit=250');
+		$apiResult = $fb->api(trim($opts['fb_id']) . '/posts');
 		
 		if(!$apiResult or !is_array($apiResult) or !isset($apiResult['data']) or !is_array($apiResult['data'])) { return false; }
 
 		$data = array();
 		foreach($apiResult['data'] as $p) {
-			
+
 			// skip this "post" if it is not of one of the following types
 			if(!in_array($p['type'], array('status', 'photo', 'video', 'link'))) { 
 				continue;
@@ -155,15 +156,16 @@ class RFB {
 			$post['type'] = $p['type'];
 			$post['author'] = $p['from'];
 			$post['content'] = isset($p['message']) ? $p['message'] : '';
-			
 
 			// set post content and image
-			if($p['type'] == 'photo') { 
-				$post['image'] = "http://graph.facebook.com/".$p['object_id']."/picture";
-			} elseif($p['type'] == 'video') {
-				//$post['image'] = $p['picture'];
-				$post['image'] = "http://graph.facebook.com/".$p['object_id']."/picture";
-				$post['content'] .= "\n\n {$p['link']}";
+			if($p['type'] == 'photo' || $p['type'] == 'video') {
+				$image = $p['picture'];
+
+				if($opts['img_size'] == 'normal') {
+					$image = str_replace(array("_s.jpg", "_s.png"), array("_n.jpg", "_n.png"), $image);
+				} 
+
+				$post['image'] = $image;
 			} else {
 				$post['image'] = null;
 			}
@@ -213,6 +215,7 @@ class RFB {
 		}
 
 		file_put_contents($cache_file, $data);
+		$this->cache_renewed = true;
 
 		return true;
 	}
@@ -251,11 +254,8 @@ class RFB {
 			$output .= '</p>';
 
 			if($opts['img_size'] != 'dont_show' && isset($post['image']) && $post['image']) { 
-				if(isset($post['type']) && $post['type'] == 'photo') {
-					$img_atts = 'src="'. $post['image'] .'?type='. $opts['img_size'] .'" style="max-width: '. $opts['img_width'] .'px; max-height: '. $opts['img_width'] .'px;"';	
-				} else {
-					$img_atts = 'src="'. $post['image'] .'" style="max-width: '. $opts['img_width'] .'px; max-height: '. $opts['img_width'] .'px;"';	
-				}
+				
+				$img_atts = 'src="'. $post['image'] .'" style="max-width: '. $opts['img_width'] .'px; max-height: '. $opts['img_width'] .'px;"';	
 
 				$output .= '<p class="rfb_image"><a target="_blank" href="'. $post['link'] . '" rel="nofollow"><img '. $img_atts .' alt="" /></a></p>';
 			}
