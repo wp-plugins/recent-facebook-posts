@@ -1,162 +1,106 @@
 === Plugin Name ===
 Contributors: DvanKooten
 Donate link: http://dannyvankooten.com/donate/
-Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
-Requires at least: 3.0.1
+Tags: mailchimp, newsletter, mailinglist, email, email list, form, widget form, sign-up form, subscribe form, comments, comment form, mailchimp widget, buddypress, multisite
+Requires at least: 3.1
 Tested up to: 3.5.2
-Stable tag: 1.2.3
+Stable tag: 0.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Widget that lists your recent Facebook page or profile updates / posts. A faster/prettier/more customizable alternative to Facebooks Like Box.
+Thé ultimate MailChimp plugin! Includes a form shortcode, form widget and a comment form checkbox to grow your MailChimp list(s).
 
 == Description ==
 
-This plugin adds a widget (and a shortcode `[recent-facebook-posts]`) to your WordPress installation which you can use to list your recent Facebook posts / updates. This can be either posts from your personal profile or posts from your fanpage.
+= MailChimp for WordPress =
 
-**Benefits of using Recent Facebook Posts**
+This plugin provides you with various ways to grow your MailChimp list(s). Add a form to your posts or pages by using the `[mc4wp-form]` shortcode, use this shortcode in your text widgets to show a form in your widget areas or add a "Sign-me up to our newsletter" checkbox to your comment and/or registration forms. 
 
-* More freedom then Facebooks Like Box, easier to customize and/or style by using plain old CSS.
-* Outputs valid HTML, no more iframes.
-* Faster then Facebooks like box, because the result is properly cached on your server.
-* SEO friendly, your Facebook page / profile content becomes part of your website content. No iframes or JavaScript is involved.
+Configuring is easy, all you need is your MailChimp API key!
 
-**Demo**
+**Features:**
 
-[Recent FB Posts demo](http://wpdemo.dannyvankooten.com/), the widget is located in the right sidebar. As you can see, you can make the widget blend in with your theme perfectly.
-
-**Coming up**
-
-* Option to show a Like button
-* Suggestions, anyone? Drop me a line if you do.
+* Embed sign-up forms to your pages or posts by using a simple shortcode `[mc4wp-form]`
+* Add a MailChimp sign-up form to your widget areas by using the shortcode in a text widget
+* Adds a "sign-up to our newsletter" checkbox to your comment form or registration form
+* Sign-up requests from bots will be ignored (honeypot, Akismet, default spam protection).
+* Includes a simple way to design forms, add as many fields as you like.
+* Uses the MailChimp API, blazingly fast and reliable.
+* Configuring is extremely easy because of the way this plugin is set-up, all you need is your MailChimp API key.
+* The checkbox is compatible with BuddyPress and MultiSite registration forms
 
 **More info:**
 
-* [Recent Facebook Posts for WordPress](http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/)
+* [MailChimp for WordPress](http://dannyvankooten.com/wordpress-plugins/mailchimp-for-wordpress/)
 * Check out more [WordPress plugins](http://dannyvankooten.com/wordpress-plugins/) by Danny van Kooten
 * You should follow [Danny on Twitter](http://twitter.com/DannyvanKooten) for lightning fast support and updates.
 
+**MailChimp Sign-Up Form**
+The plugin comes packed with an easy to way to build a form just like you want it. You have the possibility to add as many fields as you like and customize labels, placeholders, initial values etc..
+
+Use the `[mc4wp-form]` shortcode to use this form in your posts, pages or text widgets.
+
+**Sign-Up Checkbox**
+Commenters and subscribers are valuable visitors who are most likely interested to be on your mailinglist. This plugin makes it easy for them, all they have to do is check a single checkbox when commenting or registering on your website!
+
 == Installation ==
 
-1. Upload the contents of the .zip-file to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. [Create a new Facebook application here](http://developers.facebook.com/apps). Fill in ANY name you'd like (it won't be visible to the public), leave the namespace field blank and the hosting checkbox unchecked.
-1. In the Basic Application settings screen, scroll down a bit and select "Website with Facebook login" and set your `Site URL` to the URL of your WordPress installation.
-1. Copy your `App ID` and `App Secret` (see screenshot 1)
-1. Go to your WordPress Admin panel and open the Recent Facebook Posts options screen. (Settings > Recent Facebook Posts)
-1. Paste your Facebook `App id` and `App Secret`.  [screenshot 1](http://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/)
-1. Find the numeric Facebook ID of your public Facebook page with [this website](http://findmyfacebookid.com/).
-1. Fill in your Facebook ID in the RFB options screen.
-1. Test your configuration by clicking the button "Renew access token".
-1. Test if caching works by clicking the "Renew cache" button.
-1. Drag the 'Recent FB Posts Widget' to one of your widget areas.
-1. (optional) Apply some custom CSS rules to style your recent FB posts widget. Just add them to your theme's CSS file.
-
-If you're still in doubt, have a look at the [screenshots](http://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/).
+1. In your WordPress admin panel, go to Plugins > New Plugin, search for "MailChimp for WP" and click "Install now"
+1. Alternatively, download the plugin and upload the contents of mailchimp-for-wp.zip to your plugins directory, which usually is `/wp-content/plugins/`.
+1. Activate the plugin
+1. Fill in your MailChimp API key in the plugin's options.
+1. Select at least one list to subscribe visitors to.
+1. (Optional) Select where the checkbox should show up.
+1. (Optional) Design a form and include it in your posts, pages or text widgets.
 
 == Frequently Asked Questions ==
 
 = What does this plugin do? =
-This plugin adds a widget to your WordPress installation which you can use to list your X most recent Facebook posts. This can be either posts from your personal profile or from one of your fanpages. An example of the widget can be found [here](http://wpdemo.dannyvankooten.com/).
+This plugin gives you the possibility to easily create a sign-up form and show this form in various places on your website. Also, this plugin can add a checkbox to your comment form that makes it easy for commenters to subscribe to your MailChimp newsletter. All they have to do is check one checkbox and they will be added to your mailinglist(s).
 
-= Why not simply use FB's likebox? =
-This plugin gives you the freedom to style your most recent facebook posts using plain old CSS, thus giving you much more freedom. Also, this plugin outputs valid HTML. Iframes are a thing of the past. Your Facebook posts are cached on your server so it is somewhat faster too.
+For a complete list of plugin features, take a look here: [MailChimp for WordPress](http://dannyvankooten.com/wordpress-plugins/mailchimp-for-wordpress/).
 
-= How to configure this plugin? =
-Create a new Facebook application and fill in the field where it asks for your website URL. Then go to the configuration page of Recent Facebook Posts and copy-paste your App ID and App Secret. Have a look at the screenshots if you're not clear about which fields you need.
+= Why does the checkbox not show up at my comment form? =
+Your theme probably does not support the necessary comment hook this plugin uses to add the checkbox to your comment form. You can manually place the checkbox by calling `<?php do_action('comment_form') ?>` inside the form tags of your theme's comment form. Usually this file can be found in your theme folder as `comments.php`. Your theme folder can be found by browsing to `/wp-content/themes/your-theme-name/`.
 
-= Why do I need to create a Facebook application? =
-In order to query content on Facebook an application is needed. Facebook doesn't allow their content publicly to anyone, they want to know "who is asking". You don't need to submit your app to the App Center in order for it to work though.
-
-= Do you have a working demo I can take a look at? =
-Sure, [here](http://wpdemo.dannyvankooten.com/). The widget is located in the right sidebar and shows posts from [my Facebook page](http://www.facebook.com/DannyvanKootenCOM). "Like" it, while you're at it!
-
-= Facebook gives me this error when renewing the access token: The specified URL is not owned by the application =
-You are running the plugin on a different (sub)domain then specified in your FB app configuration. Fix it by correctly setting your "Site URL" or by adding an App Domain if you are running the plugin on a subdomain.
-
-= The plugin says it is connected, renewing my access token works but still there are no status updates to be shown. =
-Please check if the page you are trying to fetch posts from has **publicly** available posts. The privacy setting of your status updates has to be "everyone" in order for the plugin to "see" your posts.
-
-= Where to add custom CSS =
-IMO, appearance should be handled by the theme you are using. This is why your custom CSS rules should be added to your theme's stylesheet file. You can find this file by browsing (over FTP) to `/wp-content/themes/your-theme-name/style.css`, or you can just use the WP Editor under Appearance > Editor.
-
-= Does this plugin work with group posts? =
-Currently, no. This plugin currently only works with pages and personal profiles.
-
-= Can I show a list of recent facebook updates in my posts or pages? =
-Yes, you can use the `[recent-facebook-posts]` shortcode. Optionally, add the following attributes: `likes`, `comments`, `excerpt_length`, `number`. Example: `[recent-facebook-posts number=10 likes=0 comments=0 excerpt_length=250]`
-
-Valid attribute values are as follows:
-`likes` : 0 (don't show like count), 1 (show like count)
-`comments` : 0 (don't show comment count), 1 (show comment count)
-`excerpt_length` : 1 - 9999 (sets the length of the excerpt)
-`number` : 1 - 99 (set the number of posts to show)
+= Where can I find my MailChimp API key? =
+[http://kb.mailchimp.com/article/where-can-i-find-my-api-key](http://kb.mailchimp.com/article/where-can-i-find-my-api-key)
 
 == Screenshots ==
 
-1. The black bordered circles are the fields you'll need to provide to Facebook, at a minimum. The green circled fields are the values you'll need to provide to Recent Facebook Posts.
-2. The green circled fields are the fields where you'll need to provide your Facebook app id and app secret (as shown in screenshot 1).
+1. The MC4WP options page.
+1. The MC4WP form options page.
 
 == Changelog ==
-= 1.2.3 =
-* Changed the way thumbnail and normal image links are generated, now works with shared photos as well.
-* Added read_stream permission, please update your access token.
-* Added cache succesfully updated notice
+= 0.4.2 =
+* Fixed W3C invalid value "true" for attribute "required"
 
-= 1.2.2 =
-* Added option to hide images
-* Added option to load either thumbnail or normal size images from Facebook's CDN
-* Added border to image links
+= 0.4.1 =
+* Fixed correct and more specific error messages
+* Fixed form designer, hidden fields no longer wrapped in paragraph tags
+* Added text fields to form designer
+* Added error message when email address was already on the list
+* Added debug message when there is a problem with one of the (required) merge fields
 
-= 1.2.1 =
-* Fixed parameter app_id is required notice before being able to enter it.
+= 0.4 =
+* Improved dashboard, it now has different tabs for the different settings.
+* Improved guessing of first and last name.
+* Fixed debugging statements on settings page
+* Added settings link on plugins overview page
+* Added form functionality
+* Added form shortcode
+* Added necessary filters for shortcodes to work inside text widgets
+* Added spam honeypot to form to ignore bot sign-ups
+* Added error & success messages to form
+* Added Freddy icon to menu
 
-= 1.2 =
-* Fixed: Reverted back to 'posts' instead of 'feed', to exclude posts from others.
-* Fixed: undefined index 'count' when renewing cache file   
-* Fixed: wrong comment or like count for some posts
-* Improved: calculation of cache file modification time to prevent unnecessary cache renewal
-* Improved: error message when cURL is not enabled
-* Improved: access token and cache configuration options are now only available when connected
+= 0.3 =
+* Fixed the missing argument bug when submitting a comment for some users.
+* Added support for regular, BuddyPress and MultiSite registration forms.
 
-= 1.1.2 =
-* Fixed: Added spaces after the like and comment counts in the shortcode output
-
-= 1.1.1 =
-* Updated: Expanded installation instructions.
-* Changed: Some code improvements
-* Added: Link to Facebook numeric ID helper website.
-* Added: Check if cache directory exists. If not the plugin will now automatically try to create it with the right permissions.
-* Added: option to open link to Facebook Page in a new window.
-
-= 1.1 =
-* Added: Shortcode to show a list of recent facebook updates in your posts: '[recent-facebook-posts]'
-
-= 1.0.5 =
-* Added: More user-friendly error message when cURL is not enabled on your server.
-
-= 1.0.4 =
-* Improved: The way the excerpt is created, words (or links) won't be cut off now
-* Fixed: FB API Error for unknown fields.
-* Added: Images from FB will now be shown too. Drop me a line if you think this should be optional.
-
-= 1.0.3 = 
-* Improved the way the link to the actual status update is created (thanks Nepumuk84).
-* Improved: upped the limit of the call to Facebooks servers. 
-
-= 1.0.2 =
-* Fixed a PHP notice in the backend area when renewing cache and fetching shared status updates.
-* Added option to show link to Facebook page, with customizable text.
-
-= 1.0.1 =
-* Added error messages for easier debugging.
-
-= 1.0 =
-* Added option to load some default CSS
-* Added option to show like count
-* Added option to show comment count
-* Improved usability. Configuring Recent Facebook Posts should be much easier now due to testing options.
+= 0.2 =
+* Fixed small bug where name of comment author was not correctly assigned
+* Improved CSS reset for checkbox
 
 = 0.1 =
-* Initial release
-
+* BETA release
