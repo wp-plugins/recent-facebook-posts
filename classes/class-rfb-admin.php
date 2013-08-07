@@ -3,36 +3,50 @@
 class RFB_Admin {
 
 	private $RFB;
+	private $options;
+	private $FB;
 	
 	public function __construct($RFB) {
-		global $pagenow;
-
-		add_action('admin_init', array(&$this, 'register_settings'));
-		add_action('admin_menu', array(&$this, 'build_menu'));
-
-		add_filter("plugin_action_links_recent-facebook-posts/recent-facebook-posts.php", array(&$this, 'add_settings_link'));
 
 		$this->RFB = $RFB;
+		$this->FB = $RFB->getFBApi();
 
-		if(isset($_GET['rfb_renew_access_token'])) {
-			$this->renew_access_token();
+		add_action('admin_init', array($this, 'register_settings'));
+		add_action('admin_menu', array($this, 'build_menu'));
+		
+		add_filter("plugin_action_links_recent-facebook-posts/recent-facebook-posts.php", array($this, 'add_settings_link'));
+
+		// check expiry date of access token
+		$expiryDate = get_option('rfb_access_token_expiry_date');
+		if($expiryDate && (date('Ymd', strtotime("+14 days")) >= $expiryDate)) {
+			// access token expires in less than 7 days
+			// add admin notice to request new access token
+			add_action( 'admin_notices', array($this, 'show_admin_notice') );
 		}
 
+		if(isset($_GET['yolo'])) {
+			update_option('rfb_access_token_expiry_date', date('Ymd', strtotime('+7 days')));
+		}
+
+		// handle requests early
 		if(isset($_GET['page']) && $_GET['page'] == 'rfb-settings') {
-			$this->handle_requests();
-		}
-	}
 
-	private function renew_access_token() {
-		$fb = $this->RFB->get_fb_instance();
+			$this->options = $RFB->get_options();
 
-		// Get Facebook User ID
-		$user = $fb->getUser();
+			add_action('admin_enqueue_scripts', array($this, 'load_css') );
 
-		if($user) {
-			$access_token = $fb->getAccessToken();
-		  	// store access token for later usage
-		   	update_option('rfb_access_token', $access_token);
+			// renew cache file
+			if(isset($_POST['renew_cache'])) {
+				add_action('init', array($this->RFB, 'renew_cache_file'));
+			}
+
+			// login to facebook
+			if(isset($_GET['login_to_fb'])) {
+				$fb = $this->getFB();
+				$loginUrl = $fb->getLoginUrl(array('scope' => array('read_stream'), 'redirect_uri' => get_admin_url(null, 'admin.php?page=rfb-settings&logged_in')));
+				header("Location: {$loginUrl}");
+				exit;
+			}
 		}
 	}
 
@@ -41,60 +55,66 @@ class RFB_Admin {
 	}
 
 	public function build_menu() {
-		$page = add_options_page('Recent Facebook Posts - Settings','Recent Facebook Posts','manage_options','rfb-settings',array($this, 'settings_page'));
-		add_action( 'admin_print_styles-' . $page, array(&$this, 'load_css') );
+		$page = add_menu_page('Recent Facebook Posts - Settings','Recent FB Posts','manage_options','rfb-settings', array($this, 'settings_page'), plugins_url('recent-facebook-posts/img/icon.png'));
 	}
 
 	public function load_css() {
 		wp_enqueue_style( 'rfb_admin_css', plugins_url('recent-facebook-posts/css/admin.css') );
+
+		wp_enqueue_script( 'rfb_admin_js', plugins_url('recent-facebook-posts/js/admin.js'), array('jquery'), null, true);
 	}
 
 	public function  settings_page () {
 
-		$opts = $this->RFB->get_options();
+		$opts = $this->options;
 		$curl = extension_loaded('curl');
-
-		//update_option('rfb_access_token', '');
-		$access_token = get_option('rfb_access_token');
 		$connected = false;
 
 		if($curl) {
 
-			$fb = $this->getRFB()->get_fb_instance();
+			$fb = $this->getFB();
+			$connected = $fb->getUser();
 
-			if($access_token) {
-				
-				$fb->setAccessToken($access_token);
-				$connected = $fb->getUser();
-				
-				if($connected) {
-					// try to fetch a test pos
-					try {
-						$try = $fb->api('/' . $opts['fb_id'] . '/posts?limit=1');
-					} catch(Exception $e) {
-						$connected = false;
-						$error = $e;
-					}
+			if($connected) {
+				try {
+					$try = $fb->api('/me');
+				} catch(Exception $e) {
+					$connected = false;
+					$apiError = $e;
 				}
 			}
 
 		}
 
+		// show user-friendly error message
+		if(!$curl) { $errorMessage = "This plugin needs the PHP cURL extension installed on your server. Please ask your webhost to enable the php_curl extension."; }
+		elseif(empty($opts['app_id'])) { $errorMessage = "This plugin needs a valid Application ID to work. Please fill it in below."; }
+		elseif(empty($opts['app_secret'])) { $errorMessage = "This plugin needs a valid Application Secret to work. Please fill it in below."; }
+		elseif(!$connected) { 
+			$errorMessage = "The plugin is not connected to Facebook. Please <a href=\"". admin_url('admin.php?page=rfb-settings&login_to_fb') ."\">log in</a>."; 
+		} else {
+			// everything is fine!
+			$accessToken = $fb->getAccessToken();
+			update_option('rfb_access_token', $accessToken);
+
+			if(isset($_GET['logged_in'])) { 
+				update_option('rfb_access_token_expiry_date', date("Ymd", strtotime("+60 days")));
+				$notice = "<strong>Login success!</strong> You succesfully connected the plugin with Facebook.";
+			} elseif($this->getRFB()->cache_renewed) { $notice = "<strong>Cache renewed!</strong> You succesfully renewed the cache."; }
+		}
 
 		// check if cache directory is writable
-		$cache_dir = dirname(__FILE__) . '/../cache/';
-		$cache_file = dirname(__FILE__) . '/../cache/posts.cache';
+		$cacheDir = dirname(__FILE__) . '/../cache/';
+		$cacheFile = dirname(__FILE__) . '/../cache/posts.cache';
 
-		if(!file_exists($cache_dir)) {
-			$cache_error = 'The cache directory (<i>'. ABSPATH . 'wp-content/plugins/recent-facebook-posts/cache/</i>) does not exist.';
-		} elseif(!is_writable($cache_dir)) {
-			$cache_error = 'The cache directory (<i>'. ABSPATH . 'wp-content/plugins/recent-facebook-posts/cache/</i>) is not writable.';
-		} elseif(file_exists($cache_file) && !is_writable($cache_file)) {
-			$cache_error = 'The cache file (<i>'. ABSPATH . 'wp-content/plugins/recent-facebook-posts/cache/posts.cache</i>) exists but is not writable.';
+		if(!file_exists($cacheDir)) {
+			$cacheError = 'The cache directory (<i>'. ABSPATH . 'wp-content/plugins/recent-facebook-posts/cache/</i>) does not exist.';
+		} elseif(!is_writable($cacheDir)) {
+			$cacheError = 'The cache directory (<i>'. ABSPATH . 'wp-content/plugins/recent-facebook-posts/cache/</i>) is not writable.';
+		} elseif(file_exists($cacheFile) && !is_writable($cacheFile)) {
+			$cacheError = 'The cache file (<i>'. ABSPATH . 'wp-content/plugins/recent-facebook-posts/cache/posts.cache</i>) exists but is not writable.';
 		}
 		
-		$cache_renewed = $this->getRFB()->cache_renewed;
-
 		require dirname(__FILE__) . '/../views/settings_page.html.php';
 	}
 
@@ -103,12 +123,19 @@ class RFB_Admin {
 		return $this->RFB;
 	}
 
-	public function handle_requests() {
-		if(isset($_POST['renew_cache'])) {
-			add_action('init', array($this->RFB, 'renew_cache_file'));
-		}
+	private function getFB()
+	{
+		return $this->FB;
 	}
 
+	public function show_admin_notice()
+	{
+		?>
+	    <div class="updated">
+	        <p>Your Facebook access token for <a href="<?php echo admin_url('admin.php?page-rfb-settings'); ?>">Recent Facebook Posts</a> expires in less than 14 days. Please renew it. <a class="primary-button" href="<?php echo admin_url('admin.php?page=rfb-settings&login_to_fb'); ?>">Renew token</a></p>
+	    </div>
+	    <?php
+	}
 
     /**
     * Adds the settings link on the plugin's overview page

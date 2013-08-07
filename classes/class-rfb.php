@@ -4,18 +4,6 @@ class RFB {
 
 	private static $instance;
 	private static $fb_instance;
-	private $defaults = array(
-		'app_id' => '',
-		'app_secret' => '',
-		'fb_id' => 'DannyvanKootenCOM',
-		'cache_time' => 1800,
-		'load_css' => 0,
-		'link_text' => 'Find us on Facebook',
-		'link_new_window' => 0,
-		'img_size' => 'thumbnail',
-		'img_width' => 100,
-		'img_height' => 100
-	);
 	private $options;
 	public $cache_renewed = false;
 
@@ -26,14 +14,15 @@ class RFB {
 
 	public function __construct() {
 
-		add_action('wp_login', array($this, 'renew_access_token'));
 		add_action('init', array($this, 'on_init'));
 
 		add_shortcode('recent-facebook-posts', array($this, 'shortcode_output'));
 
 		// only on frontend
 		if(!is_admin()) {
+
 			$opts = $this->get_options();
+
 			if($opts['load_css']) {
 				add_action( 'wp_enqueue_scripts', array(&$this, 'load_css'));
 			}
@@ -53,44 +42,34 @@ class RFB {
 
 	public function get_options() {
 		if(!$this->options) {
-			$this->options = array_merge($this->defaults, (array) get_option('rfb_settings'));
+
+			$defaults = array(
+				'app_id' => '',
+				'app_secret' => '',
+				'fb_id' => 'DannyvanKootenCOM',
+				'cache_time' => 1800,
+				'load_css' => 0,
+				'link_text' => 'Find us on Facebook',
+				'link_new_window' => 0,
+				'img_size' => 'thumbnail',
+				'img_width' => 100,
+				'img_height' => 100
+			);
+
+			$this->options = array_merge($defaults, (array) get_option('rfb_settings'));
 		}
 
 		return $this->options;
 	}
 
-	public function renew_access_token($redirect_uri = null) {
-
-		// only renew when the visitor is an administrator
-		$user = wp_get_current_user();
-		if(!user_can($user, 'manage_options')) return false;
-
-		if(!$redirect_uri) {
-			$redirect_uri = get_admin_url() . '?rfb_renew_access_token';
-		}
-
-		$fb = $this->get_fb_instance();
-
-		// Get Facebook User ID
-		//$fb_user = $fb->getUser();
-
-		$location = $fb->getLoginUrl(array('scope' => array('read_stream'), 'redirect_uri' => $redirect_uri));
-
-		if(!headers_sent()) {
-		    header("Location: $location");
-		    exit;
-		} else {
-			echo '<script type="text/javascript">window.location = \''. $location .'\';</script>';
-			exit;
-		}
-
-		return ;
-	}
-
-	public function get_fb_instance() {
+	public function getFBApi() {
 		if(!self::$fb_instance) {
 
-			require dirname(__FILE__) . '/facebook-php-sdk/facebook.php';
+			// Only load Facebook class if it has not been loaded yet
+			// Other plugins may have loaded the class already at this point.
+			if(!class_exists("Facebook")) {
+				require_once dirname(__FILE__) . '/facebook-php-sdk/facebook.php';
+			}
 			
 			$opts = $this->get_options();
 			
@@ -99,6 +78,7 @@ class RFB {
 		    	'secret' => trim($opts['app_secret']),
 			));
 		}
+
 		return self::$fb_instance;
 	}
 
@@ -122,17 +102,17 @@ class RFB {
 		$opts = $this->get_options();
 		if(empty($opts['app_id']) || empty($opts['fb_id'])) return false;
 
-		$access_token = get_option('rfb_access_token'); 
+		$accessToken = get_option('rfb_access_token'); 
 
-		if(!$access_token) {
-			$access_token = $this->renew_access_token();
-			if(!$access_token) return false;
-		}
+		// if no access token has been stored, we can't make the API call.
+		if(!$accessToken) { return false; }
 
-		$fb = $this->get_fb_instance();
-		$fb->setAccessToken($access_token);
+		$fb = $this->getFBApi();
+		$fb->setAccessToken($accessToken);
 
-		if(!$fb->getUser()) return false;
+		// check if Facebook API has an identified user
+		// if not, API is not connected
+		if(!$fb->getUser()) { return false; }
 
 		$apiResult = $fb->api(trim($opts['fb_id']) . '/posts');
 		
@@ -145,10 +125,11 @@ class RFB {
 			if(!in_array($p['type'], array('status', 'photo', 'video', 'link'))) { 
 				continue;
 			}
-
+			
 			// skip empty status updates
-			if($p['type'] == 'status' && empty($p['message'])) { continue; }
-
+			if($p['type'] == 'status' && (!isset($p['message']) || empty($p['message']))) { continue; }
+			if($p['type'] == 'status' && $p['status_type'] == 'approved_friend') { continue; }
+			
 			//split user and post ID (userID_postID)
 			$idArray = explode("_", $p['id']);
 			
@@ -156,9 +137,16 @@ class RFB {
 			$post['type'] = $p['type'];
 			$post['author'] = $p['from'];
 			$post['content'] = isset($p['message']) ? $p['message'] : '';
+			$post['image'] = null;
 
 			// set post content and image
-			if($p['type'] == 'photo' || $p['type'] == 'video') {
+			if($p['type'] == 'photo') {
+
+				$image = "//graph.facebook.com/". $p['object_id'] . '/picture?type=' . $opts['img_size'];
+				$post['image'] = $image;
+
+			} elseif($p['type'] == 'video') {
+
 				$image = $p['picture'];
 
 				if($opts['img_size'] == 'normal') {
@@ -166,10 +154,10 @@ class RFB {
 				} 
 
 				$post['image'] = $image;
-			} else {
-				$post['image'] = null;
-			}
 
+			} elseif($p['type'] == 'link') {
+				$post['content'] .= "\n\n" . $p['link'];
+			}
 
 			// calculate post like and comment counts
 			if(isset($p['likes'])) {
@@ -199,7 +187,7 @@ class RFB {
 			$data[] = $post;
 
 		}
-
+		
 		$data = json_encode($data);
 		$cache_dir = dirname(__FILE__) . '/../cache/';
 		$cache_file = dirname(__FILE__) . '/../cache/posts.cache';

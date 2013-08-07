@@ -3,50 +3,49 @@
 <div id="rfb" class="wrap">
 	<div class="column" style="width:70%;">
 
-		<?php if(isset($fb) && $fb->getUser() && !$access_token) { ?>
-			<div id="setting-error-settings_updated" class="updated settings-error"> 
+		<?php 
+		if(isset($errorMessage)) { ?>
+			<div id="setting-error" class="error settings-error">
 				<p>
-					<strong>Your API settings seem fine but there is no valid access token available. </strong>
-					<a class="button-primary" href="<?php echo $fb->getLoginUrl(array('redirect_uri' => get_admin_url() . 'options-general.php?page=rfb-settings&rfb_renew_access_token')); ?>">Request Access Token</a>
+					<strong>Error:</strong> <?php echo $errorMessage; ?>
+				</p>
+			</div>
+		<?php
+		} 
+
+		if(isset($cacheError)) { ?>
+			<div id="setting-error" class="error settings-error">
+				<p>
+					<strong>Cache error:</strong>
+					<?php echo $cacheError; ?>
 				</p>
 			</div>
 		<?php }
 
-		if($cache_renewed) { ?>
+		if(isset($apiError)) {
+			?>
+			<div id="setting-error" class="error settings-error">
+				<p>Facebook returned the following error.</p>
+				<p>
+					<strong><?php echo $apiError->getType(); ?>:</strong>
+					<?php echo $apiError->getMessage(); ?>
+				</p>
+			</div>	
+			<?php
+		}
+
+		if(isset($notice)) { ?>
 			<div id="setting-error-settings_updated" class="updated settings-error"> 
 				<p>
-					Your cache file has been succesfully renewed.
+					<?php echo $notice; ?>
 				</p>
 			</div>
 		<?php 
 		}
+		 ?>
 
-		if(!$curl) { ?>
-			<div id="setting-error" class="error settings-error">
-				<p>
-					<strong>Error:</strong> Recent Facebook Posts needs the PHP cURL extension to be installed on your server.
-				</p>
-			</div>
-		<?php } 
-
-		if(isset($error)) { ?>
-			<div id="setting-error" class="error settings-error">
-				<p>The following error occured when trying to fetch a test post from <a target="_blank" href="http://www.facebook.com/<?php echo $opts['fb_id']; ?>">facebook.com/<?php echo $opts['fb_id']; ?></a></p>
-				<p>
-					<strong><?php echo $error->getType(); ?>:</strong>
-					<?php echo $error->getMessage(); ?>
-				</p>
-			</div>
-		<?php } 
-
-		if(isset($cache_error)) { ?>
-			<div id="setting-error" class="error settings-error">
-				<p>
-					<strong>Cache error:</strong>
-					<?php echo $cache_error; ?>
-				</p>
-			</div>
-		<?php } ?>
+		<h2 style="display:none;"></h2>
+		<?php settings_errors(); ?>
 
 		<h3>Configuration</h3>
 		<form method="post" action="options.php">
@@ -55,63 +54,65 @@
 				<p class="status">Facebook API status: <span class="<?php echo ($connected) ? 'connected' : 'disconnected'; ?>"><?php echo ($connected) ? 'Connected' : 'Not Connected'; ?></span></p>
 				
 				<table class="form-table">
+					<tbody>
+						<tr valign="top">
+						    <th scope="row"><label for="rfb_app_id" <?php if(empty($opts['app_id'])) echo 'class="error"'; ?>>App ID</label></th>
+						    <td><input type="text" size="50" id="rfb_app_id" name="rfb_settings[app_id]" value="<?php echo $opts['app_id']; ?>" /></td>
+						</tr>
 
-					<tr valign="top">
-					    <th scope="row"><label for="rfb_app_id" <?php if(empty($opts['app_id'])) echo 'class="error"'; ?>>App ID</label></th>
-					    <td><input type="text" size="50" id="rfb_app_id" name="rfb_settings[app_id]" value="<?php echo $opts['app_id']; ?>" /></td>
-					</tr>
+						<tr valign="top">
+						    <th scope="row"><label for="rfb_app_secret" <?php if(empty($opts['app_secret'])) echo 'class="error"'; ?>>App Secret</label></th>
+						    <td><input type="text" size="50" id="rfb_app_secret" name="rfb_settings[app_secret]" value="<?php echo $opts['app_secret']; ?>" /></td>
+						</tr>
 
-					<tr valign="top">
-					    <th scope="row"><label for="rfb_app_secret" <?php if(empty($opts['app_secret'])) echo 'class="error"'; ?>>App Secret</label></th>
-					    <td><input type="text" size="50" id="rfb_app_secret" name="rfb_settings[app_secret]" value="<?php echo $opts['app_secret']; ?>" /></td>
-					</tr>
+						<tr valign="top">
+						    <th scope="row"><label for="rfb_fb_id" <?php if(empty($opts['fb_id'])) echo 'class="error"'; ?>>Facebook numeric ID <small><a target="_blank" href="http://findmyfacebookid.com/">(?)</a></small></label></th>
+						    <td><input type="text" size="50" id="rfb_fb_id" name="rfb_settings[fb_id]" value="<?php echo $opts['fb_id']; ?>" /></td>
+						</tr>
 
-					<tr valign="top">
-					    <th scope="row"><label for="rfb_fb_id" <?php if(empty($opts['fb_id'])) echo 'class="error"'; ?>>Facebook numeric ID <small><a target="_blank" href="http://findmyfacebookid.com/">(?)</a></small></label></th>
-					    <td><input type="text" size="50" id="rfb_fb_id" name="rfb_settings[fb_id]" value="<?php echo $opts['fb_id']; ?>" /></td>
-					</tr>
+						<tr valign="top">
+						    <th scope="row"><label for="rfb_cache_time">Cache expiry time <small>(in seconds)</small></label></th>
+						    <td><input type="text" size="50" id="rfb_cache_time" name="rfb_settings[cache_time]" value="<?php echo $opts['cache_time']; ?>" /></td>
+						</tr>
 
-					<tr valign="top">
-					    <th scope="row"><label for="rfb_cache_time">Cache expiry time <small>(in seconds)</small></label></th>
-					    <td><input type="text" size="50" id="rfb_cache_time" name="rfb_settings[cache_time]" value="<?php echo $opts['cache_time']; ?>" /></td>
-					</tr>
+						<tr valign="top">
+						    <th scope="row"><label for="rfb_img_size">Image source size</label></th>
+						    <td>
+						    	<select id="rfb_img_size" name="rfb_settings[img_size]">
+						    		<option value="dont_show" <?php if($opts['img_size'] == 'dont_show') { echo 'selected'; } ?>>Don't show images</option>
+						    		<option value="thumbnail" <?php if($opts['img_size'] == 'thumbnail') { echo 'selected'; } ?>>Thumbnail</option>
+						    		<option value="normal" <?php if($opts['img_size'] == 'normal') { echo 'selected'; } ?>>Normal</option>
+						    	</select>
+						</tr>
+					</tbody>
+					<tbody id="rfb_img_options" <?php if($opts['img_size'] == 'dont_show') echo 'style="display:none;"'; ?>>
+						<tr valign="top">
+						    <th scope="row"><label for="rfb_img_width">Image width <small>(in px)</small></label></th>
+						    <td><input type="text" size="50" id="rfb_img_width" name="rfb_settings[img_width]" value="<?php echo $opts['img_width']; ?>" /></td>
+						</tr>
 
-					<tr valign="top">
-					    <th scope="row"><label for="rfb_img_size">Image source size</label></th>
-					    <td>
-					    	<select id="rfb_img_size" name="rfb_settings[img_size]">
-					    		<option value="dont_show" <?php if($opts['img_size'] == 'dont_show') { echo 'selected'; } ?>>Don't show images</option>
-					    		<option value="thumbnail" <?php if($opts['img_size'] == 'thumbnail') { echo 'selected'; } ?>>Thumbnail</option>
-					    		<option value="normal" <?php if($opts['img_size'] == 'normal') { echo 'selected'; } ?>>Normal</option>
-					    	</select>
-					</tr>
+						<tr valign="top">
+						    <th scope="row"><label for="rfb_img_width">Image height <small>(in px)</small></label></th>
+						    <td><input type="text" size="50" id="rfb_img_height" name="rfb_settings[img_height]" value="<?php echo $opts['img_height']; ?>" /></td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr valign="top">
+						    <th scope="row"><label for="rfb_link_text">Link text</label></th>
+						    <td><input type="text" size="50" id="rfb_link_text" name="rfb_settings[link_text]" value="<?php echo $opts['link_text']; ?>" /></td>
+						</tr>
 
-					<tr valign="top">
-					    <th scope="row"><label for="rfb_img_width">Image width <small>(in px)</small></label></th>
-					    <td><input type="text" size="50" id="rfb_img_width" name="rfb_settings[img_width]" value="<?php echo $opts['img_width']; ?>" /></td>
-					</tr>
+						<tr valign="top">
+						    <th scope="row"><label for="rfb_link_new_window">Open link in new window?</label></th>
+						    <td><input type="checkbox" id="rfb_link_new_window" name="rfb_settings[link_new_window]" value="1" <?php if(isset($opts['link_new_window']) && $opts['link_new_window']) { ?>checked="1" <?php } ?>/></td>
+						</tr>
 
-					<tr valign="top">
-					    <th scope="row"><label for="rfb_img_width">Image height <small>(in px)</small></label></th>
-					    <td><input type="text" size="50" id="rfb_img_height" name="rfb_settings[img_height]" value="<?php echo $opts['img_height']; ?>" /></td>
-					</tr>
+						<tr valign="top">
+						    <th scope="row"><label for="rfb_load_css">Load some default CSS?</label></th>
+						    <td><input type="checkbox" id="rfb_load_css" name="rfb_settings[load_css]" value="1" <?php if(isset($opts['load_css']) && $opts['load_css']) { ?>checked="1" <?php } ?>/></td>
+						</tr>
 
-					<tr valign="top">
-					    <th scope="row"><label for="rfb_link_text">Link text</label></th>
-					    <td><input type="text" size="50" id="rfb_link_text" name="rfb_settings[link_text]" value="<?php echo $opts['link_text']; ?>" /></td>
-					</tr>
-
-					<tr valign="top">
-					    <th scope="row"><label for="rfb_link_new_window">Open link in new window?</label></th>
-					    <td><input type="checkbox" id="rfb_link_new_window" name="rfb_settings[link_new_window]" value="1" <?php if(isset($opts['link_new_window']) && $opts['link_new_window']) { ?>checked="1" <?php } ?>/></td>
-					</tr>
-
-					<tr valign="top">
-					    <th scope="row"><label for="rfb_load_css">Load some default CSS?</label></th>
-					    <td><input type="checkbox" id="rfb_load_css" name="rfb_settings[load_css]" value="1" <?php if(isset($opts['load_css']) && $opts['load_css']) { ?>checked="1" <?php } ?>/></td>
-					</tr>
-
-
+					</tbody>
 
 				</table>
 
@@ -123,13 +124,20 @@
 
 			<?php if($curl && !empty($opts['app_id']) && !empty($opts['app_secret'])) { ?>
 				<h3 title="<?php echo get_option('rfb_access_token'); ?>">Access Token</h3>
-				<p>Use this button to test your configuration. It also won't hurt to hit this button once in a month or so to renew your access token, although this should be taken care of automatically everytime you log into WordPress.</p>
-				<a class="button-primary" href="<?php echo $fb->getLoginUrl(array('scope' => array('read_stream'), 'redirect_uri' => get_admin_url() . 'options-general.php?page=rfb-settings&rfb_renew_access_token')); ?>">Test / Renew Access Token</a>
-			<?php } ?>
-			<?php if($connected) { ?>
+				<p>Use this button to receive a new access token from Facebook.</p>
+				<p><strong>Important: </strong> you should make it a habit to click this button once every few weeks.</p>
+				<p><a class="button-primary" href="<?php echo admin_url('admin.php?page=rfb-settings&login_to_fb'); ?>">Get Access Token</a></p>
+			<?php }
+
+			if($connected) { ?>
 				<h3>Cache</h3>
 				<p>Because fetching posts from Facebook is "expensive", this will only happen every <?php echo $opts['cache_time']; ?> seconds (as configured above). You can manually renew the cache using the button below.</p>
-			<form action="" method="post"><input type="submit" name="renew_cache" class="button-primary" value="<?php _e('Renew Cache'); ?>" /></form>
+				<p>
+					<form action="<?php echo admin_url('admin.php?page=rfb-settings'); ?>" method="post">
+						<input type="hidden" name="renew_cache" value="1" />
+						<input type="submit" class="button-primary" value="Renew cache file" />
+					</form>
+				</p>
 		<?php } ?>
 	</div>
 

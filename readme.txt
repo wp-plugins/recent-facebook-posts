@@ -3,8 +3,8 @@ Contributors: DvanKooten
 Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.0.1
-Tested up to: 3.5.2
-Stable tag: 1.2.3
+Tested up to: 3.6
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,14 +74,11 @@ Sure, [here](http://wpdemo.dannyvankooten.com/). The widget is located in the ri
 = Facebook gives me this error when renewing the access token: The specified URL is not owned by the application =
 You are running the plugin on a different (sub)domain then specified in your FB app configuration. Fix it by correctly setting your "Site URL" or by adding an App Domain if you are running the plugin on a subdomain.
 
-= The plugin says it is connected, renewing my access token works but still there are no status updates to be shown. =
-Please check if the page you are trying to fetch posts from has **publicly** available posts. The privacy setting of your status updates has to be "everyone" in order for the plugin to "see" your posts.
-
 = Where to add custom CSS =
-IMO, appearance should be handled by the theme you are using. This is why your custom CSS rules should be added to your theme's stylesheet file. You can find this file by browsing (over FTP) to `/wp-content/themes/your-theme-name/style.css`, or you can just use the WP Editor under Appearance > Editor.
+In my opinion, appearance should be handled by the theme you are using. This is why your custom CSS rules should be added to your theme's stylesheet file. You can find this file by browsing (over FTP) to `/wp-content/themes/your-theme-name/style.css`, or you can just use the WP Editor under Appearance > Editor.
 
 = Does this plugin work with group posts? =
-Currently, no. This plugin currently only works with pages and personal profiles.
+Currently, no. This plugin currently only works with pages and public profiles.
 
 = Can I show a list of recent facebook updates in my posts or pages? =
 Yes, you can use the `[recent-facebook-posts]` shortcode. Optionally, add the following attributes: `likes`, `comments`, `excerpt_length`, `number`. Example: `[recent-facebook-posts number=10 likes=0 comments=0 excerpt_length=250]`
@@ -98,6 +95,17 @@ Valid attribute values are as follows:
 2. The green circled fields are the fields where you'll need to provide your Facebook app id and app secret (as shown in screenshot 1).
 
 == Changelog ==
+
+= 1.3 =
+* Added Facebook icon to WP Admin menu item
+* Changed the connecting to Facebook process
+* Improved error messages
+* Improved code, code clean-up
+* Improved usability in admin area by showing notifications, removing unnecessary options, etc.
+* Added notice when access token expires (starting 14 days in advance)
+* Fixed: Cannot redeclare Facebook class.
+* Fixed: Images not being shown when using "normal" as image source size
+* Fixed: empty status updates (friends approved)
 
 = 1.2.3 =
 * Changed the way thumbnail and normal image links are generated, now works with shared photos as well.
