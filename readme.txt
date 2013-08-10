@@ -88,6 +88,7 @@ Use `<?php echo do_shortcode('[recent-facebook-posts number=10 likes=1 comments=
 * Added redirection fallbacks when headers have already been sent when trying to connect to Facebook.
 * Fixed error message when cURL is not enabled.
 * Improved some messages and field labels so things are more clear.
+* Updated Facebook API class.
 
 = 1.3 =
 * Added Facebook icon to WP Admin menu item
