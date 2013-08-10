@@ -2,33 +2,27 @@
 Contributors: DvanKooten
 Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
-Requires at least: 3.0.1
+Requires at least: 3.1
 Tested up to: 3.6
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Widget that lists your recent Facebook page or profile updates / posts. A faster/prettier/more customizable alternative to Facebooks Like Box.
+A faster, prettier and more customizable alternative to Facebooks Like Box. Lists most recent Facebook posts from public pages.
 
 == Description ==
 
-This plugin adds a widget (and a shortcode `[recent-facebook-posts]`) to your WordPress installation which you can use to list your recent Facebook posts / updates. This can be either posts from your personal profile or posts from your fanpage.
+This plugin adds a widget and a shortcode `[recent-facebook-posts]` to your WordPress website which you can use to list your most recent Facebook posts. This plugin works with public pages and to a certain extent with personal profiles.
 
-**Benefits of using Recent Facebook Posts**
+**Features**
 
-* More freedom then Facebooks Like Box, easier to customize and/or style by using plain old CSS.
-* Outputs valid HTML, no more iframes.
-* Faster then Facebooks like box, because the result is properly cached on your server.
-* SEO friendly, your Facebook page / profile content becomes part of your website content. No iframes or JavaScript is involved.
+* Highly customizable. By adding a few CSS rules to your theme's stylesheet you can make your Facebook updates blend in with your theme perfectly.
+* SEO friendly. Your most recent Facebook updates can be indexed by search engines because the plugin doesn't use JavaScript or iframes to show the posts.
+* Caching. The plugin uses caching to reduce round-trips to the Facebook servers.
 
 **Demo**
 
 [Recent FB Posts demo](http://wpdemo.dannyvankooten.com/), the widget is located in the right sidebar. As you can see, you can make the widget blend in with your theme perfectly.
-
-**Coming up**
-
-* Option to show a Like button
-* Suggestions, anyone? Drop me a line if you do.
 
 **More info:**
 
@@ -38,56 +32,49 @@ This plugin adds a widget (and a shortcode `[recent-facebook-posts]`) to your Wo
 
 == Installation ==
 
-1. Upload the contents of the .zip-file to the `/wp-content/plugins/` directory
+1. Upload the contents of the .zip-file to your plugins directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. [Create a new Facebook application here](http://developers.facebook.com/apps). Fill in ANY name you'd like (it won't be visible to the public), leave the namespace field blank and the hosting checkbox unchecked.
-1. In the Basic Application settings screen, scroll down a bit and select "Website with Facebook login" and set your `Site URL` to the URL of your WordPress installation.
-1. Copy your `App ID` and `App Secret` (see screenshot 1)
-1. Go to your WordPress Admin panel and open the Recent Facebook Posts options screen. (Settings > Recent Facebook Posts)
-1. Paste your Facebook `App id` and `App Secret`.  [screenshot 1](http://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/)
-1. Find the numeric Facebook ID of your public Facebook page with [this website](http://findmyfacebookid.com/).
+1. If you're not a Facebook developer yet, register as one [here](http://developers.facebook.com/apps).
+1. [Create a new Facebook application](http://developers.facebook.com/apps). Fill in ANY valid name but leave the namespace field blank and the hosting checkbox unchecked.
+1. In the Basic Application settings screen, scroll down a bit and select "Website with Facebook login" and set your `Site URL` to the URL of your WordPress installation. Example: `http://dannyvankooten.com/`
+1. (optional) Fill in the App Domain field as well. Example: `dannyvankooten.com`
+1. Open a new browser tab and go to your WordPress admin panel. Open the Recent FB Posts settings screen.
+1. Copy paste your Facebook `App id` and `App Secret` into the setting fields.  [screenshot 1](http://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/)
+1. Find the numeric Facebook ID of your public Facebook page using [this website](http://findmyfacebookid.com/).
 1. Fill in your Facebook ID in the RFB options screen.
-1. Test your configuration by clicking the button "Renew access token".
-1. Test if caching works by clicking the "Renew cache" button.
-1. Drag the 'Recent FB Posts Widget' to one of your widget areas.
-1. (optional) Apply some custom CSS rules to style your recent FB posts widget. Just add them to your theme's CSS file.
+1. Try to connect the plugin to Facebook by clicking the "Get access token" button.
+1. Test if everything works by clicking the "Renew cache" button.
 
 If you're still in doubt, have a look at the [screenshots](http://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/).
 
 == Frequently Asked Questions ==
 
-= What does this plugin do? =
-This plugin adds a widget to your WordPress installation which you can use to list your X most recent Facebook posts. This can be either posts from your personal profile or from one of your fanpages. An example of the widget can be found [here](http://wpdemo.dannyvankooten.com/).
-
-= Why not simply use FB's likebox? =
-This plugin gives you the freedom to style your most recent facebook posts using plain old CSS, thus giving you much more freedom. Also, this plugin outputs valid HTML. Iframes are a thing of the past. Your Facebook posts are cached on your server so it is somewhat faster too.
+= What does Recent Facebook Posts do? =
+With this plugin you can show a list of your X most recent Facebook status updates in pages / posts or widget areas. Have a look at my [own WordPress website](http://dannyvankooten.com/) for an example, I have a widget with my latest Facebook update in my footer.
 
 = How to configure this plugin? =
-Create a new Facebook application and fill in the field where it asks for your website URL. Then go to the configuration page of Recent Facebook Posts and copy-paste your App ID and App Secret. Have a look at the screenshots if you're not clear about which fields you need.
+You need to create a Facebook application for this plugin to work. Have a look at the [installation instructions](http://wordpress.org/plugins/recent-facebook-posts/installation/).
 
 = Why do I need to create a Facebook application? =
-In order to query content on Facebook an application is needed. Facebook doesn't allow their content publicly to anyone, they want to know "who is asking". You don't need to submit your app to the App Center in order for it to work though.
+Facebook doesn't allow their content publicly to anyone, they want to know "who's asking". That's why you need to create a Facebook application. This application does not have to be publicly visible though.
 
 = Do you have a working demo I can take a look at? =
-Sure, [here](http://wpdemo.dannyvankooten.com/). The widget is located in the right sidebar and shows posts from [my Facebook page](http://www.facebook.com/DannyvanKootenCOM). "Like" it, while you're at it!
+Sure, I use the plugin on my own [WordPress website](http://dannyvankooten.com/).
 
 = Facebook gives me this error when renewing the access token: The specified URL is not owned by the application =
 You are running the plugin on a different (sub)domain then specified in your FB app configuration. Fix it by correctly setting your "Site URL" or by adding an App Domain if you are running the plugin on a subdomain.
 
 = Where to add custom CSS =
-In my opinion, appearance should be handled by the theme you are using. This is why your custom CSS rules should be added to your theme's stylesheet file. You can find this file by browsing (over FTP) to `/wp-content/themes/your-theme-name/style.css`, or you can just use the WP Editor under Appearance > Editor.
+In my opinion, appearance should be handled by your theme and not by plugins. This is why you can just add custom CSS rules to your theme's stylesheet. This file is usually located here: `/wp-content/themes/your-theme-name/style.css`.
 
 = Does this plugin work with group posts? =
-Currently, no. This plugin currently only works with pages and public profiles.
+No, sorry. Recent Facebook Posts works with public pages and to a certain extent with personal profiles.
 
 = Can I show a list of recent facebook updates in my posts or pages? =
-Yes, you can use the `[recent-facebook-posts]` shortcode. Optionally, add the following attributes: `likes`, `comments`, `excerpt_length`, `number`. Example: `[recent-facebook-posts number=10 likes=0 comments=0 excerpt_length=250]`
+Yes, you can use the `[recent-facebook-posts]` shortcode. Optionally, add the following attributes: `likes` (show like count?), `comments` (show comment count?), `excerpt_length` (number of characters to show), `number` (number of posts to show). Example: `[recent-facebook-posts number=10 likes=1 comments=1 excerpt_length=250]`
 
-Valid attribute values are as follows:
-`likes` : 0 (don't show like count), 1 (show like count)
-`comments` : 0 (don't show comment count), 1 (show comment count)
-`excerpt_length` : 1 - 9999 (sets the length of the excerpt)
-`number` : 1 - 99 (set the number of posts to show)
+= What about usage of your plugin in template files? =
+Use `<?php echo do_shortcode('[recent-facebook-posts number=10 likes=1 comments=1 excerpt_length=250]'); ?>` in your theme files.
 
 == Screenshots ==
 
@@ -95,6 +82,12 @@ Valid attribute values are as follows:
 2. The green circled fields are the fields where you'll need to provide your Facebook app id and app secret (as shown in screenshot 1).
 
 == Changelog ==
+
+= 1.4 =
+* Changed cache folder to the WP Content folder (outside of the plugin to prevent cache problems after updating the plugin).
+* Added redirection fallbacks when headers have already been sent when trying to connect to Facebook.
+* Fixed error message when cURL is not enabled.
+* Improved some messages and field labels so things are more clear.
 
 = 1.3 =
 * Added Facebook icon to WP Admin menu item

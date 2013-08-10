@@ -24,7 +24,7 @@ class RFB {
 			$opts = $this->get_options();
 
 			if($opts['load_css']) {
-				add_action( 'wp_enqueue_scripts', array(&$this, 'load_css'));
+				add_action( 'wp_enqueue_scripts', array($this, 'load_css'));
 			}
 		}
 	}
@@ -83,7 +83,7 @@ class RFB {
 	}
 
 	public function get_posts() {
-		$cache_file = dirname(__FILE__) . '/../cache/posts.cache';
+		$cache_file = WP_CONTENT_DIR . '/recent-facebook-posts.cache';
 		$opts = $this->get_options();
 
 		// check if cache file exists 
@@ -130,6 +130,8 @@ class RFB {
 			if($p['type'] == 'status' && (!isset($p['message']) || empty($p['message']))) { continue; }
 			if($p['type'] == 'status' && $p['status_type'] == 'approved_friend') { continue; }
 			
+			//var_dump($p); echo '<br /><br />';
+
 			//split user and post ID (userID_postID)
 			$idArray = explode("_", $p['id']);
 			
@@ -189,16 +191,11 @@ class RFB {
 		}
 		
 		$data = json_encode($data);
-		$cache_dir = dirname(__FILE__) . '/../cache/';
-		$cache_file = dirname(__FILE__) . '/../cache/posts.cache';
+		$cache_dir = WP_CONTENT_DIR . '/';
+		$cache_file = WP_CONTENT_DIR . '/recent-facebook-posts.cache';
 		
-		// create cache directory if not exists
-		if(!file_exists($cache_dir)) {
-			@mkdir($cache_dir, 0777);
-		}
-
 		// abandon if cache folder is not writable
-		if(!is_writable(dirname(__FILE__) . '/../cache/')) {
+		if(!is_writable(WP_CONTENT_DIR)) {
 			return false;
 		}
 

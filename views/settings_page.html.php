@@ -56,17 +56,17 @@
 				<table class="form-table">
 					<tbody>
 						<tr valign="top">
-						    <th scope="row"><label for="rfb_app_id" <?php if(empty($opts['app_id'])) echo 'class="error"'; ?>>App ID</label></th>
+						    <th scope="row"><label for="rfb_app_id" <?php if(empty($opts['app_id'])) echo 'class="error"'; ?>>Facebook App ID</label></th>
 						    <td><input type="text" size="50" id="rfb_app_id" name="rfb_settings[app_id]" value="<?php echo $opts['app_id']; ?>" /></td>
 						</tr>
 
 						<tr valign="top">
-						    <th scope="row"><label for="rfb_app_secret" <?php if(empty($opts['app_secret'])) echo 'class="error"'; ?>>App Secret</label></th>
+						    <th scope="row"><label for="rfb_app_secret" <?php if(empty($opts['app_secret'])) echo 'class="error"'; ?>>Facebook App Secret</label></th>
 						    <td><input type="text" size="50" id="rfb_app_secret" name="rfb_settings[app_secret]" value="<?php echo $opts['app_secret']; ?>" /></td>
 						</tr>
 
 						<tr valign="top">
-						    <th scope="row"><label for="rfb_fb_id" <?php if(empty($opts['fb_id'])) echo 'class="error"'; ?>>Facebook numeric ID <small><a target="_blank" href="http://findmyfacebookid.com/">(?)</a></small></label></th>
+						    <th scope="row"><label for="rfb_fb_id" <?php if(empty($opts['fb_id'])) echo 'class="error"'; ?>>Facebook page ID <small><a target="_blank" href="http://findmyfacebookid.com/">(use this)</a></small></label></th>
 						    <td><input type="text" size="50" id="rfb_fb_id" name="rfb_settings[fb_id]" value="<?php echo $opts['fb_id']; ?>" /></td>
 						</tr>
 

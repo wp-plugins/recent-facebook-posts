@@ -4,12 +4,10 @@ class RFB_Admin {
 
 	private $RFB;
 	private $options;
-	private $FB;
 	
 	public function __construct($RFB) {
 
 		$this->RFB = $RFB;
-		$this->FB = $RFB->getFBApi();
 
 		add_action('admin_init', array($this, 'register_settings'));
 		add_action('admin_menu', array($this, 'build_menu'));
@@ -44,8 +42,21 @@ class RFB_Admin {
 			if(isset($_GET['login_to_fb'])) {
 				$fb = $this->getFB();
 				$loginUrl = $fb->getLoginUrl(array('scope' => array('read_stream'), 'redirect_uri' => get_admin_url(null, 'admin.php?page=rfb-settings&logged_in')));
-				header("Location: {$loginUrl}");
-				exit;
+				
+				// check if headers have beent sent, otherwise redirect via JS
+				if(!headers_sent()) {
+					header("Location: {$loginUrl}");
+					exit;
+				} else {
+					?>
+						<script type="text/javascript">
+							window.location.href = "<?php echo $loginUrl; ?>";
+						</script>
+						<noscript>
+							<meta http-equiv="refresh" content="0;url=<?php echo $loginUrl; ?>" />
+						</noscript>
+					<?php
+				}
 			}
 		}
 	}
@@ -60,7 +71,6 @@ class RFB_Admin {
 
 	public function load_css() {
 		wp_enqueue_style( 'rfb_admin_css', plugins_url('recent-facebook-posts/css/admin.css') );
-
 		wp_enqueue_script( 'rfb_admin_js', plugins_url('recent-facebook-posts/js/admin.js'), array('jquery'), null, true);
 	}
 
@@ -91,7 +101,7 @@ class RFB_Admin {
 		elseif(empty($opts['app_id'])) { $errorMessage = "This plugin needs a valid Application ID to work. Please fill it in below."; }
 		elseif(empty($opts['app_secret'])) { $errorMessage = "This plugin needs a valid Application Secret to work. Please fill it in below."; }
 		elseif(!$connected) { 
-			$errorMessage = "The plugin is not connected to Facebook. Please <a href=\"". admin_url('admin.php?page=rfb-settings&login_to_fb') ."\">log in</a>."; 
+			$errorMessage = "The plugin is not connected to Facebook. Please <a href=\"". admin_url('admin.php?page=rfb-settings&login_to_fb') ."\">connect</a>."; 
 		} else {
 			// everything is fine!
 			$accessToken = $fb->getAccessToken();
@@ -103,16 +113,15 @@ class RFB_Admin {
 			} elseif($this->getRFB()->cache_renewed) { $notice = "<strong>Cache renewed!</strong> You succesfully renewed the cache."; }
 		}
 
-		// check if cache directory is writable
-		$cacheDir = dirname(__FILE__) . '/../cache/';
-		$cacheFile = dirname(__FILE__) . '/../cache/posts.cache';
 
-		if(!file_exists($cacheDir)) {
-			$cacheError = 'The cache directory (<i>'. ABSPATH . 'wp-content/plugins/recent-facebook-posts/cache/</i>) does not exist.';
-		} elseif(!is_writable($cacheDir)) {
-			$cacheError = 'The cache directory (<i>'. ABSPATH . 'wp-content/plugins/recent-facebook-posts/cache/</i>) is not writable.';
+		// check if cache directory is writable
+		$cacheDir = WP_CONTENT_DIR;
+		$cacheFile = WP_CONTENT_DIR . '/recent-facebook-posts.cache';
+
+		if(!is_writable($cacheDir)) {
+			$cacheError = 'The wp-content folder (<i>'. WP_CONTENT_DIR .'</i>) is not writable. Please set the folder permissions to 755.';
 		} elseif(file_exists($cacheFile) && !is_writable($cacheFile)) {
-			$cacheError = 'The cache file (<i>'. ABSPATH . 'wp-content/plugins/recent-facebook-posts/cache/posts.cache</i>) exists but is not writable.';
+			$cacheError = 'The cache file (<i>'. $cacheFile .'</i>) exists but is not writable. Please set the file permissions to 755.';
 		}
 		
 		require dirname(__FILE__) . '/../views/settings_page.html.php';
@@ -125,7 +134,7 @@ class RFB_Admin {
 
 	private function getFB()
 	{
-		return $this->FB;
+		return $this->getRFB()->getFBApi();
 	}
 
 	public function show_admin_notice()
