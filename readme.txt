@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.1
 Tested up to: 3.6
-Stable tag: 1.4
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +82,14 @@ Use `<?php echo do_shortcode('[recent-facebook-posts number=10 likes=1 comments=
 2. The green circled fields are the fields where you'll need to provide your Facebook app id and app secret (as shown in screenshot 1).
 
 == Changelog ==
+
+= 1.5 =
+* Improved: huge performance improvement for retrieving posts from Facebook
+* Improved: some code refactoring
+* Improved: cache now automatically invalidated when updating settings
+* Improved: settings are now sanitized before saving
+* Fixed: like and comment count no longer capped at 25
+* Changed links to show your appreciation for the plugin.
 
 = 1.4 =
 * Changed cache folder to the WP Content folder (outside of the plugin to prevent cache problems after updating the plugin).

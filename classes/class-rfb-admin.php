@@ -8,6 +8,7 @@ class RFB_Admin {
 	public function __construct($RFB) {
 
 		$this->RFB = $RFB;
+		global $pagenow;
 
 		add_action('admin_init', array($this, 'register_settings'));
 		add_action('admin_menu', array($this, 'build_menu'));
@@ -27,15 +28,14 @@ class RFB_Admin {
 		}
 
 		// handle requests early
-		if(isset($_GET['page']) && $_GET['page'] == 'rfb-settings') {
-
-			$this->options = $RFB->get_options();
+		if(isset($_GET['page']) && $_GET['page'] == 'rfb-settings' ) {
 
 			add_action('admin_enqueue_scripts', array($this, 'load_css') );
 
 			// renew cache file
 			if(isset($_POST['renew_cache'])) {
-				add_action('init', array($this->RFB, 'renew_cache_file'));
+				add_action('init', array($this->RFB, 'invalidate_cache'));
+				add_action('init', array($this->RFB, 'get_posts'));
 			}
 
 			// login to facebook
@@ -61,8 +61,30 @@ class RFB_Admin {
 		}
 	}
 
+	public function getOptions()
+	{
+		return $this->getRFB()->get_options();
+	}
+
 	public function register_settings() {
-		register_setting('rfb_settings_group', 'rfb_settings');
+		register_setting('rfb_settings_group', 'rfb_settings', array($this, 'sanitize_settings'));
+	}
+
+	public function sanitize_settings($opts)
+	{
+		$oldOptions = $this->getOptions();
+
+		// check to see if page ID has changed
+		// if so, invalidate cache
+		if($oldOptions['fb_id'] != $opts['fb_id'] || $opts['img_size'] != $oldOptions['img_size'] || $opts['app_id'] != $oldOptions['app_id'] || $opts['app_secret'] != $oldOptions['app_secret']) {
+			$this->getRFB()->invalidate_cache();
+			add_settings_error('rfb_settings', 'cache_invalidated', "Some settings have been changed which invalidated Recent Facebook Posts' cache file. The cache will automatically be updated or you can do it manually." . '<form action="'.admin_url('admin.php?page=rfb-settings') . '" method="post"><input type="hidden" name="renew_cache" value="1" /><input type="submit" class="button-primary" value="Renew cache file" /></form>', 'updated');
+		}
+
+		$opts['cache_time'] = (int) $opts['cache_time'];
+		$opts['img_height'] = (int) $opts['img_height'];
+		$opts['img_width'] = (int) $opts['img_width'];
+		return $opts;
 	}
 
 	public function build_menu() {
@@ -76,7 +98,7 @@ class RFB_Admin {
 
 	public function  settings_page () {
 
-		$opts = $this->options;
+		$opts = $this->getOptions();
 		$curl = extension_loaded('curl');
 		$connected = false;
 

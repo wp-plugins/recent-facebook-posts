@@ -159,23 +159,25 @@
 				<img alt="" border="0" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1">
 			</form>
 
-			<p>Or you can: </p>
+			<p>Alternatively, you can: </p>
             <ul>
-                <li><a href="http://wordpress.org/extend/plugins/recent-facebook-posts/">Give a 5&#9733; rating on WordPress.org</a></li>
-                <li><a href="http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/">Blog about it and link to the plugin page</a></li>
-                <li style="vertical-align:bottom;"><a href="http://twitter.com/share" class="twitter-share-button" data-url="http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/" data-text="Showing my appreciation to @DannyvanKooten for his #WordPress plugin: Recent Facebook Posts" data-count="none">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></li>
+                <li><a href="http://wordpress.org/support/view/plugin-reviews/recent-facebook-posts?rate=5#postform" target="_blank">Give a 5&#9733; rating on WordPress.org</a></li>
+                <li><a href="http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/" target="_blank">Blog about it and link to the plugin page</a></li>
+                <li><a href="http://twitter.com/?status=I%20show%20my%20recent%20facebook%20posts%20on%20my%20%23wordpress%20site%20using%20the%20Recent%20Facebook%20Posts%20plugin%20-%20check%20it%20out!%20http%3A%2F%2Fwordpress.org%2Fplugins%2Frecent-facebook-posts%2F" target="_blank">Tweet about Recent Facebook Posts</a></li>
             </ul>
         </div>
 
         <div class="box">
         	<h3>Looking for support?</h3>
-        	<p>Having trouble configuring Recent Facebook Posts? Experiencing an error or just having a great idea on how to further
-        		improve the plugin? Please post your question / idea / problem in the <a href="http://wordpress.org/support/plugin/recent-facebook-posts">support forums</a> on WordPress.org.</p>
+        	<p>Having trouble? Please use the <a href="http://wordpress.org/support/plugin/recent-facebook-posts">support forums</a> on WordPress.org.</p>
         </div>
 
         <div class="box">
-        	<h3>Looking for more WordPress goodness?</h3>
-        	<p>Have a look around on my personal website, <a href="http://dannyvankooten.com/">DannyvanKooten.com</a>.</p>
+        	<h3>About the developer</h3>
+        	<p>I am <a href="http://dannyvankooten.com/">Danny</a>, a young Dutch nerd.</p>
+        	<p>Besides this one I developed a few other <a href="http://dannyvankooten.com/wordpress-plugins/">WordPress plugins</a>. Have a look, you might like them.</p>
+        	<p>I enjoy developing plugins for WordPress but I'd like to remind you that I don't get paid for it while I spend <strong>a lot</strong> of my free time developing, chasing bugs, offering support, etcetera. That's why <a href="http://dannyvankooten.com/donate/">donations</a> are very much appreciated!</p>
+        	<p>Thank you for using this plugin. Enjoy!</p>
         </div>
 	</div>
 </div>

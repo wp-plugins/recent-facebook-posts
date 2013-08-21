@@ -37,7 +37,7 @@ class RFB {
 
 	public function load_css() {
 		wp_register_style('rfb_css', plugins_url('recent-facebook-posts/css/rfb.css') );
-        wp_enqueue_style('rfb_css' );
+		wp_enqueue_style('rfb_css' );
 	}
 
 	public function get_options() {
@@ -54,7 +54,7 @@ class RFB {
 				'img_size' => 'thumbnail',
 				'img_width' => 100,
 				'img_height' => 100
-			);
+				);
 
 			$this->options = array_merge($defaults, (array) get_option('rfb_settings'));
 		}
@@ -74,67 +74,58 @@ class RFB {
 			$opts = $this->get_options();
 			
 			self::$fb_instance = new Facebook(array(
-		   	 	'appId'  => trim($opts['app_id']),
-		    	'secret' => trim($opts['app_secret']),
-			));
+				'appId'  => trim($opts['app_id']),
+				'secret' => trim($opts['app_secret']),
+				));
 		}
 
 		return self::$fb_instance;
 	}
 
 	public function get_posts() {
-		$cache_file = WP_CONTENT_DIR . '/recent-facebook-posts.cache';
+		
 		$opts = $this->get_options();
 
-		// check if cache file exists 
-		// check if cache file exists for longer then the given expiration time
-		if(!file_exists($cache_file) || ($this->get_time_of_last_file_change($cache_file) < (time() - $opts['cache_time']))) {
-			$this->renew_cache_file();
-
-			if(!file_exists($cache_file)) return array();
+		// try to get posts from cache
+		if(($posts = $this->get_cached_posts())) {
+			return $posts;
 		}
 
-		$posts = json_decode(file_get_contents($cache_file), true);
-		return $posts;
-	}
-
-	public function renew_cache_file() {
-		$opts = $this->get_options();
-		if(empty($opts['app_id']) || empty($opts['fb_id'])) return false;
+		if(empty($opts['app_id']) || empty($opts['fb_id'])) { return array(); }
 
 		$accessToken = get_option('rfb_access_token'); 
 
 		// if no access token has been stored, we can't make the API call.
-		if(!$accessToken) { return false; }
+		if(!$accessToken) { return array(); }
 
 		$fb = $this->getFBApi();
 		$fb->setAccessToken($accessToken);
 
 		// check if Facebook API has an identified user
 		// if not, API is not connected
-		if(!$fb->getUser()) { return false; }
+		if(!$fb->getUser()) { return array(); }
 
-		$apiResult = $fb->api(trim($opts['fb_id']) . '/posts');
+		$apiResult = $fb->api(trim($opts['fb_id']) . '/posts?fields=id,picture,type,from,message,status_type,object_id,link,created_time,comments.limit(1).summary(true),likes.limit(1).summary(true)');
 		
-		if(!$apiResult or !is_array($apiResult) or !isset($apiResult['data']) or !is_array($apiResult['data'])) { return false; }
+		if(!$apiResult or !is_array($apiResult) or !isset($apiResult['data']) or !is_array($apiResult['data'])) { return array(); }
 
-		$data = array();
+		$posts = array();
 		foreach($apiResult['data'] as $p) {
 
 			// skip this "post" if it is not of one of the following types
 			if(!in_array($p['type'], array('status', 'photo', 'video', 'link'))) { 
 				continue;
 			}
-			
+
 			// skip empty status updates
 			if($p['type'] == 'status' && (!isset($p['message']) || empty($p['message']))) { continue; }
 			if($p['type'] == 'status' && $p['status_type'] == 'approved_friend') { continue; }
-			
+
 			//var_dump($p); echo '<br /><br />';
 
 			//split user and post ID (userID_postID)
 			$idArray = explode("_", $p['id']);
-			
+
 			$post = array();
 			$post['type'] = $p['type'];
 			$post['author'] = $p['from'];
@@ -162,22 +153,14 @@ class RFB {
 			}
 
 			// calculate post like and comment counts
-			if(isset($p['likes'])) {
-				if(isset($p['likes']['count'])) {
-					$like_count = $p['likes']['count'];
-				} elseif(isset($p['likes']['data']) && is_array($p['likes']['data'])) {
-					$like_count = count($p['likes']['data']);
-				}
+			if(isset($p['likes']['summary']['total_count'])) {
+				$like_count = $p['likes']['summary']['total_count'];
 			} else {
 				$like_count = 0;
 			}
 
-			if(isset($p['comments'])) {
-				if(isset($p['comments']['count'])) {
-					$comment_count = $p['comments']['count'];
-				} elseif(isset($p['comments']['data']) && is_array($p['comments']['data'])) {
-					$comment_count = count($p['comments']['data']);
-				}
+			if(isset($p['comments']['summary']['total_count'])) {
+				$comment_count = $p['comments']['summary']['total_count'];
 			} else {
 				$comment_count = 0;
 			}
@@ -186,11 +169,41 @@ class RFB {
 			$post['like_count'] = $like_count;
 			$post['comment_count'] = $comment_count;
 			$post['link'] = "http://www.facebook.com/".$opts['fb_id']."/posts/".$idArray[1];
-			$data[] = $post;
+			$posts[] = $post;
 
 		}
+
+		// store results in cache for later use
+		$this->set_cached_posts($posts);
 		
-		$data = json_encode($data);
+		return $posts;
+	}
+
+	public function invalidate_cache()
+	{
+		$opts = $this->get_options();
+		$cache_file = WP_CONTENT_DIR . '/recent-facebook-posts.cache';
+		$time = time() - ($opts['cache_time'] * 2);
+		return touch($cache_file, $time);
+	}
+
+	private function get_cached_posts()
+	{
+		$opts = $this->get_options();
+		$cache_file = WP_CONTENT_DIR . '/recent-facebook-posts.cache';
+		if(!file_exists($cache_file) || ($this->get_time_of_last_file_change($cache_file) < (time() - $opts['cache_time']))) {
+			return false;
+		}
+
+		// by now, cache file exists.
+		$posts = json_decode(file_get_contents($cache_file), true);
+		return $posts;
+		
+	}
+
+	private function set_cached_posts($posts)
+	{
+		$data = json_encode($posts);
 		$cache_dir = WP_CONTENT_DIR . '/';
 		$cache_file = WP_CONTENT_DIR . '/recent-facebook-posts.cache';
 		
@@ -201,18 +214,17 @@ class RFB {
 
 		file_put_contents($cache_file, $data);
 		$this->cache_renewed = true;
-
 		return true;
 	}
 
 	public function shortcode_output($atts)
 	{
-		 extract(shortcode_atts(array(
-	      'number' => '5',
-	      'likes' => 1,
-	      'comments' => 1,
-	      'excerpt_length' => 140
-    	 ), $atts));
+		extract(shortcode_atts(array(
+			'number' => '5',
+			'likes' => 1,
+			'comments' => 1,
+			'excerpt_length' => 140
+			), $atts));
 
 		$opts = $this->get_options();
 		$posts = $this->get_posts();
@@ -231,8 +243,8 @@ class RFB {
 					$shortened = true;
 				}
 			}
-		
-		
+
+
 			$output .= '<div class="rfb-post">';
 			$output .= '<p class="rfb_text">'. nl2br(make_clickable($content));
 			if ($shortened) $output .= '..';
@@ -254,7 +266,7 @@ class RFB {
 			if($likes || $comments) { $output .= ' · '; }
 			$output .= '<span>' . $this->time_ago($post['timestamp']) . '</span></span>';
 			$output .= '</a></p></div>' ;
-		
+
 		} 
 
 		if(empty($posts)) {
@@ -271,44 +283,44 @@ class RFB {
 	public function time_ago($timestamp) {
 		$diff = time() - (int) $timestamp;
 
-	    if ($diff == 0) 
-	         return 'just now';
+		if ($diff == 0) 
+			return 'just now';
 
-	    $intervals = array
-	    (
-	        1                   => array('year',    31556926),
-	        $diff < 31556926    => array('month',   2628000),
-	        $diff < 2629744     => array('week',    604800),
-	        $diff < 604800      => array('day',     86400),
-	        $diff < 86400       => array('hour',    3600),
-	        $diff < 3600        => array('minute',  60),
-	        $diff < 60          => array('second',  1)
-	    );
+		$intervals = array
+		(
+			1                   => array('year',    31556926),
+			$diff < 31556926    => array('month',   2628000),
+			$diff < 2629744     => array('week',    604800),
+			$diff < 604800      => array('day',     86400),
+			$diff < 86400       => array('hour',    3600),
+			$diff < 3600        => array('minute',  60),
+			$diff < 60          => array('second',  1)
+			);
 
-	    $value = floor($diff/$intervals[1][1]);
-	    return $value.' '.$intervals[1][0].($value > 1 ? 's' : '').' ago';
+		$value = floor($diff/$intervals[1][1]);
+		return $value.' '.$intervals[1][0].($value > 1 ? 's' : '').' ago';
 	}	
 
 	private function get_time_of_last_file_change($filePath) 
 	{ 
 		clearstatcache();
-	    $time = filemtime($filePath); 
+		$time = filemtime($filePath); 
 
-	    $isDST = (date('I', $time) == 1); 
-	    $systemDST = (date('I') == 1); 
+		$isDST = (date('I', $time) == 1); 
+		$systemDST = (date('I') == 1); 
 
-	    $adjustment = 0; 
+		$adjustment = 0; 
 
-	    if($isDST == false && $systemDST == true) 
-	        $adjustment = 3600; 
-	    
-	    else if($isDST == true && $systemDST == false) 
-	        $adjustment = -3600; 
+		if($isDST == false && $systemDST == true) 
+			$adjustment = 3600; 
 
-	    else 
-	        $adjustment = 0; 
+		else if($isDST == true && $systemDST == false) 
+			$adjustment = -3600; 
 
-	    return ($time + $adjustment); 
+		else 
+			$adjustment = 0; 
+
+		return ($time + $adjustment); 
 	} 
 	
 }
