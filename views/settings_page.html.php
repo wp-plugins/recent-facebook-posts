@@ -103,7 +103,7 @@
 						</tr>
 
 						<tr valign="top">
-						    <th scope="row"><label for="rfb_link_new_window">Open link in new window?</label></th>
+						    <th scope="row"><label for="rfb_link_new_window">Open links in new window?</label></th>
 						    <td><input type="checkbox" id="rfb_link_new_window" name="rfb_settings[link_new_window]" value="1" <?php if(isset($opts['link_new_window']) && $opts['link_new_window']) { ?>checked="1" <?php } ?>/></td>
 						</tr>
 
@@ -161,7 +161,7 @@
 
 			<p>Alternatively, you can: </p>
             <ul>
-                <li><a href="http://wordpress.org/support/view/plugin-reviews/recent-facebook-posts?rate=5#postform" target="_blank">Give a 5&#9733; rating on WordPress.org</a></li>
+                <li><a href="http://wordpress.org/support/view/plugin-reviews/recent-facebook-posts?rate=5#postform" target="_blank">Give a &#9733;&#9733;&#9733;&#9733;&#9733; rating on WordPress.org</a></li>
                 <li><a href="http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/" target="_blank">Blog about it and link to the plugin page</a></li>
                 <li><a href="http://twitter.com/?status=I%20show%20my%20recent%20facebook%20posts%20on%20my%20%23wordpress%20site%20using%20the%20Recent%20Facebook%20Posts%20plugin%20-%20check%20it%20out!%20http%3A%2F%2Fwordpress.org%2Fplugins%2Frecent-facebook-posts%2F" target="_blank">Tweet about Recent Facebook Posts</a></li>
             </ul>

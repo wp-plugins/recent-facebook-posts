@@ -1,0 +1,21 @@
+.rfb_posts a.rfb_link{ display:block; clear:both; float:none; font-weight:normal; background:none; border:0; padding:1px 0; margin:0; cursor:pointer; text-decoration:none; font-size:11px; line-height:15px; height:15px; }
+.rfb_posts a.rfb_link:hover{ text-decoration:none; }
+.rfb_posts .rfb_text a{ word-break:break-all; }
+div.widget .rfb_posts .rfb_image a, .rfb_posts .rfb_image a{ border:1px solid #ccc; display:inline-block; margin:0; padding:3px; line-height:0; }
+div.widget .rfb_posts .rfb_image a:hover, .rfb_posts .rfb_image a:hover{ border-color:#3b5998; }
+div.widget .rfb_posts .rfb_image img, .rfb_posts .rfb_image img{ max-width:100%; margin:0; padding:0; }
+
+.rfb_posts span.like_count, .rfb_posts span.comment_count{ margin-right:3px; background:url("../img/fb-sprite.png") no-repeat 0 0;  padding-left:18px; color: #3B5998 !important; display:inline-block; }
+.rfb_posts span.like_count_and_comment_count:hover{ background-color: #ECEFF5; }
+.rfb_posts span.like_count{ background-position:0 -52px; }
+.rfb_posts span.comment_count{ background-position:0 -18px; }
+.rfb_posts span.timestamp{ color:#999; }
+.rfb_posts span.timestamp:hover span{ text-decoration:underline; }
+.rfb_posts span.like_count span{ display:none; }
+.rfb_posts span.comment_count span{ display:none; }
+
+/* shortcode */
+.rfb_posts.shortcode div.rfb-post{ border-bottom:1px solid #E9E9E9; padding-top:15px; margin-bottom:15px; margin-top:0; padding-bottom:0;  }
+
+/* widget */
+.widget .rfb_posts { }

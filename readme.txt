@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.1
 Tested up to: 3.6
-Stable tag: 1.5
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,16 +53,16 @@ If you're still in doubt, have a look at the [screenshots](http://wordpress.org/
 With this plugin you can show a list of your X most recent Facebook status updates in pages / posts or widget areas. Have a look at my [own WordPress website](http://dannyvankooten.com/) for an example, I have a widget with my latest Facebook update in my footer.
 
 = How to configure this plugin? =
-You need to create a Facebook application for this plugin to work. Have a look at the [installation instructions](http://wordpress.org/plugins/recent-facebook-posts/installation/).
+You need to create a Facebook application for this plugin to work. Have a **close** look at the [installation instructions](http://wordpress.org/plugins/recent-facebook-posts/installation/).
 
 = Why do I need to create a Facebook application? =
 Facebook doesn't allow their content publicly to anyone, they want to know "who's asking". That's why you need to create a Facebook application. This application does not have to be publicly visible though.
 
 = Do you have a working demo I can take a look at? =
-Sure, I use the plugin on my own [WordPress website](http://dannyvankooten.com/).
+Sure, I use the plugin on my own [WordPress website](http://dannyvankooten.com/), in the footer widget.
 
 = Facebook gives me this error when renewing the access token: The specified URL is not owned by the application =
-You are running the plugin on a different (sub)domain then specified in your FB app configuration. Fix it by correctly setting your "Site URL" or by adding an App Domain if you are running the plugin on a subdomain.
+You are running the plugin on a different (sub)domain then specified in your FB app configuration. Fix it by correctly setting your "Site URL" or by adding an App Domain if you are running the plugin on a subdomain. **Pay close attention to subdomains like www and trailing slashes, it has to be an exact match.**
 
 = Where to add custom CSS =
 In my opinion, appearance should be handled by your theme and not by plugins. This is why you can just add custom CSS rules to your theme's stylesheet. This file is usually located here: `/wp-content/themes/your-theme-name/style.css`.
@@ -71,10 +71,20 @@ In my opinion, appearance should be handled by your theme and not by plugins. Th
 No, sorry. Recent Facebook Posts works with public pages and to a certain extent with personal profiles.
 
 = Can I show a list of recent facebook updates in my posts or pages? =
-Yes, you can use the `[recent-facebook-posts]` shortcode. Optionally, add the following attributes: `likes` (show like count?), `comments` (show comment count?), `excerpt_length` (number of characters to show), `number` (number of posts to show). Example: `[recent-facebook-posts number=10 likes=1 comments=1 excerpt_length=250]`
+Yes, you can use the `[recent-facebook-posts]` shortcode. Optionally, add the following attributes.
+
+`
+likes = 1 // show like count, 1 = yes, 0 = no
+comments = 1 // show comment count, 1 = yes, 0 = no
+excerpt_length = 140 // the number of characters to show from each post
+number = 5 // number of posts to show
+`
+
+*Shortcode example*
+`[recent-facebook-posts number=10 likes=1 comments=1 excerpt_length=250]`
 
 = What about usage of your plugin in template files? =
-Use `<?php echo do_shortcode('[recent-facebook-posts number=10 likes=1 comments=1 excerpt_length=250]'); ?>` in your theme files.
+Use `<?php recent-facebook-posts(array('likes' => 1, 'excerpt_length => 140')); ?>` in your theme files. The parameter is optional, it can be an array of the same values available for the shortcode.
 
 == Screenshots ==
 
@@ -82,6 +92,9 @@ Use `<?php echo do_shortcode('[recent-facebook-posts number=10 likes=1 comments=
 2. The green circled fields are the fields where you'll need to provide your Facebook app id and app secret (as shown in screenshot 1).
 
 == Changelog ==
+= 1.5.1 =
+* Improved: a lot of refactoring, code clean-up, etc.
+* Improved: "open link in new window" option now applies to ALL generated links
 
 = 1.5 =
 * Improved: huge performance improvement for retrieving posts from Facebook
