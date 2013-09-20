@@ -22,7 +22,7 @@ This plugin adds a widget and a shortcode `[recent-facebook-posts]` to your Word
 
 **Demo**
 
-[Recent FB Posts demo](http://wpdemo.dannyvankooten.com/), the widget is located in the right sidebar. As you can see, you can make the widget blend in with your theme perfectly.
+There is a demo on [http://dannyvankooten.com/], I use the plugin to show my latest Facebook post in the footer.
 
 **More info:**
 
