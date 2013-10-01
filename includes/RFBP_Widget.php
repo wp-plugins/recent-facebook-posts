@@ -120,7 +120,7 @@ class RFBP_Widget extends WP_Widget {
 					if($opts['img_size'] != 'dont_show' && isset($post['image']) && $post['image']) { 
 
 						if(isset($post['type']) && $post['type'] == 'photo') {
-							$img_atts = "src=\"{$post['image']}\" style=\"max-height: {$opts['img_height']}px;\"";
+							$img_atts = "src=\"{$post['image']}\" style=\"width:auto; max-height: {$opts['img_height']}px;\"";
 						} else {
 							$img_atts = "src=\"{$post['image']}\" style=\"\"";
 						}
