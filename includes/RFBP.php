@@ -16,7 +16,7 @@ class RFBP {
 		self::$instance = $this;
 
 		// both frontend and backend
-		include 'RFBP_Widget.php';
+		include_once RFBP_PLUGIN_DIR . 'includes/RFBP_Widget.php';
 		add_action( 'widgets_init', array($this, 'register_widget') );
 
 		// finish if this is an AJAX request
@@ -30,8 +30,8 @@ class RFBP {
 		// only on frontend
 		if(!is_admin()) {
 
-			include 'helper-functions.php';
-			include 'template-functions.php';
+			include_once RFBP_PLUGIN_DIR . 'includes/helper-functions.php';
+			include_once RFBP_PLUGIN_DIR . 'includes/template-functions.php';
 
 			add_shortcode('recent-facebook-posts', array($this, 'shortcode_output'));
 			
@@ -41,7 +41,7 @@ class RFBP {
 
 		} else {
 			// only in admin panel
-			require 'RFBP_Admin.php';
+			include_once RFBP_PLUGIN_DIR . 'includes/RFBP_Admin.php';
 			new RFBP_Admin();
 		}
 	}
@@ -91,7 +91,7 @@ class RFBP {
 		if(!self::$api) {
 
 			if(!class_exists("Facebook")) {
-				require_once 'facebook-php-sdk/facebook.php';
+				require_once RFBP_PLUGIN_DIR . 'includes/facebook-php-sdk/facebook.php';
 			}
 
 			$opts = RFBP::instance()->get_settings();

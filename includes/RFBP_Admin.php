@@ -144,7 +144,7 @@ class RFBP_Admin {
 			$cacheError = 'The cache file (<i>'. $cacheFile .'</i>) exists but is not writable. Please set the file permissions to 755.';
 		}
 		
-		require dirname(__FILE__) . '/../views/settings_page.html.php';
+		include_once RFBP_PLUGIN_DIR . 'includes/views/settings_page.html.php';
 	}
 
 	public function show_admin_notice()
