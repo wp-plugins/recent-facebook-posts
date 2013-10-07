@@ -75,7 +75,7 @@ class RFBP_Admin {
 		// if so, invalidate cache
 		if($oldOptions['fb_id'] != $opts['fb_id'] || $opts['img_size'] != $oldOptions['img_size'] || $opts['app_id'] != $oldOptions['app_id'] || $opts['app_secret'] != $oldOptions['app_secret']) {
 			RFBP::instance()->invalidate_cache();
-			add_settings_error('rfb_settings', 'cache_invalidated', "Some settings have been changed which invalidated Recent Facebook Posts' cache file. The cache will automatically be updated or you can do it manually." . '<form action="'.admin_url('options.php?page=rfb-settings') . '" method="post"><input type="hidden" name="renew_cache" value="1" /><input type="submit" class="button-primary" value="Renew cache file" /></form>', 'updated');
+			add_settings_error('rfb_settings', 'cache_invalidated', "Some settings have been changed which invalidated Recent Facebook Posts' cache file. The cache will automatically be updated or you can do it manually." . '<form action="'.admin_url('options-general.php?page=rfb-settings') . '" method="post"><input type="hidden" name="renew_cache" value="1" /><input type="submit" class="button-primary" value="Renew cache file" /></form>', 'updated');
 		}
 
 		$opts['cache_time'] = (int) $opts['cache_time'];
