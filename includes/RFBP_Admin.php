@@ -14,23 +14,23 @@ class RFBP_Admin {
 		// check expiry date of access token
 		$expiryDate = get_option('rfb_access_token_expiry_date');
 		if($expiryDate && (date('Ymd', strtotime("+14 days")) >= $expiryDate)) {
-			// access token expires in less than 7 days
-			// add admin notice to request new access token
+			// access token expires in less than 14 days, show admin notice
 			add_action( 'admin_notices', array($this, 'show_admin_notice') );
 		}
 
 		// handle requests early, but only on rfb settings page
 		if(isset($_GET['page']) && $_GET['page'] == 'rfb-settings' ) {
 
+			// load css
 			add_action('admin_enqueue_scripts', array($this, 'load_css') );
 
-			// renew cache file
+			// maybe renew cache file
 			if(isset($_POST['renew_cache'])) {
 				add_action('init', array(RFBP::instance(), 'invalidate_cache'));
 				add_action('init', array(RFBP::instance(), 'get_posts'));
 			}
 
-			// login to facebook
+			// maybe to facebook
 			if(isset($_GET['login_to_fb'])) {
 				$this->redirect_to_facebook();
 			}
@@ -40,7 +40,7 @@ class RFBP_Admin {
 	private function redirect_to_facebook()
 	{
 		$fb = RFBP::api();
-		$loginUrl = $fb->getLoginUrl(array('scope' => array('read_stream'), 'redirect_uri' => get_admin_url(null, 'admin.php?page=rfb-settings&logged_in=1')));
+		$loginUrl = $fb->getLoginUrl(array('scope' => array('read_stream'), 'redirect_uri' => get_admin_url(null, 'options-general.php?page=rfb-settings&logged_in=1')));
 
 				// check if headers have beent sent, otherwise redirect via JS
 		if(!headers_sent()) {
@@ -75,7 +75,7 @@ class RFBP_Admin {
 		// if so, invalidate cache
 		if($oldOptions['fb_id'] != $opts['fb_id'] || $opts['img_size'] != $oldOptions['img_size'] || $opts['app_id'] != $oldOptions['app_id'] || $opts['app_secret'] != $oldOptions['app_secret']) {
 			RFBP::instance()->invalidate_cache();
-			add_settings_error('rfb_settings', 'cache_invalidated', "Some settings have been changed which invalidated Recent Facebook Posts' cache file. The cache will automatically be updated or you can do it manually." . '<form action="'.admin_url('admin.php?page=rfb-settings') . '" method="post"><input type="hidden" name="renew_cache" value="1" /><input type="submit" class="button-primary" value="Renew cache file" /></form>', 'updated');
+			add_settings_error('rfb_settings', 'cache_invalidated', "Some settings have been changed which invalidated Recent Facebook Posts' cache file. The cache will automatically be updated or you can do it manually." . '<form action="'.admin_url('options.php?page=rfb-settings') . '" method="post"><input type="hidden" name="renew_cache" value="1" /><input type="submit" class="button-primary" value="Renew cache file" /></form>', 'updated');
 		}
 
 		$opts['cache_time'] = (int) $opts['cache_time'];
@@ -85,7 +85,7 @@ class RFBP_Admin {
 	}
 
 	public function build_menu() {
-		$page = add_menu_page('Recent Facebook Posts - Settings','Recent FB Posts','manage_options','rfb-settings', array($this, 'settings_page'), plugins_url('recent-facebook-posts/assets/img/icon.png'));
+		$page = add_options_page('Recent Facebook Posts - Settings','Recent Facebook Posts','manage_options','rfb-settings', array($this, 'settings_page'));
 	}
 
 	public function load_css() {
@@ -121,7 +121,7 @@ class RFBP_Admin {
 		elseif(empty($opts['app_id'])) { $errorMessage = "This plugin needs a valid Application ID to work. Please fill it in below."; }
 		elseif(empty($opts['app_secret'])) { $errorMessage = "This plugin needs a valid Application Secret to work. Please fill it in below."; }
 		elseif(!$connected) { 
-			$errorMessage = "The plugin is not connected to Facebook. Please <a href=\"". admin_url('admin.php?page=rfb-settings&login_to_fb') ."\">connect</a>."; 
+			$errorMessage = "The plugin is not connected to Facebook. Please <a class=\"button-primary\" href=\"". admin_url('options-general.php?page=rfb-settings&login_to_fb') ."\">connect</a>."; 
 		} else {
 			// everything is fine!
 			$accessToken = $fb->getAccessToken();
@@ -151,7 +151,7 @@ class RFBP_Admin {
 	{
 		?>
 		<div class="updated">
-			<p>Your Facebook access token for <a href="<?php echo admin_url('admin.php?page-rfb-settings'); ?>">Recent Facebook Posts</a> expires in less than 14 days. Please renew it. <a class="primary-button" href="<?php echo admin_url('admin.php?page=rfb-settings&login_to_fb'); ?>">Renew token</a></p>
+			<p>Your Facebook access token for <a href="<?php echo admin_url('options-general.php?page-rfb-settings'); ?>">Recent Facebook Posts</a> expires in less than 14 days. Please renew it. <a class="primary-button" href="<?php echo admin_url('options-general.php?page=rfb-settings&login_to_fb'); ?>">Renew token</a></p>
 		</div>
 		<?php
 	}

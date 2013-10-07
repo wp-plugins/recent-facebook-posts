@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.1
 Tested up to: 3.6
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,7 +93,9 @@ Use `<?php recent-facebook-posts(array('likes' => 1, 'excerpt_length => 140')); 
 
 == Changelog ==
 = 1.5.3 =
-* Improved loading of code files.
+* Improved: Code improvement
+* Improved: UI improvement, implemented some HTML5 fields
+* Improved: Moved options page back to sub-item of Settings.
 
 = 1.5.2 =
 * Fixed: max-width in older browsers

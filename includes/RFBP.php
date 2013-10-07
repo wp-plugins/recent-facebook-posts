@@ -22,10 +22,12 @@ class RFBP {
 		// finish if this is an AJAX request
 		if(defined("DOING_AJAX") && DOING_AJAX) { return; }
 
-		$opts = $this->get_settings();
+		// starts sessions, fixes app token problem
+		if(!session_id() && !headers_sent()) {
+			session_start();
+		}
 
-		// backend and frontend actions
-		add_action('init', array($this, 'start_session'));
+		$opts = $this->get_settings();
 
 		// only on frontend
 		if(!is_admin()) {
@@ -51,14 +53,6 @@ class RFBP {
 		register_widget( "RFBP_Widget" );
 	}
 
-	public function start_session() {
-
-		// starts sessions, fixes app token problem
-		if(!session_id() && !headers_sent()) {
-			session_start();
-		}
-	}
-
 	public function load_css() {
 		wp_register_style('recent-facebook-posts-css', plugins_url('recent-facebook-posts/assets/css/default.css') );
 		wp_enqueue_style('recent-facebook-posts-css' );
@@ -80,7 +74,13 @@ class RFBP {
 				'img_height' => 100
 				);
 
-			$this->options = array_merge($defaults, (array) get_option('rfb_settings'));
+			// get user options
+			$options = get_option('rfb_settings');
+
+			// options did not exist yet, add option to database
+			if(!$options) { add_option('rfb_settings', $defaults); }
+
+			$this->options = array_merge($defaults, (array) $options);
 		}
 
 		return $this->options;

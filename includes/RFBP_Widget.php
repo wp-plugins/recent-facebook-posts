@@ -27,7 +27,7 @@ class RFBP_Widget extends WP_Widget {
  		$rfb_options = RFBP::instance()->get_settings();
 
  		if(empty($rfb_options['app_id'])) { ?>
- 		<p style="color:red;">You'll need to <a href="<?php echo get_admin_url(null, 'options-general.php?page=rfb-settings'); ?>">configure Recent Facebook Posts</a> in order for it to work.</p>
+ 		<p style="color:red;">You'll need to <a href="<?php echo get_admin_url(null, 'options-general.php?page=rfb-settings'); ?>">configure Recent Facebook Posts</a> first before this will work.</p>
  		<?php } ?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
@@ -147,7 +147,7 @@ class RFBP_Widget extends WP_Widget {
 			if(empty($posts)) { ?>
 				<li>
 					<p>No recent Facebook status updates to show.</p>
-					<?php if(current_user_can('manage_options')) { ?><p><strong>Admins only notice:</strong> Did you <a href="<?php echo get_admin_url(null,'options-general.php?page=rfb-settings'); ?>">configure the plugin</a> properly?<?php } ?></p>
+					<?php if(current_user_can('manage_options')) { ?><p><strong>Admins only notice:</strong> Did you <a href="<?php echo admin_url('options-general.php?page=rfb-settings'); ?>">configure the plugin</a> properly?<?php } ?></p>
 				</li>
 
 			<?php } ?>
