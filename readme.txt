@@ -8,7 +8,7 @@ Stable tag: 1.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A faster, prettier and more customizable alternative to Facebooks Like Box. Lists most recent Facebook posts from public pages.
+Lists most recent Facebook posts from public pages. A faster, prettier and more customizable alternative to Facebooks Like Box. 
 
 == Description ==
 
@@ -18,17 +18,17 @@ This plugin adds a widget and a shortcode `[recent-facebook-posts]` to your Word
 
 * Highly customizable. By adding a few CSS rules to your theme's stylesheet you can make your Facebook updates blend in with your theme perfectly.
 * SEO friendly. Your most recent Facebook updates can be indexed by search engines because the plugin doesn't use JavaScript or iframes to show the posts.
-* Caching. The plugin uses caching to reduce round-trips to the Facebook servers.
+* Fast. The plugin caches your latest posts to reduce round-trips to Facebooks servers.
 
 **Demo**
 
-There is a demo on [http://dannyvankooten.com/], I use the plugin to show my latest Facebook post in the footer.
+There is a demo on [my own website](http://dannyvankooten.com/), I use the plugin to show my latest Facebook post in the footer.
 
-**More info:**
+**More information**
 
 * [Recent Facebook Posts for WordPress](http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/)
 * Check out more [WordPress plugins](http://dannyvankooten.com/wordpress-plugins/) by Danny van Kooten
-* You should follow [Danny on Twitter](http://twitter.com/DannyvanKooten) for lightning fast support and updates.
+* You should follow [@DannyvanKooten](http://twitter.com/DannyvanKooten) on Twitter.
 
 == Installation ==
 
@@ -59,7 +59,7 @@ You need to create a Facebook application for this plugin to work. Have a **clos
 Facebook doesn't allow their content publicly to anyone, they want to know "who's asking". That's why you need to create a Facebook application. This application does not have to be publicly visible though.
 
 = Do you have a working demo I can take a look at? =
-Sure, I use the plugin on my own [WordPress website](http://dannyvankooten.com/), in the footer widget.
+Sure, I use the plugin on my own [WordPress website](http://dannyvankooten.com/), in the middle footer widget.
 
 = Facebook gives me this error when renewing the access token: The specified URL is not owned by the application =
 You are running the plugin on a different (sub)domain then specified in your FB app configuration. Fix it by correctly setting your "Site URL" or by adding an App Domain if you are running the plugin on a subdomain. **Pay close attention to subdomains like www and trailing slashes, it has to be an exact match.**
