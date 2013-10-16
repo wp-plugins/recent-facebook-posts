@@ -35,7 +35,8 @@ class RFBP {
 			include_once RFBP_PLUGIN_DIR . 'includes/helper-functions.php';
 			include_once RFBP_PLUGIN_DIR . 'includes/template-functions.php';
 
-			add_shortcode('recent-facebook-posts', array($this, 'shortcode_output'));
+			add_shortcode('rfbp', array($this, 'output'));
+			add_shortcode('recent-facebook-posts', array($this, 'output'));
 			
 			if($opts['load_css']) {
 				add_action( 'wp_enqueue_scripts', array($this, 'load_css'));
@@ -54,7 +55,7 @@ class RFBP {
 	}
 
 	public function load_css() {
-		wp_register_style('recent-facebook-posts-css', plugins_url('recent-facebook-posts/assets/css/default.css') );
+		wp_register_style('recent-facebook-posts-css', plugins_url('recent-facebook-posts/assets/css/default.css'), array(), RFBP_VERSION );
 		wp_enqueue_style('recent-facebook-posts-css' );
 	}
 
@@ -65,13 +66,13 @@ class RFBP {
 				'app_id' => '',
 				'app_secret' => '',
 				'fb_id' => 'DannyvanKootenCOM',
-				'cache_time' => 1800,
-				'load_css' => 0,
+				'cache_time' => 7200,
+				'load_css' => 1,
 				'link_text' => 'Find us on Facebook',
 				'link_new_window' => 0,
-				'img_size' => 'thumbnail',
-				'img_width' => 100,
-				'img_height' => 100
+				'img_size' => 'normal',
+				'img_width' => '',
+				'img_height' => ''
 				);
 
 			// get user options
@@ -98,7 +99,7 @@ class RFBP {
 			self::$api = new Facebook(array(
 				'appId'  => trim($opts['app_id']),
 				'secret' => trim($opts['app_secret']),
-			));
+				));
 		}
 
 		return self::$api;
@@ -239,95 +240,108 @@ class RFBP {
 		return true;
 	}
 
-	public function shortcode_output($atts)
+	public function output($atts = array())
 	{
 		extract(shortcode_atts(array(
 			'number' => '5',
 			'likes' => 1,
 			'comments' => 1,
-			'excerpt_length' => 140
+			'excerpt_length' => 140,
+			'el' => 'div',
+			'origin' => 'shortcode',
+			'show_link' => false
 			), $atts));
 
 		$opts = $this->get_settings();
 		$posts = $this->get_posts();
-		$posts = array_slice($posts, 0, $number);
 
-		// set link target
-		$link_target = ($opts['link_new_window']) ? "_blank" : ''; 
+		ob_start();
+		?>
+		<!-- Recent Facebook Posts v<?php echo RFBP_VERSION; ?> - http://wordpress.org/plugins/recent-facebook-posts/ -->
+		<div class="recent-facebook-posts rfbp rfbp-container rfbp-<?php echo $origin; ?>">
+			<?php
 
-		$output = "\n<!-- Recent Facebook Posts v".RFBP_VERSION." - http://wordpress.org/plugins/recent-facebook-posts/ -->\n";
+			if($posts && !empty($posts)) {
 
-		$output .= '<div class="recent-facebook-posts rfb_posts shortcode">';
+				$posts = array_slice($posts, 0, $number);
+				$link_target = ($opts['link_new_window']) ? "_blank" : ''; 
 
-		foreach($posts as $post) { 
-			$content = $post['content'];
-			$shortened = false;
+				foreach($posts as $p) { 
+					$content = $p['content'];
+					$shortened = false;
 
-			if(strlen($content) > $excerpt_length) {
-				$limit = strpos($post['content'], ' ',$excerpt_length); 
-				if($limit) {
-					$content = substr($post['content'], 0, $limit);
-					$shortened = true;
+					if(strlen($content) > $excerpt_length) {
+						$limit = strpos($p['content'], ' ',$excerpt_length); 
+						if($limit) {
+							$content = substr($p['content'], 0, $limit);
+							$shortened = true;
+						}
+					}
+					?>
+
+
+					<<?php echo $el; ?> class="rfbp-post">
+					<p class="rfbp-text"><?php echo nl2br(rfbp_make_clickable($content, $link_target)); if($shortened) { echo '..'; } ?></p>
+					<?php if($opts['img_size'] != 'dont_show' && isset($p['image']) && !empty($p['image'])) { ?>
+					<p class="rfbp-image-wrap">
+						<a class="rfbp-image-link" target="<?php echo $link_target; ?>" href="<?php echo $p['link']; ?>" rel="nofollow">
+							<?php $max_img_width = (!empty($opts['img_width'])) ? $opts['img_width'].'px' : '100%'; $max_img_height = (!empty($opts['img_height'])) ? $opts['img_height'].'px' : 'none'; ?>
+							<img class="rfbp-image" src="<?php echo $p['image']; ?>" style="max-width: <?php echo $max_img_width; ?>; max-height: <?php echo $max_img_height; ?>" alt="" />
+						</a>
+					</p>
+					<?php } ?>
+					<p class="rfbp-post-link-wrap">
+						<a target="<?php echo $link_target; ?>" class="rfbp-post-link" href="<?php echo $p['link']; ?>" rel="nofolloW">
+							<?php if($likes) { ?><span class="rfbp-like-count"><?php echo $p['like_count']; ?> <span>likes<?php if($comments) { ?>, <?php } ?></span></span><?php } ?>
+							<?php if($comments) { ?><span class="rfbp-comment-count"><?php echo $p['comment_count']; ?> <span>comments</span></span><?php } ?>
+							<?php if($likes || $comments) { ?> · <?php } ?>
+							<span class="rfbp-timestamp" title="<?php echo date('l, F j, Y', $p['timestamp']) ?> at <?php echo date('G:i', $p['timestamp']); ?>"><?php echo rfbp_time_ago($p['timestamp']); ?></span>
+						</a>
+					</p>
+					</<?php echo $el; ?>>
+				<?php 
+
+				} // end foreach $posts
+			} else {
+				?><p>No recent Facebook posts to show.</p><?php
+				if(current_user_can('manage_options')) { 
+					?><p><strong>Admins only notice:</strong> Did you <a href="<?php echo admin_url('options-general.php?page=rfb-settings'); ?>">configure the plugin</a> properly?</p><?php
 				}
-			}
+			} ?>
 
+			<?php if($show_link) { ?>
+				<p class="rfbp-page-link-wrap"><a class="rfbp-page-link" href="http://www.facebook.com/<?php echo $opts['fb_id']; ?>/" rel="external nofollow" target="<?php echo $link_target; ?>"><?php echo strip_tags($opts['link_text']); ?></a></p>
+			<?php } ?>
 
-			$output .= '<div class="rfb-post">';
-			$output .= '<p class="rfb_text">'. nl2br(rfbp_make_clickable($content, $link_target));
-			if ($shortened) $output .= '..';
-			$output .= '</p>';
+			</div>
+			<!-- / Recent Facebook Posts -->
+			<?php
+			$output = ob_get_contents();
+			ob_end_clean();
 
-			if($opts['img_size'] != 'dont_show' && isset($post['image']) && $post['image']) { 
-				
-				$img_atts = 'src="'. $post['image'] .'" style="max-width: '. $opts['img_width'] .'px; max-height: '. $opts['img_width'] .'px;"';	
-
-				$output .= '<p class="rfb_image"><a target="'.$link_target.'" href="'. $post['link'] . '" rel="nofollow"><img '. $img_atts .' alt="" /></a></p>';
-			}
-
-			$output .= '<p><a target="'.$link_target.'"" class="rfb_link" href="'. $post['link'] .'" rel="nofollow">';
-			if($likes || $comments) { $output .= '<span class="like_count_and_comment_count">'; }
-			if($likes) { $output .= '<span class="like_count">'. $post['like_count'] . ' <span>likes</span></span> '; }
-			if($comments) { $output .= '<span class="comment_count">' . $post['comment_count'] . ' <span>comments</span></span> '; }
-			if($likes || $comments) { $output .= '</span>'; }
-			$output .= '<span class="timestamp" title="'. date('l, F j, Y', $post['timestamp']) . ' at ' . date('G:i', $post['timestamp']) . '" >';
-			if($likes || $comments) { $output .= ' · '; }
-			$output .= '<span>' . rfbp_time_ago($post['timestamp']) . '</span></span>';
-			$output .= '</a></p></div>' ;
-
-		} 
-
-		if(empty($posts)) {
-			$output .= '<p>No recent Facebook status updates to show.</p>';
-			if(current_user_can('manage_options')) { 
-				$output .= '<p><strong>Admins only notice:</strong> Did you <a href="' . get_admin_url(null,'options-general.php?page=rfb-settings') . '">configure the plugin</a> properly?</p>';
-			}
+			return $output;
 		}
 
-		$output .= "</div>";
-		$output .= "\n <!-- / Recent Facebook Posts -->\n";
-		return $output;
-	}
+		private function get_time_of_last_file_change($filePath) 
+		{ 
+			clearstatcache();
+			$time = filemtime($filePath); 
 
-	private function get_time_of_last_file_change($filePath) 
-	{ 
-		clearstatcache();
-		$time = filemtime($filePath); 
+			$isDST = (date('I', $time) == 1); 
+			$systemDST = (date('I') == 1); 
 
-		$isDST = (date('I', $time) == 1); 
-		$systemDST = (date('I') == 1); 
-
-		$adjustment = 0; 
-
-		if($isDST == false && $systemDST == true) 
-			$adjustment = 3600; 
-
-		else if($isDST == true && $systemDST == false) 
-			$adjustment = -3600; 
-
-		else 
 			$adjustment = 0; 
 
-		return ($time + $adjustment); 
-	} 
-	
-}
+			if($isDST == false && $systemDST == true) 
+				$adjustment = 3600; 
+
+			else if($isDST == true && $systemDST == false) 
+				$adjustment = -3600; 
+
+			else 
+				$adjustment = 0; 
+
+			return ($time + $adjustment); 
+		} 
+
+	}

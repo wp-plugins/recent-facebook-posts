@@ -79,8 +79,9 @@ class RFBP_Admin {
 		}
 
 		$opts['cache_time'] = (int) $opts['cache_time'];
-		$opts['img_height'] = (int) $opts['img_height'];
-		$opts['img_width'] = (int) $opts['img_width'];
+		$opts['img_height'] = (!empty($opts['img_height'])) ? (int) $opts['img_height'] : '';
+		$opts['img_width'] = (!empty($opts['img_width'])) ? (int) $opts['img_width'] : '';
+		$opts['load_css'] = (isset($opts['load_css'])) ? 1 : 0;
 		return $opts;
 	}
 

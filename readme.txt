@@ -3,16 +3,16 @@ Contributors: DvanKooten
 Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.1
-Tested up to: 3.6
-Stable tag: 1.5.4
+Tested up to: 3.6.1
+Stable tag: 1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Lists most recent Facebook posts from public pages. A faster, prettier and more customizable alternative to Facebooks Like Box. 
+Lists most recent Facebook posts from public Facebook pages. A faster, prettier and more customizable alternative to Facebooks Like Box. 
 
 == Description ==
 
-This plugin adds a widget and a shortcode `[recent-facebook-posts]` to your WordPress website which you can use to list your most recent Facebook posts. This plugin works with public pages and to a certain extent with personal profiles.
+This plugin adds a widget, a shortcode `[recent-facebook-posts]` and a template function `recent_facebook_posts()` to your WordPress website which you can use to list your most recent Facebook posts. This plugin works with public pages and to a certain extent with personal profiles (YMMV with the latter).
 
 **Features**
 
@@ -32,20 +32,33 @@ There is a demo on [my own website](http://dannyvankooten.com/), I use the plugi
 
 == Installation ==
 
-1. Upload the contents of the .zip-file to your plugins directory
+= Installing the plugin =
+1. [Download the latest version of the plugin](http://downloads.wordpress.org/plugin/recent-facebook-posts.zip)
+1. Upload the contents of the downloaded .zip-file to your WordPress plugin directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. If you're not a Facebook developer yet, register as one [here](http://developers.facebook.com/apps).
-1. [Create a new Facebook application](http://developers.facebook.com/apps). Fill in ANY valid name but leave the namespace field blank and the hosting checkbox unchecked.
-1. In the Basic Application settings screen, scroll down a bit and select "Website with Facebook login" and set your `Site URL` to the URL of your WordPress installation. Example: `http://dannyvankooten.com/`
-1. (optional) Fill in the App Domain field as well. Example: `dannyvankooten.com`
-1. Open a new browser tab and go to your WordPress admin panel. Open the Recent FB Posts settings screen.
-1. Copy paste your Facebook `App id` and `App Secret` into the setting fields.  [screenshot 1](http://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/)
-1. Find the numeric Facebook ID of your public Facebook page using [this website](http://findmyfacebookid.com/).
-1. Fill in your Facebook ID in the RFB options screen.
-1. Try to connect the plugin to Facebook by clicking the "Get access token" button.
-1. Test if everything works by clicking the "Renew cache" button.
 
-If you're still in doubt, have a look at the [screenshots](http://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/).
+= Registering a Facebook application =
+This plugin requires a Facebook application to fetch posts from Facebook.
+
+1. If you're not a Facebook developer yet, register as one [here](http://developers.facebook.com/apps).
+1. [Create a new Facebook application](http://developers.facebook.com/apps). Fill in ANY name you like but leave the `namespace` field blank and the `hosting` checkbox unchecked.
+1. In the Basic Application settings screen, scroll down a bit and select `Website with Facebook login` and set your `Site URL` to the URL of your WordPress installation, eg `http://dannyvankooten.com/` 
+1. *(optional)* Fill in the App Domain field as well, eg `dannyvankooten.com` *(no http:// prefix)*
+
+= Configuring the plugin =
+1. Go to *Settings > Recent Facebook* posts in your WP Admin panel.
+1. Copy and paste your Facebook `App ID/API Key` and `App Secret` into the setting fields.  [screenshot 1](http://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/)
+1. Find the numeric Facebook ID of your public Facebook page using [this website](http://findmyfacebookid.com/).
+1. Copy paste the ID in the `Facebook Page ID` field.
+1. Try to connect the plugin to Facebook by clicking the "Get access token" button. You will be redirected to Facebook.
+1. Test if fetching posts works by clicking the "Renew cache" button.
+1. Add `[recent-facebook-posts]` to the page where you would like to show a list of recent Facebook posts or use the widget.
+
+= Extra notes =
+* Your Site URL should match your WordPress url exactly. Include any subdomains in the URL and don't include subfolders.
+* The plugin works with personal profiles, but only to a certain extend. I am not actively supporting personal profiles because of many privacy settings related issues.
+
+If you're still in doubt, have a look at the [screenshots](http://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/) and the [FAQ](http://wordpress.org/plugins/recent-facebook-posts/faq/) for solutions to common mistakes.
 
 == Frequently Asked Questions ==
 
@@ -77,14 +90,16 @@ Yes, you can use the `[recent-facebook-posts]` shortcode. Optionally, add the fo
 likes = 1 // show like count, 1 = yes, 0 = no
 comments = 1 // show comment count, 1 = yes, 0 = no
 excerpt_length = 140 // the number of characters to show from each post
-number = 5 // number of posts to show
+number = 5 // number of posts to show,
+show_link = 0 // show a link to Facebook page after posts?
+el = div // which element to use as a post container?
 `
 
 *Shortcode example*
-`[recent-facebook-posts number=10 likes=1 comments=1 excerpt_length=250]`
+`[recent-facebook-posts number=10 likes=1 comments=1 excerpt_length=250 show_link=1]`
 
 = What about usage of your plugin in template files? =
-Use `<?php recent-facebook-posts(array('likes' => 1, 'excerpt_length => 140')); ?>` in your theme files. The parameter is optional, it can be an array of the same values available for the shortcode.
+Use `<?php recent_facebook_posts(array('likes' => 1, 'excerpt_length => 140')); ?>` in your theme files. The parameter is optional, it can be an array of the same values available for the shortcode.
 
 == Screenshots ==
 
@@ -92,6 +107,19 @@ Use `<?php recent-facebook-posts(array('likes' => 1, 'excerpt_length => 140')); 
 2. The green circled fields are the fields where you'll need to provide your Facebook app id and app secret (as shown in screenshot 1).
 
 == Changelog ==
+= 1.6 =
+* Improved code performance and readability
+* Improved usability of admin settings
+* Improved: cleaner HTML output
+* Improved: default CSS
+* Improved: image resizing
+* Improved: default settings
+* Added installation instructions link to admin settings
+* Added many CSS classes to output
+* Fixed extra double quote breaking link validation
+
+**Important:** CSS Selectors and HTML output has changed in this version. If you're using custom styling rules you'll have to edit them after updating.
+
 = 1.5.3 =
 * Improved: Code improvement
 * Improved: UI improvement, implemented some HTML5 fields
@@ -192,3 +220,7 @@ Use `<?php recent-facebook-posts(array('likes' => 1, 'excerpt_length => 140')); 
 = 0.1 =
 * Initial release
 
+== Upgrade Notice ==
+
+= 1.6 =
+CSS and HTML output have changed. If you're using custom CSS styles you will have to edit them after updating.

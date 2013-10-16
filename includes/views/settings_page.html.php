@@ -54,18 +54,27 @@
 				<table class="form-table">
 					<tbody>
 						<tr valign="top">
-						    <th scope="row"><label for="rfb_app_id" <?php if(empty($opts['app_id'])) echo 'class="error"'; ?>>Facebook App ID</label></th>
-						    <td><input type="text" class="widefat" id="rfb_app_id" name="rfb_settings[app_id]" value="<?php echo esc_attr($opts['app_id']); ?>" /></td>
+						    <th scope="row"><label for="rfb_app_id" <?php if(empty($opts['app_id'])) echo 'class="error"'; ?>>Facebook App ID/API Key</label></th>
+						    <td>
+						    	<input type="text" class="widefat" placeholder="Eg: 123456789012345" id="rfb_app_id" name="rfb_settings[app_id]" value="<?php echo esc_attr($opts['app_id']); ?>" />
+						    	<small class="help"><a href="https://developers.facebook.com/apps">get from developers.facebook.com/apps</a></small>
+						    </td>
 						</tr>
 
 						<tr valign="top">
 						    <th scope="row"><label for="rfb_app_secret" <?php if(empty($opts['app_secret'])) echo 'class="error"'; ?>>Facebook App Secret</label></th>
-						    <td><input type="text" class="widefat" id="rfb_app_secret" name="rfb_settings[app_secret]" value="<?php echo esc_attr($opts['app_secret']); ?>" /></td>
+						    <td>
+						    	<input type="text" class="widefat" placeholder="Eg: 16vgrz4hk45wvh29k2puk45wvk2h29pu"  id="rfb_app_secret" name="rfb_settings[app_secret]" value="<?php echo esc_attr($opts['app_secret']); ?>" />
+						   	 	<small class="help"><a href="https://developers.facebook.com/apps">get from developers.facebook.com/apps</a></small>
+						   	 </td>
 						</tr>
 
 						<tr valign="top">
-						    <th scope="row"><label for="rfb_fb_id" <?php if(empty($opts['fb_id'])) echo 'class="error"'; ?>>Facebook page ID <small><a target="_blank" href="http://findmyfacebookid.com/">(use this)</a></small></label></th>
-						    <td><input type="text" class="widefat" id="rfb_fb_id" name="rfb_settings[fb_id]" value="<?php echo esc_attr($opts['fb_id']); ?>" /></td>
+						    <th scope="row"><label for="rfb_fb_id" <?php if(empty($opts['fb_id'])) echo 'class="error"'; ?>>Facebook Page ID</label></th>
+						    <td>
+						    	<input type="text" class="widefat" placeholder="Eg: DannyvanKootenCOM" id="rfb_fb_id" name="rfb_settings[fb_id]" value="<?php echo esc_attr($opts['fb_id']); ?>" />
+						    	<small><a target="_blank" href="http://findmyfacebookid.com/">Use this tool to find the numeric ID of the Facebook page you want to fetch posts from</a></small>
+						    </td>
 						</tr>
 
 						<tr valign="top">
@@ -74,7 +83,7 @@
 						</tr>
 
 						<tr valign="top">
-						    <th scope="row"><label for="rfb_img_size">Image source size</label></th>
+						    <th scope="row"><label for="rfb_img_size">Image size</label></th>
 						    <td>
 						    	<select class="widefat" id="rfb_img_size" name="rfb_settings[img_size]">
 						    		<option value="dont_show" <?php if($opts['img_size'] == 'dont_show') { echo 'selected'; } ?>>Don't show images</option>
@@ -88,20 +97,21 @@
 							<th>Image dimensions<br /><small>(in pixels)</small></th>
 						    <td>
 						    	<label style="float:left; margin-right:20px; ">
-						    		Width<br />
+						    		Max Width<br />
 						    		<input type="number" min="0" max="1600" size="3" id="rfb_img_width" name="rfb_settings[img_width]" value="<?php echo esc_attr($opts['img_width']); ?>" /> 
 						    	</label>
-						    	<label style="float:left;">
-						    		Height<br />
+						    	<label style="float:left; margin-right:20px;">
+						    		Max Height<br />
 						    		<input type="number" min="0" max="1600" size="3" id="rfb_img_height" name="rfb_settings[img_height]" value="<?php echo esc_attr($opts['img_height']); ?>" />
 						   		</label>
+						   		<small class="help"><br />Leave empty for default sizing (maximum of 100% of containing element)</small>
 						    </td>
 						</tr>
 					</tbody>
 					<tbody>
 						<tr valign="top">
 						    <th scope="row"><label for="rfb_link_text">Link text</label></th>
-						    <td><input type="text" class="widefat" id="rfb_link_text" name="rfb_settings[link_text]" value="<?php echo esc_attr($opts['link_text']); ?>" /></td>
+						    <td><input type="text" class="widefat" placeholder="Find us on Facebook" id="rfb_link_text" name="rfb_settings[link_text]" value="<?php echo esc_attr($opts['link_text']); ?>" /></td>
 						</tr>
 
 						<tr valign="top">
@@ -113,9 +123,7 @@
 						    <th scope="row"><label for="rfb_load_css">Load some default CSS?</label></th>
 						    <td><input type="checkbox" id="rfb_load_css" name="rfb_settings[load_css]" value="1" <?php checked($opts['load_css'], 1); ?> /></td>
 						</tr>
-
 					</tbody>
-
 				</table>
 
 				<p class="submit">
@@ -175,6 +183,16 @@
         <div class="rfbp-box">
         	<h3>Looking for support?</h3>
         	<p>Having trouble? Please use the <a href="http://wordpress.org/support/plugin/recent-facebook-posts">support forums</a> on WordPress.org.</p>
+        	<p>Take a close look at the <a href="http://wordpress.org/plugins/recent-facebook-posts/installation/">installation instructions</a> for help configuring the plugin and registering your own Facebook application (required).</p>
+        </div>
+
+        <div class="rfbp-box">
+        	<h3>Other Useful plugins</h3>
+        	<ul class="ul-square">
+        		<li><a href="http://wordpress.org/plugins/mailchimp-for-wp/">MailChimp for WordPress</a></li>
+        		<li><a href="http://wordpress.org/plugins/wysiwyg-widgets/">WYSIWYG Widgets</a>
+        		<li><a href="http://wordpress.org/plugins/newsletter-sign-up/">Newsletter Sign-Up</a></li>
+        	</ul>
         </div>
 
         <div class="rfbp-box">
