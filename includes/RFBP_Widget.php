@@ -27,7 +27,7 @@ class RFBP_Widget extends WP_Widget {
  		$opts = RFBP::instance()->get_settings();
 
  		if(empty($opts['app_id'])) { ?>
- 		<p style="color:red;">You'll need to <a href="<?php echo admin_url('options-general.php?page=rfb-settings'); ?>">configure Recent Facebook Posts</a> first before this will work.</p>
+ 		<p style="color:red;">You'll need to <a href="<?php echo admin_url('options-general.php?page=rfbp'); ?>">configure Recent Facebook Posts</a> first before this will work.</p>
  		<?php } ?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
@@ -59,7 +59,7 @@ class RFBP_Widget extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'show_link' ); ?>"><?php _e( 'Show a link to Facebook page?' ); ?></label> 
 		</p>
 
-		<p style="background: #222; color:#eee; padding:10px; ">I spent countless hours developing (and offering support) for this plugin for FREE. If you like it, consider <a href="http://dannyvankooten.com/donate/">donating $10, $20 or $50</a> as a token of your appreciation.</p>       
+		<p style="background: #222; color:#eee; padding:10px; ">If you like this plugin, consider <a href="http://dannyvankooten.com/donate/">donating $10, $20 or $50</a> as a token of your appreciation.</p>       
 
 		<?php 
 	}

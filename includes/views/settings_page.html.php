@@ -3,37 +3,14 @@
 	<div class="rfbp-column" style="width:69%;">
 
 	<h2>Recent Facebook Posts</h2>
-	
-		<?php 
-		if(isset($errorMessage)) { ?>
-			<div id="setting-error" class="updated settings-error">
+		
+		<?php if($api->has_error()) { ?>
+			<div id="setting-error-settings_updated" class="settings-error error">
 				<p>
-					<?php echo $errorMessage; ?>
-				</p>
-			</div>
-		<?php
-		} 
-
-		if(isset($cacheError)) { ?>
-			<div id="setting-error" class="error settings-error">
-				<p>
-					<strong>Cache error:</strong>
-					<?php echo $cacheError; ?>
+					<strong>Error:</strong> <?php echo $api->get_error_message(); ?>
 				</p>
 			</div>
 		<?php }
-
-		if(isset($apiError)) {
-			?>
-			<div id="setting-error" class="error settings-error">
-				<p>Facebook returned the following error.</p>
-				<p>
-					<strong><?php echo $apiError->getType(); ?>:</strong>
-					<?php echo $apiError->getMessage(); ?>
-				</p>
-			</div>	
-			<?php
-		}
 
 		if(isset($notice)) { ?>
 			<div id="setting-error-settings_updated" class="updated settings-error"> 
@@ -48,38 +25,36 @@
 		<h3>Configuration</h3>
 		<form method="post" action="options.php">
 				<?php settings_fields( 'rfb_settings_group' ); ?>
-
-				<p class="status">Facebook API status: <span class="<?php echo ($connected) ? 'connected' : 'disconnected'; ?>"><?php echo ($connected) ? 'Connected' : 'Not Connected'; ?></span></p>
 				
 				<table class="form-table">
 					<tbody>
-						<tr valign="top">
-						    <th scope="row"><label for="rfb_app_id" <?php if(empty($opts['app_id'])) echo 'class="error"'; ?>>Facebook App ID/API Key</label></th>
+						<tr valign="top" <?php if(empty($opts['app_id'])) echo 'class="rfbp-row-error"'; ?>>
+						    <th scope="row"><label for="rfb_app_id">Facebook App ID/API Key</label></th>
 						    <td>
-						    	<input type="text" class="widefat" placeholder="Eg: 123456789012345" id="rfb_app_id" name="rfb_settings[app_id]" value="<?php echo esc_attr($opts['app_id']); ?>" />
+						    	<input type="text" class="widefat" placeholder="Eg: 123456789012345" id="rfb_app_id" name="rfb_settings[app_id]" value="<?php echo esc_attr($opts['app_id']); ?>" required />
 						    	<small class="help"><a href="https://developers.facebook.com/apps">get from developers.facebook.com/apps</a></small>
 						    </td>
 						</tr>
 
-						<tr valign="top">
-						    <th scope="row"><label for="rfb_app_secret" <?php if(empty($opts['app_secret'])) echo 'class="error"'; ?>>Facebook App Secret</label></th>
+						<tr valign="top" <?php if(empty($opts['app_secret'])) echo 'class="rfbp-row-error"'; ?>>
+						    <th scope="row"><label for="rfb_app_secret">Facebook App Secret</label></th>
 						    <td>
-						    	<input type="text" class="widefat" placeholder="Eg: 16vgrz4hk45wvh29k2puk45wvk2h29pu"  id="rfb_app_secret" name="rfb_settings[app_secret]" value="<?php echo esc_attr($opts['app_secret']); ?>" />
+						    	<input type="text" class="widefat" placeholder="Eg: 16vgrz4hk45wvh29k2puk45wvk2h29pu"  id="rfb_app_secret" name="rfb_settings[app_secret]" value="<?php echo esc_attr($opts['app_secret']); ?>" required />
 						   	 	<small class="help"><a href="https://developers.facebook.com/apps">get from developers.facebook.com/apps</a></small>
 						   	 </td>
 						</tr>
 
-						<tr valign="top">
-						    <th scope="row"><label for="rfb_fb_id" <?php if(empty($opts['fb_id'])) echo 'class="error"'; ?>>Facebook Page ID</label></th>
+						<tr valign="top" <?php if(empty($opts['fb_id'])) echo 'class="rfbp-row-error"'; ?>>
+						    <th scope="row"><label for="rfb_fb_id">Facebook Page ID or Slug</label></th>
 						    <td>
-						    	<input type="text" class="widefat" placeholder="Eg: DannyvanKootenCOM" id="rfb_fb_id" name="rfb_settings[fb_id]" value="<?php echo esc_attr($opts['fb_id']); ?>" />
+						    	<input type="text" class="widefat" placeholder="Eg: DannyvanKootenCOM" id="rfb_fb_id" name="rfb_settings[fb_id]" value="<?php echo esc_attr($opts['fb_id']); ?>" required />
 						    	<small><a target="_blank" href="http://findmyfacebookid.com/">Use this tool to find the numeric ID of the Facebook page you want to fetch posts from</a></small>
 						    </td>
 						</tr>
 
 						<tr valign="top">
 						    <th scope="row"><label for="rfb_cache_time">Cache expiry time <small>(in seconds)</small></label></th>
-						    <td><input type="number" min="60" max="99999999999" id="rfb_cache_time" name="rfb_settings[cache_time]" value="<?php echo esc_attr($opts['cache_time']); ?>" /></td>
+						    <td><input type="number" min="60" max="99999999999" id="rfb_cache_time" name="rfb_settings[cache_time]" value="<?php echo esc_attr($opts['cache_time']); ?>" required /></td>
 						</tr>
 
 						<tr valign="top">
@@ -132,23 +107,16 @@
 
 		</form>
 
-			<?php if($curl && !empty($opts['app_id']) && !empty($opts['app_secret'])) { ?>
-				<h3 title="<?php echo get_option('rfb_access_token'); ?>">Access Token</h3>
-				<p>Use this button to connect to Facebook. If you're already connected, this will give you a new access token.
-				 I recommend clicking this button once every few weeks to make sure you always have a valid access token.</p>
-				<p><a class="button-primary" href="<?php echo admin_url('admin.php?page=rfb-settings&login_to_fb'); ?>">Get Access Token</a></p>
-			<?php }
-
-			if($connected) { ?>
-				<h3>Cache</h3>
-				<p>Because fetching posts from Facebook is "expensive", this will only happen every <?php echo $opts['cache_time']; ?> seconds (as configured above). You can manually renew the cache using the button below.</p>
+			<?php if($ready) { ?>
+				<h3>Faceook Posts Cache</h3>
+				<p>Because fetching posts from Facebook is slow the posts are cached for <strong><?php echo $opts['cache_time']; ?> seconds</strong> (as configured above). You can manually renew the cache or test your configuration using the button below.</p>
 				<p>
-					<form action="<?php echo admin_url('admin.php?page=rfb-settings'); ?>" method="post">
+					<form action="<?php echo admin_url('options-general.php?page=rfbp'); ?>" method="post">
 						<input type="hidden" name="renew_cache" value="1" />
-						<input type="submit" class="button-primary" value="Renew cache file" />
+						<input type="submit" class="button-primary" value="Renew Facebook Posts" />
 					</form>
 				</p>
-		<?php } ?>
+			<?php } ?>
 	</div>
 
 	<div class="rfbp-sidebar clearfix">

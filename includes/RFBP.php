@@ -35,7 +35,7 @@ class RFBP {
 			include_once RFBP_PLUGIN_DIR . 'includes/helper-functions.php';
 			include_once RFBP_PLUGIN_DIR . 'includes/template-functions.php';
 
-			add_shortcode('rfbp', array($this, 'output'));
+			add_shortcode('recent_facebook_posts', array($this, 'output'));
 			add_shortcode('recent-facebook-posts', array($this, 'output'));
 			
 			if($opts['load_css']) {
@@ -47,6 +47,9 @@ class RFBP {
 			include_once RFBP_PLUGIN_DIR . 'includes/RFBP_Admin.php';
 			new RFBP_Admin();
 		}
+
+		add_action('rfbp_renew_cache', array($this, 'delete_transients'), 10);
+		add_action('rfbp_renew_cache', array($this, 'get_posts'), 11);
 	}
 
 	public function register_widget()
@@ -90,105 +93,100 @@ class RFBP {
 	static public function api()
 	{
 		if(!self::$api) {
-
-			if(!class_exists("Facebook")) {
-				require_once RFBP_PLUGIN_DIR . 'includes/facebook-php-sdk/facebook.php';
-			}
-
+			require_once RFBP_PLUGIN_DIR . 'includes/RFBP_API.php';
 			$opts = RFBP::instance()->get_settings();
-			self::$api = new Facebook(array(
-				'appId'  => trim($opts['app_id']),
-				'secret' => trim($opts['app_secret']),
-				));
+			self::$api = new RFBP_API($opts['app_id'], $opts['app_secret'], $opts['fb_id']);
 		}
 
 		return self::$api;
 	}
 
+	public function get_fallback_posts()
+	{
+		$posts = get_transient('rfbp_posts_fallback');
+
+		if(!$posts) {
+			return array();
+		}
+
+		return $posts;
+	}
+
 	public function get_posts() {
 		
-		$opts = $this->get_settings();
-
 		// try to get posts from cache
-		if(($posts = $this->get_cached_posts())) {
+		if(($posts = get_transient('rfbp_posts'))) {
 			return $posts;
 		}
 
-		if(empty($opts['app_id']) || empty($opts['fb_id'])) { return array(); }
+		$opts = $this->get_settings();
 
-		$accessToken = get_option('rfb_access_token'); 
-
-		// if no access token has been stored, we can't make the API call.
-		if(!$accessToken) { return array(); }
-
-		$fb = self::api();
-		$fb->setAccessToken($accessToken);
-
-		// check if Facebook API has an identified user
-		// if not, API is not connected
-		if(!$fb->getUser()) { return array(); }
-
-		$apiResult = $fb->api(trim($opts['fb_id']) . '/posts?fields=id,picture,type,from,message,status_type,object_id,link,created_time,comments.limit(1).summary(true),likes.limit(1).summary(true)');
+		$api = self::api();
+		$data = $api->get_posts();
 		
-		if(!$apiResult or !is_array($apiResult) or !isset($apiResult['data']) or !is_array($apiResult['data'])) { return array(); }
+		// did api call succeed?
+		if(!$data) { 
+			return $this->get_fallback_posts();
+		}
 
 		$posts = array();
-		foreach($apiResult['data'] as $p) {
+		foreach($data as $p) {
 
 			// skip this "post" if it is not of one of the following types
-			if(!in_array($p['type'], array('status', 'photo', 'video', 'link'))) { 
+			if(!in_array($p->type, array('status', 'photo', 'video', 'link'))) { 
 				continue;
 			}
 
-			// skip empty status updates
-			if($p['type'] == 'status' && (!isset($p['message']) || empty($p['message']))) { continue; }
-			if($p['type'] == 'status' && $p['status_type'] == 'approved_friend') { continue; }
+			// skip empty status updates and friend approvals
+			if($p->type == 'status' && (!isset($p->message) || empty($p->message))) { continue; }
+			if($p->type == 'status' && $p->status_type == 'approved_friend') { continue; }
 
 			//var_dump($p); echo '<br /><br />';
 
 			//split user and post ID (userID_postID)
-			$idArray = explode("_", $p['id']);
+			$idArray = explode("_", $p->id);
 
 			$post = array();
-			$post['type'] = $p['type'];
-			$post['author'] = $p['from'];
-			$post['content'] = isset($p['message']) ? $p['message'] : '';
+			$post['type'] = $p->type;
+			$post['author'] = $p->from;
+			$post['content'] = isset($p->message) ? $p->message : '';
 			$post['image'] = null;
 
 			// set post content and image
-			if($p['type'] == 'photo') {
+			if($p->type == 'photo') {
 
-				$image = "//graph.facebook.com/". $p['object_id'] . '/picture?type=' . $opts['img_size'];
+				$image = "//graph.facebook.com/". $p->object_id . '/picture?type=' . $opts['img_size'];
 				$post['image'] = $image;
 
-			} elseif($p['type'] == 'video') {
+			} elseif($p->type == 'video') {
 
-				$image = $p['picture'];
+				$image = $p->picture;
 
+				// hacky
 				if($opts['img_size'] == 'normal') {
 					$image = str_replace(array("_s.jpg", "_s.png"), array("_n.jpg", "_n.png"), $image);
 				} 
 
 				$post['image'] = $image;
 
-			} elseif($p['type'] == 'link') {
-				$post['content'] .= "\n\n" . $p['link'];
+			} elseif($p->type == 'link') {
+				$post['content'] .= "\n\n" . $p->link;
 			}
 
 			// calculate post like and comment counts
-			if(isset($p['likes']['summary']['total_count'])) {
-				$like_count = $p['likes']['summary']['total_count'];
+			if(isset($p->likes->summary->total_count)) {
+				$like_count = $p->likes->summary->total_count;
 			} else {
 				$like_count = 0;
 			}
 
-			if(isset($p['comments']['summary']['total_count'])) {
-				$comment_count = $p['comments']['summary']['total_count'];
+			if(isset($p->comments->summary->total_count)) {
+				$comment_count = $p->comments->summary->total_count;
 			} else {
 				$comment_count = 0;
 			}
 
-			$post['timestamp'] = strtotime($p['created_time']);
+			$post['timestamp'] = strtotime($p->created_time);
 			$post['like_count'] = $like_count;
 			$post['comment_count'] = $comment_count;
 			$post['link'] = "http://www.facebook.com/".$opts['fb_id']."/posts/".$idArray[1];
@@ -197,47 +195,13 @@ class RFBP {
 		}
 
 		// store results in cache for later use
-		$this->set_cached_posts($posts);
+		if($posts) {
+			set_transient('rfbp_posts', $posts, $opts['cache_time']); // user set cache time
+			set_transient('rfbp_posts_fallback', $posts, 2629744); // 1 month
+			$this->cache_renewed = true;
+		}
 		
 		return $posts;
-	}
-
-	public function invalidate_cache()
-	{
-		$opts = $this->get_settings();
-		$cache_file = WP_CONTENT_DIR . '/recent-facebook-posts.cache';
-		$time = time() - ($opts['cache_time'] * 2);
-		return touch($cache_file, $time);
-	}
-
-	private function get_cached_posts()
-	{
-		$opts = $this->get_settings();
-		$cache_file = WP_CONTENT_DIR . '/recent-facebook-posts.cache';
-		if(!file_exists($cache_file) || ($this->get_time_of_last_file_change($cache_file) < (time() - $opts['cache_time']))) {
-			return false;
-		}
-
-		// by now, cache file exists.
-		$posts = json_decode(file_get_contents($cache_file), true);
-		return $posts;
-		
-	}
-
-	private function set_cached_posts($posts)
-	{
-		$data = json_encode($posts);
-		$cache_dir = WP_CONTENT_DIR . '/';
-		$cache_file = WP_CONTENT_DIR . '/recent-facebook-posts.cache';
-		
-		// abandon if cache folder is not writable
-		if(!is_writable(WP_CONTENT_DIR)) {
-			return false;
-		}
-
-		file_put_contents($cache_file, $data);
-		$this->cache_renewed = true;
-		return true;
 	}
 
 	public function output($atts = array())
@@ -263,6 +227,8 @@ class RFBP {
 
 			if($posts && !empty($posts)) {
 
+				if($el == 'li') { echo '<ul class="rfbp-posts-wrap">'; }
+
 				$posts = array_slice($posts, 0, $number);
 				$link_target = ($opts['link_new_window']) ? "_blank" : ''; 
 
@@ -279,9 +245,15 @@ class RFBP {
 					}
 					?>
 
-
 					<<?php echo $el; ?> class="rfbp-post">
-					<p class="rfbp-text"><?php echo nl2br(rfbp_make_clickable($content, $link_target)); if($shortened) { echo '..'; } ?></p>
+					<div class="rfbp-text">
+
+						<?php 
+						$content = make_clickable($content, $link_target); 
+						$content = ($shortened) ? $content . '..' : $content;
+						echo wpautop($content); ?>
+
+					</div>
 					<?php if($opts['img_size'] != 'dont_show' && isset($p['image']) && !empty($p['image'])) { ?>
 					<p class="rfbp-image-wrap">
 						<a class="rfbp-image-link" target="<?php echo $link_target; ?>" href="<?php echo $p['link']; ?>" rel="nofollow">
@@ -302,10 +274,13 @@ class RFBP {
 				<?php 
 
 				} // end foreach $posts
+
+				if($el == 'li') { echo '</ul>'; }
+
 			} else {
 				?><p>No recent Facebook posts to show.</p><?php
 				if(current_user_can('manage_options')) { 
-					?><p><strong>Admins only notice:</strong> Did you <a href="<?php echo admin_url('options-general.php?page=rfb-settings'); ?>">configure the plugin</a> properly?</p><?php
+					?><p><strong>Admins only notice:</strong> Did you <a href="<?php echo admin_url('options-general.php?page=rfbp'); ?>">configure the plugin</a> properly?</p><?php
 				}
 			} ?>
 
@@ -321,27 +296,5 @@ class RFBP {
 
 			return $output;
 		}
-
-		private function get_time_of_last_file_change($filePath) 
-		{ 
-			clearstatcache();
-			$time = filemtime($filePath); 
-
-			$isDST = (date('I', $time) == 1); 
-			$systemDST = (date('I') == 1); 
-
-			$adjustment = 0; 
-
-			if($isDST == false && $systemDST == true) 
-				$adjustment = 3600; 
-
-			else if($isDST == true && $systemDST == false) 
-				$adjustment = -3600; 
-
-			else 
-				$adjustment = 0; 
-
-			return ($time + $adjustment); 
-		} 
 
 	}

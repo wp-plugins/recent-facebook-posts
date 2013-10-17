@@ -2,7 +2,13 @@
 
 function rfbp_make_clickable($text, $target)
 {
-    return preg_replace('@(?<![.*">])\b(?:(?:https?|ftp|file)://|[a-z]\.)[-A-Z0-9+&#/%=~_|$?!:,.]*[A-Z0-9+&#/%=~_|$]@i', '<a href="\0" target="'.$target.'">\0</a>', $text);
+	$clickable_text = make_clickable($text);
+
+	if(!empty($target)) {
+		return str_replace('<a href="', '<a target="'.$target.'" href="', $clickable_text);
+	}
+
+	return $clickable_text;
 }
 
 function rfbp_time_ago($timestamp) 

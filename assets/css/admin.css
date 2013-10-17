@@ -5,7 +5,7 @@
 .rfbp-box{ margin:0 0 24px;}
 .rfbp-well { background:#222; color:#eee; padding:10px 20px; margin-top:10px; }
 
-.error{ color:red; }
+.rfbp-row-error label{ color:red; }
 p.status{ font-weight:bold;}
 span.connected, span.disconnected{ font-weight:bold; display:inline-block; color:white; padding:3px; }
 span.connected{ background:green; }
