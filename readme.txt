@@ -12,13 +12,13 @@ Lists most recent Facebook posts from public Facebook pages. A faster, prettier 
 
 == Description ==
 
-This plugin adds a widget, a shortcode `[recent-facebook-posts]` and a template function `recent_facebook_posts()` to your WordPress website which you can use to list your most recent Facebook posts. This plugin works with public pages and to a certain extent with personal profiles.
+This plugin adds a widget, a shortcode `[recent_facebook_posts]` and a template function `recent_facebook_posts()` to your WordPress website which you can use to list your most recent Facebook posts. This plugin works with public pages and to a certain extent with personal profiles.
 
 = Facebook Posts Widget =
 Render a number of most recent Facebook page updates in any of your widget areas using the Recent Facebook Posts widget. 
 
 = Facebook Posts Shortcode =
-Display a list of your most recent Facebook posts in your posts or pages using the `[recent-facebook-posts]` shortcode. Optionally, specify some arguments to customize the output.
+Display a list of your most recent Facebook posts in your posts or pages using the `[recent_facebook_posts]` shortcode. Optionally, specify some arguments to customize the output.
 
 **Features**
 
@@ -34,9 +34,9 @@ There is a demo on [my own website](http://dannyvankooten.com/), I use the plugi
 **Other Links**
 
 * [Recent Facebook Posts for WordPress](http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/)
+* Using MailChimp to send out email newsletters and looking to grow your lists? Try [MailChimp for WordPress](http://wordpress.org/plugins/mailchimp-for-wp/).
 * Check out more [WordPress plugins](http://dannyvankooten.com/wordpress-plugins/) by Danny van Kooten
 * You should follow [@DannyvanKooten](http://twitter.com/DannyvanKooten) on Twitter.
-* Using MailChimp to send out email newsletters and looking to grow your lists? Try this: [MailChimp for WordPress](http://wordpress.org/plugins/mailchimp-for-wp/)!
 
 == Installation ==
 
@@ -57,7 +57,7 @@ This plugin requires a Facebook application to fetch posts from Facebook.
 1. Find the numeric Facebook ID of your public Facebook page using [this website](http://findmyfacebookid.com/).
 1. Copy paste the ID in the `Facebook Page ID` field.
 1. Test if fetching posts works by clicking the "Renew Facebook Posts" button.
-1. Add `[recent-facebook-posts]` to the page where you would like to show a list of recent Facebook posts or use the widget.
+1. Add `[recent_facebook_posts]` to the page where you would like to show a list of recent Facebook posts or use the widget.
 
 = Extra notes =
 * Take a look at the [screenshots](http://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/), they will tell you which values from Facebook you need.
@@ -95,7 +95,7 @@ el = div // which element to use as a post container?
 `
 
 *Shortcode example*
-`[recent-facebook-posts number=10 likes=1 comments=1 excerpt_length=250 show_link=1]`
+`[recent_facebook_posts number=10 likes=1 comments=1 excerpt_length=250 show_link=1]`
 
 = Do you have a function I can use in template files? =
 Use `<?php recent_facebook_posts(array('likes' => 1, 'excerpt_length => 140')); ?>` in your theme files. The parameter is optional, it can be an array of the same values available for the shortcode.
@@ -198,7 +198,7 @@ Use `<?php recent_facebook_posts(array('likes' => 1, 'excerpt_length => 140')); 
 * Added: option to open link to Facebook Page in a new window.
 
 = 1.1 =
-* Added: Shortcode to show a list of recent facebook updates in your posts: '[recent-facebook-posts]'
+* Added: Shortcode to show a list of recent facebook updates in your posts: '[recent_facebook_posts]'
 
 = 1.0.5 =
 * Added: More user-friendly error message when cURL is not enabled on your server.
