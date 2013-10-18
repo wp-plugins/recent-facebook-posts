@@ -123,7 +123,7 @@ class RFBP {
 
 		$api = self::api();
 		$data = $api->get_posts();
-		
+
 		// did api call succeed?
 		if(!$data) { 
 			return $this->get_fallback_posts();
@@ -141,15 +141,12 @@ class RFBP {
 			if($p->type == 'status' && (!isset($p->message) || empty($p->message))) { continue; }
 			if($p->type == 'status' && $p->status_type == 'approved_friend') { continue; }
 
-			//var_dump($p); echo '<br /><br />';
-
 			//split user and post ID (userID_postID)
 			$idArray = explode("_", $p->id);
 
 			$post = array();
 			$post['type'] = $p->type;
-			$post['author'] = $p->from;
-			$post['content'] = isset($p->message) ? $p->message : '';
+			$post['content'] = isset($p->message) ? utf8_encode($p->message) : '';
 			$post['image'] = null;
 
 			// set post content and image
@@ -169,7 +166,7 @@ class RFBP {
 
 				$post['image'] = $image;
 
-			} elseif($p->type == 'link') {
+			} elseif($p->type == 'link' && (empty($post['content']) || stristr($post['content'], $p->link) == -1)) {
 				$post['content'] .= "\n\n" . $p->link;
 			}
 
@@ -233,13 +230,15 @@ class RFBP {
 				$link_target = ($opts['link_new_window']) ? "_blank" : ''; 
 
 				foreach($posts as $p) { 
-					$content = $p['content'];
+
+					$content = convert_smilies(utf8_decode($p['content']));
+
 					$shortened = false;
 
 					if(strlen($content) > $excerpt_length) {
-						$limit = strpos($p['content'], ' ',$excerpt_length); 
+						$limit = strpos($content, ' ',$excerpt_length); 
 						if($limit) {
-							$content = substr($p['content'], 0, $limit);
+							$content = substr($content, 0, $limit);
 							$shortened = true;
 						}
 					}

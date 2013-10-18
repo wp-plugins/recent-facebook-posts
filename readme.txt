@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.1
 Tested up to: 3.6.1
-Stable tag: 1.7.1
+Stable tag: 1.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -107,6 +107,11 @@ Use `<?php recent_facebook_posts(array('likes' => 1, 'excerpt_length => 140')); 
 3. This is where you'll find your Facebook Page Slug on Facebook.com. 
 
 == Changelog ==
+
+= 1.7.2 =
+* Fixed: No posts showing up for Scandinavian languages
+* Improved: Links will no longer show up twice
+* Added: Conversion of common smileys
 
 = 1.7.1 =
 * Fixed: fetching posts from wrong Facebook page. Sorry for the quick version push.
