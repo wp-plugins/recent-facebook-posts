@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.1
 Tested up to: 3.7
-Stable tag: 1.7.2
+Stable tag: 1.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,34 @@ el = div // which element to use as a post container?
 = Do you have a function I can use in template files? =
 Use `<?php recent_facebook_posts(array('likes' => 1, 'excerpt_length => 140')); ?>` in your theme files. The parameter is optional, it can be an array of the same values available for the shortcode.
 
+= How do I change the .. at the end of the excerpt? =
+You can change this using a so-called filter. Add the following snippet to your theme its `functions.php` file to change *..* into a link to the Facebook post.
+
+`
+function my_rfbp_read_more($more, $link)
+{
+	return '<a href="'. $link . '">Read more &raquo;</a>';
+}
+
+add_filter('rfbp_read_more', 'my_rfbp_read_more', 10, 2);
+`
+
+= How do I disable the automatic paragraphs? =
+`
+remove_filter('rfbp_content', 'wpautop');
+`
+
+= How do I add text to all posts? =
+`
+function my_rfbp_content($content, $link)
+{
+	return $content . " my appended text.";
+}
+
+add_filter('rfbp_content', 'my_rfbp_content', 10, 2);
+`
+
+
 == Screenshots ==
 
 1. The Recent Facebook Posts settings screen.
@@ -108,23 +136,28 @@ Use `<?php recent_facebook_posts(array('likes' => 1, 'excerpt_length => 140')); 
 
 == Changelog ==
 
-= 1.7.2 =
+= 1.7.3 - October 28, 2013 =
+* Added: `rfbp_read_more` filter.
+* Added: `rfbp_content` filter.
+* Added: option to unhook `wpautop` from `rfbp_content` filter.
+
+= 1.7.2 - October 18, 2013 =
 * Fixed: No posts showing up for Scandinavian languages
 * Improved: Links will no longer show up twice
 * Added: Conversion of common smileys
 
-= 1.7.1 =
+= 1.7.1 - October 17, 2013 =
 * Fixed: fetching posts from wrong Facebook page. Sorry for the quick version push.
 * Improved: default CSS
 
-= 1.7 =
+= 1.7 - October 16, 2013 =
 * Fixed issue where strings with dots where turned into (broken) links.
 * Improved: better linebreaks
 * Improved: Now using WP Transients for caching
 * Improved: Now using WP HTTP API for fetching posts, which allows for other transfer methods besides just cURL.
 * Improved: No user access token is required any more. Access tokens will now *never* expire.
 
-= 1.6 =
+= 1.6 - October 7, 2013 =
 * Improved code performance and readability
 * Improved usability of admin settings
 * Improved: cleaner HTML output
@@ -137,15 +170,15 @@ Use `<?php recent_facebook_posts(array('likes' => 1, 'excerpt_length => 140')); 
 
 **Important:** CSS Selectors and HTML output has changed in this version. If you're using custom styling rules you'll have to edit them after updating.
 
-= 1.5.3 =
+= 1.5.3 - October 3, 2013 =
 * Improved: Code improvement
 * Improved: UI improvement, implemented some HTML5 fields
 * Improved: Moved options page back to sub-item of Settings.
 
-= 1.5.2 =
+= 1.5.2 - October 1, 2013 =
 * Fixed: max-width in older browsers
 
-= 1.5.1 =
+= 1.5.1 - September 20, 2013 =
 * Improved: a lot of refactoring, code clean-up, etc.
 * Improved: "open link in new window" option now applies to ALL generated links
 

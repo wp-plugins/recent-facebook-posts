@@ -32,6 +32,8 @@ class RFBP {
 		// only on frontend
 		if(!is_admin()) {
 
+			add_filter('rfbp_content', 'wpautop');
+
 			include_once RFBP_PLUGIN_DIR . 'includes/helper-functions.php';
 			include_once RFBP_PLUGIN_DIR . 'includes/template-functions.php';
 
@@ -166,8 +168,8 @@ class RFBP {
 
 				$post['image'] = $image;
 
-			} elseif($p->type == 'link' && (empty($post['content']) || stristr($post['content'], $p->link) == -1)) {
-				$post['content'] .= "\n\n" . $p->link;
+			} elseif($p->type == 'link' && !stristr($post['content'], $p->link)) {
+				$post['content'] .= (empty($post['content'])) ? $p->link : "\n\n" . $p->link;
 			}
 
 			// calculate post like and comment counts
@@ -249,8 +251,10 @@ class RFBP {
 
 						<?php 
 						$content = make_clickable($content, $link_target); 
-						$content = ($shortened) ? $content . '..' : $content;
-						echo wpautop($content); ?>
+						$content = ($shortened) ? $content . apply_filters('rfbp_read_more', '..', $p['link']) : $content;
+						$content = apply_filters('rfbp_content', $content, $p['link']);
+
+						echo $content; ?>
 
 					</div>
 					<?php if($opts['img_size'] != 'dont_show' && isset($p['image']) && !empty($p['image'])) { ?>

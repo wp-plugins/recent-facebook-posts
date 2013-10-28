@@ -29,6 +29,6 @@ function rfbp_time_ago($timestamp)
 			$diff < 60          => array('second',  1)
 			);
 
-		$value = floor($diff/$intervals[1][1]);
-		return $value.' '.$intervals[1][0].($value > 1 ? 's' : '').' ago';
+		$value = floor($diff / $intervals[1][1]);
+		return $value.' '. $intervals[1][0] . ($value > 1 ? 's' : '').' ago';
 }
