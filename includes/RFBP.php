@@ -22,11 +22,6 @@ class RFBP {
 		// finish if this is an AJAX request
 		if(defined("DOING_AJAX") && DOING_AJAX) { return; }
 
-		// starts sessions, fixes app token problem
-		if(!session_id() && !headers_sent()) {
-			session_start();
-		}
-
 		$opts = $this->get_settings();
 
 		// only on frontend
