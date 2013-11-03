@@ -271,19 +271,21 @@ class RFBP {
 
 					</div>
 
-					<?php if($show_link_previews && isset($p['link_url']) && !empty($p['link_url']) && !empty($p['link_image']) && !empty($p['link_name'])) { ?>
+					<?php if($show_link_previews && isset($p['link_url']) && !empty($p['link_url']) && !empty($p['link_name'])) { ?>
 
 					<p class="rfbp-link-wrap">
 						<a class="rfbp-link" href="<?php echo $p['link_url']; ?>" rel="external nofollow" target="<?php echo $link_target; ?>">
 
+							<?php if(!empty($p['link_image']) || (apply_filters('rfbp_show_link_images', true) == false)) { ?>
 							<span class="rfbp-link-image-wrap">
 								<img class="rfbp-link-image" src="<?php echo esc_attr($p['link_image']); ?>" width="114" /> 
 							</span>
+							<?php } ?>
 
 							<span class="rfbp-link-text-wrap">
 								<span class="rfbp-link-name"><?php echo $p['link_name']; ?></span>
 								<?php if(isset($p['link_caption'])) { ?><span class="rfbp-link-caption"><?php echo $p['link_caption']; ?></span><?php } ?>
-								<?php if(isset($p['link_description'])) { ?><span class="rfbp-link-description"><?php echo $p['link_description']; ?></span><?php } ?>
+								<?php if(isset($p['link_description']) && !empty($p['link_description'])) { ?><span class="rfbp-link-description"><?php echo $p['link_description']; ?></span><?php } ?>
 							</span>
 
 						</a> 

@@ -38,8 +38,6 @@ class RFBP_Admin {
 			update_option('rfb_settings', $settings);
 
 			update_option('rfbp_version', RFBP_VERSION);
-
-
 		}
 
 		// maybe renew cache file

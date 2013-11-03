@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.1
 Tested up to: 3.7.1
-Stable tag: 1.8
+Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -146,6 +146,11 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 3. This is where you'll find your Facebook Page Slug on Facebook.com. 
 
 == Changelog ==
+
+= 1.8.1 - November 4, 2013 =
+* Fixed: link previews without images not showing
+* Added: filter `rfbp_show_link_images` to hide link preview images
+* Improved: Link preview CSS
 
 = 1.8 - November 3, 2013 =
 * Added: previews of attached links, with image and short description (like Facebook)
@@ -289,6 +294,9 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.8.1 =
+Added link previews (like Facebook) and Dutch translations. Please update your settings after updating.
 
 = 1.8 =
 Added link previews (like Facebook) and Dutch translations. Please update your settings after updating.
