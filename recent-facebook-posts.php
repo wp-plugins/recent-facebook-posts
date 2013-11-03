@@ -34,3 +34,4 @@ if ( ! defined( 'WP_CONTENT_DIR' ) ) { define( 'WP_CONTENT_DIR', ABSPATH . 'wp-c
 
 require RFBP_PLUGIN_DIR . 'includes/RFBP.php';
 new RFBP();
+

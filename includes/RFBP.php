@@ -276,7 +276,7 @@ class RFBP {
 					<p class="rfbp-link-wrap">
 						<a class="rfbp-link" href="<?php echo $p['link_url']; ?>" rel="external nofollow" target="<?php echo $link_target; ?>">
 
-							<?php if(!empty($p['link_image']) || (apply_filters('rfbp_show_link_images', true) == false)) { ?>
+							<?php if(!empty($p['link_image']) && (apply_filters('rfbp_show_link_images', true) !== false)) { ?>
 							<span class="rfbp-link-image-wrap">
 								<img class="rfbp-link-image" src="<?php echo esc_attr($p['link_image']); ?>" width="114" /> 
 							</span>
