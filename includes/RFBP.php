@@ -6,6 +6,7 @@ class RFBP {
 	private static $api = null;
 	private $options;
 	public $cache_renewed = false;
+	private $slug = 'recent-facebook-posts';
 
 	public static function instance() {
 		return self::$instance;
@@ -47,7 +48,14 @@ class RFBP {
 
 		add_action('rfbp_renew_cache', array($this, 'delete_transients'), 10);
 		add_action('rfbp_renew_cache', array($this, 'get_posts'), 11);
+
+		add_action('plugins_loaded', array($this, 'load_textdomain') );
 	}
+
+	public function load_textdomain() {
+  		load_plugin_textdomain( $this->slug, false, 'recent-facebook-posts/languages/' );
+	}
+
 
 	public function register_widget()
 	{
@@ -66,9 +74,8 @@ class RFBP {
 				'app_id' => '',
 				'app_secret' => '',
 				'fb_id' => 'DannyvanKootenCOM',
-				'cache_time' => 7200,
 				'load_css' => 1,
-				'link_text' => 'Find us on Facebook',
+				'page_link_text' => 'Find us on Facebook',
 				'link_new_window' => 0,
 				'img_size' => 'normal',
 				'img_width' => '',
@@ -163,8 +170,12 @@ class RFBP {
 
 				$post['image'] = $image;
 
-			} elseif($p->type == 'link' && !stristr($post['content'], $p->link)) {
-				$post['content'] .= (empty($post['content'])) ? $p->link : "\n\n" . $p->link;
+			} elseif($p->type == 'link') {
+				$post['link_image'] = (isset($p->picture)) ? $p->picture : '';
+				$post['link_name'] = (isset($p->name)) ? $p->name : '';
+				$post['link_caption'] = (isset($p->caption)) ? $p->caption : ''; 
+				$post['link_description'] = (isset($p->description)) ? $p->description : '';
+				$post['link_url'] = $p->link;	
 			}
 
 			// calculate post like and comment counts
@@ -183,14 +194,14 @@ class RFBP {
 			$post['timestamp'] = strtotime($p->created_time);
 			$post['like_count'] = $like_count;
 			$post['comment_count'] = $comment_count;
-			$post['link'] = "http://www.facebook.com/".$opts['fb_id']."/posts/".$idArray[1];
+			$post['url'] = "http://www.facebook.com/".$opts['fb_id']."/posts/".$idArray[1];
 			$posts[] = $post;
 
 		}
 
 		// store results in cache for later use
 		if($posts) {
-			set_transient('rfbp_posts', $posts, $opts['cache_time']); // user set cache time
+			set_transient('rfbp_posts', $posts, apply_filters('rfbp_cache_time', 3600)); // user set cache time
 			set_transient('rfbp_posts_fallback', $posts, 2629744); // 1 month
 			$this->cache_renewed = true;
 		}
@@ -200,6 +211,14 @@ class RFBP {
 
 	public function output($atts = array())
 	{
+
+		$opts = $this->get_settings();
+		$posts = $this->get_posts();
+
+		if(isset($atts['show_link'])) {
+			$atts['show_page_link'] = $atts['show_link'];
+		}
+
 		extract(shortcode_atts(array(
 			'number' => '5',
 			'likes' => 1,
@@ -207,11 +226,9 @@ class RFBP {
 			'excerpt_length' => 140,
 			'el' => 'div',
 			'origin' => 'shortcode',
-			'show_link' => false
+			'show_page_link' => false,
+			'show_link_previews' => ($opts['load_css'])
 			), $atts));
-
-		$opts = $this->get_settings();
-		$posts = $this->get_posts();
 
 		ob_start();
 		?>
@@ -228,7 +245,7 @@ class RFBP {
 
 				foreach($posts as $p) { 
 
-					$content = convert_smilies(utf8_decode($p['content']));
+					$content = utf8_decode($p['content']);
 
 					$shortened = false;
 
@@ -246,26 +263,48 @@ class RFBP {
 
 						<?php 
 						$content = make_clickable($content, $link_target); 
-						$content = ($shortened) ? $content . apply_filters('rfbp_read_more', '..', $p['link']) : $content;
-						$content = apply_filters('rfbp_content', $content, $p['link']);
+						$content = convert_smilies($content);
+						$content = ($shortened) ? $content . apply_filters('rfbp_read_more', '..', $p['url']) : $content;
+						$content = apply_filters('rfbp_content', $content, $p['url']);
 
 						echo $content; ?>
 
 					</div>
+
+					<?php if($show_link_previews && isset($p['link_url']) && !empty($p['link_url']) && !empty($p['link_image']) && !empty($p['link_name'])) { ?>
+
+					<p class="rfbp-link-wrap">
+						<a class="rfbp-link" href="<?php echo $p['link_url']; ?>" rel="external nofollow" target="<?php echo $link_target; ?>">
+
+							<span class="rfbp-link-image-wrap">
+								<img class="rfbp-link-image" src="<?php echo esc_attr($p['link_image']); ?>" width="114" /> 
+							</span>
+
+							<span class="rfbp-link-text-wrap">
+								<span class="rfbp-link-name"><?php echo $p['link_name']; ?></span>
+								<?php if(isset($p['link_caption'])) { ?><span class="rfbp-link-caption"><?php echo $p['link_caption']; ?></span><?php } ?>
+								<?php if(isset($p['link_description'])) { ?><span class="rfbp-link-description"><?php echo $p['link_description']; ?></span><?php } ?>
+							</span>
+
+						</a> 
+					</p>
+					
+					<?php } ?>
+
 					<?php if($opts['img_size'] != 'dont_show' && isset($p['image']) && !empty($p['image'])) { ?>
 					<p class="rfbp-image-wrap">
-						<a class="rfbp-image-link" target="<?php echo $link_target; ?>" href="<?php echo $p['link']; ?>" rel="nofollow">
+						<a class="rfbp-image-link" target="<?php echo $link_target; ?>" href="<?php echo $p['url']; ?>" rel="external nofollow">
 							<?php $max_img_width = (!empty($opts['img_width'])) ? $opts['img_width'].'px' : '100%'; $max_img_height = (!empty($opts['img_height'])) ? $opts['img_height'].'px' : 'none'; ?>
 							<img class="rfbp-image" src="<?php echo $p['image']; ?>" style="max-width: <?php echo $max_img_width; ?>; max-height: <?php echo $max_img_height; ?>" alt="" />
 						</a>
 					</p>
 					<?php } ?>
 					<p class="rfbp-post-link-wrap">
-						<a target="<?php echo $link_target; ?>" class="rfbp-post-link" href="<?php echo $p['link']; ?>" rel="nofolloW">
-							<?php if($likes) { ?><span class="rfbp-like-count"><?php echo $p['like_count']; ?> <span>likes<?php if($comments) { ?>, <?php } ?></span></span><?php } ?>
-							<?php if($comments) { ?><span class="rfbp-comment-count"><?php echo $p['comment_count']; ?> <span>comments</span></span><?php } ?>
+						<a target="<?php echo $link_target; ?>" class="rfbp-post-link" href="<?php echo $p['url']; ?>" rel="external nofolloW">
+							<?php if($likes) { ?><span class="rfbp-like-count"><?php echo $p['like_count']; ?> <span><?php _e("likes", $this->slug); ?><?php if($comments) { ?>, <?php } ?></span></span><?php } ?>
+							<?php if($comments) { ?><span class="rfbp-comment-count"><?php echo $p['comment_count']; ?> <span><?php _e("comments", $this->slug); ?></span></span><?php } ?>
 							<?php if($likes || $comments) { ?> · <?php } ?>
-							<span class="rfbp-timestamp" title="<?php echo date('l, F j, Y', $p['timestamp']) ?> at <?php echo date('G:i', $p['timestamp']); ?>"><?php echo rfbp_time_ago($p['timestamp']); ?></span>
+							<span class="rfbp-timestamp" title="<?php printf(__('%1$s at %2$s', $this->slug), date('l, F j, Y', $p['timestamp']), date('G:i', $p['timestamp'])); ?>"><?php echo rfbp_time_ago($p['timestamp']); ?></span>
 						</a>
 					</p>
 					</<?php echo $el; ?>>
@@ -276,14 +315,14 @@ class RFBP {
 				if($el == 'li') { echo '</ul>'; }
 
 			} else {
-				?><p>No recent Facebook posts to show.</p><?php
+				?><p><?php _e("No recent Facebook posts to show", $this->slug); ?></p><?php
 				if(current_user_can('manage_options')) { 
-					?><p><strong>Admins only notice:</strong> Did you <a href="<?php echo admin_url('options-general.php?page=rfbp'); ?>">configure the plugin</a> properly?</p><?php
+					?><p><strong><?php _e("Admins only notice", $this->slug); ?>:</strong> Did you <a href="<?php echo admin_url('options-general.php?page=rfbp'); ?>">configure the plugin</a> properly?</p><?php
 				}
 			} ?>
 
-			<?php if($show_link) { ?>
-				<p class="rfbp-page-link-wrap"><a class="rfbp-page-link" href="http://www.facebook.com/<?php echo $opts['fb_id']; ?>/" rel="external nofollow" target="<?php echo $link_target; ?>"><?php echo strip_tags($opts['link_text']); ?></a></p>
+			<?php if($show_page_link) { ?>
+				<p class="rfbp-page-link-wrap"><a class="rfbp-page-link" href="http://www.facebook.com/<?php echo $opts['fb_id']; ?>/" rel="external nofollow" target="<?php echo $link_target; ?>"><?php echo $opts['page_link_text']; ?></a></p>
 			<?php } ?>
 
 			</div>

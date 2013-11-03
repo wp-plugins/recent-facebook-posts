@@ -3,8 +3,8 @@ Contributors: DvanKooten
 Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.1
-Tested up to: 3.7
-Stable tag: 1.7.3
+Tested up to: 3.7.1
+Stable tag: 1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,6 +26,7 @@ Display a list of your most recent Facebook posts in your posts or pages using t
 * High performance. Facebook posts are cached for a customizable period.
 * Customizable. Your Facebook updates will blend in with your theme perfectly and can be easily styled because of smart CSS selectors.
 * Easy Configuration, the plugin comes with a comprehensive [installation guide](http://wordpress.org/plugins/recent-facebook-posts/installation/) and [screenshots](http://wordpress.org/plugins/recent-facebook-posts/screenshots/).
+* Translation ready!
 
 **Demo**
 
@@ -90,12 +91,13 @@ likes = 1 // show like count, 1 = yes, 0 = no
 comments = 1 // show comment count, 1 = yes, 0 = no
 excerpt_length = 140 // the number of characters to show from each post
 number = 5 // number of posts to show,
-show_link = 0 // show a link to Facebook page after posts?
+show_page_link = 0 // show a link to Facebook page after posts?
 el = div // which element to use as a post container?
+show_link_previews = 1 // show preview of attached links?
 `
 
 *Shortcode example*
-`[recent_facebook_posts number=10 likes=1 comments=1 excerpt_length=250 show_link=1]`
+`[recent_facebook_posts number=10 likes=1 comments=1 excerpt_length=250 show_page_link=1 show_link_previews=1]`
 
 = Do you have a function I can use in template files? =
 Use `<?php recent_facebook_posts(array('likes' => 1, 'excerpt_length => 140')); ?>` in your theme files. The parameter is optional, it can be an array of the same values available for the shortcode.
@@ -127,6 +129,15 @@ function my_rfbp_content($content, $link)
 add_filter('rfbp_content', 'my_rfbp_content', 10, 2);
 `
 
+= How do I change the time posts are cached? =
+`
+function my_rfbp_cache_time($time)
+{
+	return 3600; // 1 hour
+}
+
+add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
+`
 
 == Screenshots ==
 
@@ -135,6 +146,13 @@ add_filter('rfbp_content', 'my_rfbp_content', 10, 2);
 3. This is where you'll find your Facebook Page Slug on Facebook.com. 
 
 == Changelog ==
+
+= 1.8 - November 3, 2013 =
+* Added: previews of attached links, with image and short description (like Facebook)
+* Added: Translation files
+* Added: Dutch translations
+* Improved: Moved cache time to a filter.
+* Improved: Removed `session_start()` call.
 
 = 1.7.3 - October 28, 2013 =
 * Added: `rfbp_read_more` filter.
@@ -271,6 +289,9 @@ add_filter('rfbp_content', 'my_rfbp_content', 10, 2);
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.8 =
+Added link previews (like Facebook) and Dutch translations. Please update your settings after updating.
 
 = 1.6 =
 CSS and HTML output have changed. If you're using custom CSS styles you will have to edit them after updating.

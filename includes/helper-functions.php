@@ -16,7 +16,7 @@ function rfbp_time_ago($timestamp)
 	$diff = time() - (int) $timestamp;
 
 		if ($diff == 0) 
-			return 'just now';
+			return __('just now', "recent-facebook-posts");
 
 		$intervals = array
 		(
@@ -30,5 +30,42 @@ function rfbp_time_ago($timestamp)
 			);
 
 		$value = floor($diff / $intervals[1][1]);
-		return $value.' '. $intervals[1][0] . ($value > 1 ? 's' : '').' ago';
+
+		$time_unit = $intervals[1][0];
+
+		switch($time_unit) {
+			case 'year':
+				return sprintf(_n('1 year ago', '%d years ago', $value, "recent-facebook-posts"), $value); 
+			break;
+
+			case 'month':
+				return sprintf(_n('1 month ago', '%d months ago', $value, "recent-facebook-posts"), $value); 
+			break;
+
+			case 'week':
+				return sprintf(_n('1 week ago', '%d weeks ago', $value, "recent-facebook-posts"), $value); 
+			break;
+
+			case 'day':
+				return sprintf(_n('1 day ago', '%d days ago', $value, "recent-facebook-posts"), $value); 
+			break;
+
+			case 'hour':
+				return sprintf(_n('1 hour ago', '%d hours ago', $value, "recent-facebook-posts"), $value); 
+			break;
+
+			case 'minute':
+				return sprintf(_n('1 minute ago', '%d minutes ago', $value, "recent-facebook-posts"), $value); 
+			break;
+
+			case 'second':
+				return sprintf(_n('1 second ago', '%d seconds ago', $value, "recent-facebook-posts"), $value); 
+			break;
+
+			default:
+				return sprintf(__('Some time ago', "recent-facebook-posts")); 
+			break;
+		}
+		
+		
 }
