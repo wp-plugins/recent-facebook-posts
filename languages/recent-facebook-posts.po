@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Recent Facebook Posts\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/recent-facebook-posts\n"
-"POT-Creation-Date: 2013-11-03 20:23+0100\n"
-"PO-Revision-Date: 2013-11-03 20:25+0100\n"
+"POT-Creation-Date: 2013-11-17 19:06+0100\n"
+"PO-Revision-Date: 2013-11-17 19:06+0100\n"
 "Last-Translator: Danny van Kooten <hi@dannyvankooten.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,6 +15,80 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SearchPath-0: ../.\n"
+
+#: .././includes/class-admin.php:68
+msgid "Some settings have changed which invalidated the cached Facebook posts."
+msgstr ""
+
+#: .././includes/class-admin.php:68
+#: .././includes/views/settings_page.html.php:117
+msgid "Clear Cache"
+msgstr ""
+
+#: .././includes/class-admin.php:99
+msgid "<strong>Cache cleared!</strong> You succesfully cleared the cache."
+msgstr ""
+
+#: .././includes/class-admin.php:112
+msgid "Settings"
+msgstr ""
+
+#: .././includes/class-public.php:233
+msgid "likes"
+msgstr ""
+
+#: .././includes/class-public.php:234
+msgid "comments"
+msgstr ""
+
+#: .././includes/class-public.php:236
+#, php-format
+msgid "%1$s at %2$s"
+msgstr ""
+
+#: .././includes/class-public.php:247
+msgid "No recent Facebook posts to show"
+msgstr ""
+
+#: .././includes/class-public.php:249
+msgid "Admins only notice"
+msgstr ""
+
+#: .././includes/class-widget.php:11
+msgid "Lists a number of your most recent Facebook posts."
+msgstr ""
+
+#: .././includes/class-widget.php:15
+msgid "Recent Facebook Posts"
+msgstr ""
+
+#: .././includes/class-widget.php:37
+msgid "Title:"
+msgstr ""
+
+#: .././includes/class-widget.php:42
+msgid "Number of posts:"
+msgstr ""
+
+#: .././includes/class-widget.php:47
+msgid "Excerpt length:"
+msgstr ""
+
+#: .././includes/class-widget.php:53
+msgid "Show like count?"
+msgstr ""
+
+#: .././includes/class-widget.php:58
+msgid "Show comment count?"
+msgstr ""
+
+#: .././includes/class-widget.php:63
+msgid "Show link to Facebook page?"
+msgstr ""
+
+#: .././includes/class-widget.php:68
+msgid "Show link previews?"
+msgstr ""
 
 #: .././includes/helper-functions.php:19
 msgid "just now"
@@ -71,79 +145,6 @@ msgstr[1] ""
 
 #: .././includes/helper-functions.php:66
 msgid "Some time ago"
-msgstr ""
-
-#: .././includes/RFBP.php:300
-msgid "likes"
-msgstr ""
-
-#: .././includes/RFBP.php:301
-msgid "comments"
-msgstr ""
-
-#: .././includes/RFBP.php:303
-#, php-format
-msgid "%1$s at %2$s"
-msgstr ""
-
-#: .././includes/RFBP.php:314
-msgid "No recent Facebook posts to show"
-msgstr ""
-
-#: .././includes/RFBP.php:316
-msgid "Admins only notice"
-msgstr ""
-
-#: .././includes/RFBP_Admin.php:68
-msgid "Some settings have changed which invalidated the cached Facebook posts."
-msgstr ""
-
-#: .././includes/RFBP_Admin.php:68
-msgid "Renew Cache"
-msgstr ""
-
-#: .././includes/RFBP_Admin.php:99
-msgid "<strong>Cache renewed!</strong> You succesfully renewed the cache."
-msgstr ""
-
-#: .././includes/RFBP_Admin.php:112
-msgid "Settings"
-msgstr ""
-
-#: .././includes/RFBP_Widget.php:12
-msgid "Lists a number of your most recent Facebook posts."
-msgstr ""
-
-#: .././includes/RFBP_Widget.php:16
-msgid "Recent Facebook Posts"
-msgstr ""
-
-#: .././includes/RFBP_Widget.php:38
-msgid "Title:"
-msgstr ""
-
-#: .././includes/RFBP_Widget.php:43
-msgid "Number of posts:"
-msgstr ""
-
-#: .././includes/RFBP_Widget.php:48
-msgid "Excerpt length:"
-msgstr ""
-
-#: .././includes/RFBP_Widget.php:54
-msgid "Show like count?"
-msgstr ""
-
-#: .././includes/RFBP_Widget.php:59
-msgid "Show comment count?"
-msgstr ""
-
-#: .././includes/RFBP_Widget.php:64
-msgid "Show link to Facebook page?"
-msgstr ""
-
-#: .././includes/RFBP_Widget.php:69
-msgid "Show link previews?"
 msgstr ""
 
 #: .././includes/views/settings_page.html.php:29
@@ -223,12 +224,8 @@ msgstr ""
 #: .././includes/views/settings_page.html.php:113
 msgid ""
 "Because fetching posts from Facebook is slow the posts are cached for "
-"<strong>30 minutes</strong>. You can manually renew the cache or test your "
-"configuration using the button below."
-msgstr ""
-
-#: .././includes/views/settings_page.html.php:117
-msgid "Renew Facebook Posts"
+"<strong>30 minutes</strong>. You can manually clear the cache using the "
+"button below."
 msgstr ""
 
 #~ msgid "Show attached links?"

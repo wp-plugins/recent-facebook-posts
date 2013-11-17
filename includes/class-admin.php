@@ -2,6 +2,8 @@
 
 class RFBP_Admin {
 
+	private $cache_cleared = false;
+
 	public function __construct() {
 
 		global $pagenow;
@@ -30,7 +32,7 @@ class RFBP_Admin {
 			delete_transient('rfbp_posts');
 			delete_transient('rfbp_posts_fallback');
 
-			$settings = $this->get_settings();
+			$settings = rfbp_get_settings();
 			if(isset($settings['link_text'])) { 
 				$settings['page_link_text'] = $settings['link_text']; 
 				unset($settings['link_text']);
@@ -42,15 +44,12 @@ class RFBP_Admin {
 
 		// maybe renew cache file
 		if ( isset( $_POST['renew_cache'] ) ) {
+
 			delete_transient('rfbp_posts');
 			delete_transient('rfbp_posts_fallback');
 
-			RFBP::instance()->get_posts();
+			$this->cache_cleared = true;
 		}
-	}
-
-	public function get_settings() {
-		return RFBP::instance()->get_settings();
 	}
 
 	public function register_settings() {
@@ -58,7 +57,7 @@ class RFBP_Admin {
 	}
 
 	public function sanitize_settings( $opts ) {
-		$old_opts = $this->get_settings();
+		$old_opts = rfbp_get_settings();
 
 		// fb config
 		$opts['app_id'] = trim($opts['app_id']);
@@ -66,7 +65,7 @@ class RFBP_Admin {
 		$opts['fb_id'] = trim($opts['fb_id']);
 
 		if(($old_opts['fb_id'] !== $opts['fb_id']) || ($old_opts['img_size'] !== $opts['img_size']) || ($old_opts['app_id'] !== $opts['app_id']) || ($old_opts['app_secret'] !== $opts['app_secret'])) {
-			add_settings_error('rfbp', 'rfbp-cache-invalid', __('Some settings have changed which invalidated the cached Facebook posts.', 'recent-facebook-posts'). '<form action="'. admin_url('options-general.php?page=rfbp') .'" method="post"><input type="hidden" name="renew_cache" value="1" /><input type="submit" class="button-primary" value="'. __('Renew Cache', 'recent-facebook-posts') .'" /></form>', "updated");
+			add_settings_error('rfbp', 'rfbp-cache-invalid', __('Some settings have changed which invalidated the cached Facebook posts.', 'recent-facebook-posts'). '<form action="'. admin_url('options-general.php?page=rfbp') .'" method="post"><input type="hidden" name="renew_cache" value="1" /><input type="submit" class="button-primary" value="'. __('Clear Cache', 'recent-facebook-posts') .'" /></form>', "updated");
 		}
 
 		// appearance opts
@@ -90,14 +89,14 @@ class RFBP_Admin {
 
 	public function settings_page() {
 
-		$opts = $this->get_settings();
+		$opts = rfbp_get_settings();
 
 		$ready = (!empty($opts['app_id']) && !empty($opts['app_secret']) && !empty($opts['fb_id']));
-		$api = RFBP::api();
+		$api = rfbp_get_api();
 
 		// show user-friendly error message
-		if(RFBP::instance()->cache_renewed) {
-			 $notice = __("<strong>Cache renewed!</strong> You succesfully renewed the cache.", 'recent-facebook-posts');
+		if($this->cache_cleared) {
+			 $notice = __("<strong>Cache cleared!</strong> You succesfully cleared the cache.", 'recent-facebook-posts');
 		}
 
 		include_once RFBP_PLUGIN_DIR . 'includes/views/settings_page.html.php';

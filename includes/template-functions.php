@@ -2,5 +2,6 @@
 
 function recent_facebook_posts($args = array())
 {
-	echo RFBP::instance()->output($args);
+	$rfbp = rfbp_get_class();
+	echo $rfbp->output($args);
 }
