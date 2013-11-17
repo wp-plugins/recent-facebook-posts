@@ -232,7 +232,7 @@ class RFBP_Public {
 						<a target="<?php echo $link_target; ?>" class="rfbp-post-link" href="<?php echo $p['url']; ?>" rel="external nofolloW">
 							<?php if ( $likes ) { ?><span class="rfbp-like-count"><?php echo $p['like_count']; ?> <span><?php _e( "likes", 'recent-facebook-posts' ); ?><?php if ( $comments ) { ?>, <?php } ?></span></span><?php } ?>
 							<?php if ( $comments ) { ?><span class="rfbp-comment-count"><?php echo $p['comment_count']; ?> <span><?php _e( "comments", 'recent-facebook-posts' ); ?></span></span><?php } ?>
-							<?php if ( $likes || $comments ) { ?> Â· <?php } ?>
+							<?php if ( $likes || $comments ) { ?> &sdot; <?php } ?>
 							<span class="rfbp-timestamp" title="<?php printf( __( '%1$s at %2$s', 'recent-facebook-posts' ), date( 'l, F j, Y', $p['timestamp'] ), date( 'G:i', $p['timestamp'] ) ); ?>"><?php echo rfbp_time_ago( $p['timestamp'] ); ?></span>
 						</a>
 					</p>
