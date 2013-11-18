@@ -3,55 +3,60 @@
 		<div class="rfbp-column rfbp-primary">
 
 			<h2>Recent Facebook Posts</h2>
-			
-			<?php if($api->has_error()) { ?>
-			<div id="setting-error-settings_updated" class="settings-error error">
-				<p>
-					<strong>Error:</strong> <?php echo $api->get_error_message(); ?>
-				</p>
-			</div>
-			<?php }
 
-			if(isset($notice)) { ?>
+			<?php if(isset($notice)) { ?>
 			<div id="setting-error-settings_updated" class="updated settings-error"> 
 				<p>
 					<?php echo $notice; ?>
 				</p>
 			</div>
-			<?php 
-		}
-		?>
+			<?php } ?>
 
 
 		<form method="post" action="options.php">
 			<?php settings_fields( 'rfb_settings_group' ); ?>
+	
+			<div class="rfbp-facebook-settings rfbp-<?php echo (rfbp_valid_config()) ? 'valid' : 'invalid'; ?>">
+				<h3><?php _e('Facebook Settings', 'recent-facebook-posts'); ?></h3>
 
-			<h3><?php _e('Facebook Settings', 'recent-facebook-posts'); ?></h3>
-			<table class="form-table">
-				<tr valign="top" <?php if(empty($opts['app_id'])) echo 'class="rfbp-row-error"'; ?>>
-					<th scope="row"><label for="rfb_app_id"><?php _e('Facebook App ID/API Key', 'recent-facebook-posts'); ?></label></th>
-					<td>
-						<input type="text" class="widefat" placeholder="Eg: 123456789012345" id="rfb_app_id" name="rfb_settings[app_id]" value="<?php echo esc_attr($opts['app_id']); ?>" required />
-						<small class="help"><a href="https://developers.facebook.com/apps">get from developers.facebook.com/apps</a></small>
-					</td>
-				</tr>
+				<?php if(!rfbp_valid_config()) { ?>
+					<div class="rfbp-info">
+						<p>
+							<?php _e('This plugin needs a Facebook application to work.', 'recent-facebook-posts'); ?> 
+							<?php _e('Please fill in the Facebook Settings fields after creating your application.', 'recent-facebook-posts'); ?>
+						</p>
+						<p>
+							<?php printf(__('Not sure how to proceed? Please take a close look at the %sInstallation Instructions%s on my website.', 'recent-facebook-posts'), '<a href="http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/">', '</a>'); ?>
+						</p>
+					</div>
+				<?php } ?>
 
-				<tr valign="top" <?php if(empty($opts['app_secret'])) echo 'class="rfbp-row-error"'; ?>>
-					<th scope="row"><label for="rfb_app_secret"><?php _e('Facebook App Secret', 'recent-facebook-posts'); ?></label></th>
-					<td>
-						<input type="text" class="widefat" placeholder="Eg: 16vgrz4hk45wvh29k2puk45wvk2h29pu"  id="rfb_app_secret" name="rfb_settings[app_secret]" value="<?php echo esc_attr($opts['app_secret']); ?>" required />
-						<small class="help"><a href="https://developers.facebook.com/apps">get from developers.facebook.com/apps</a></small>
-					</td>
-				</tr>
+				<table class="form-table">
+					<tr valign="top" <?php if(empty($opts['app_id'])) echo 'class="rfbp-row-error"'; ?>>
+						<th scope="row"><label for="rfb_app_id"><?php _e('Facebook App ID/API Key', 'recent-facebook-posts'); ?></label></th>
+						<td>
+							<input type="text" class="widefat" placeholder="Eg: 123456789012345" id="rfb_app_id" name="rfb_settings[app_id]" value="<?php echo esc_attr($opts['app_id']); ?>" required />
+							<small class="help"><a href="https://developers.facebook.com/apps">get from developers.facebook.com/apps</a></small>
+						</td>
+					</tr>
 
-				<tr valign="top" <?php if(empty($opts['fb_id'])) echo 'class="rfbp-row-error"'; ?>>
-					<th scope="row"><label for="rfb_fb_id"><?php _e('Facebook Page ID or Slug', 'recent-facebook-posts'); ?></label></th>
-					<td>
-						<input type="text" class="widefat" placeholder="Eg: DannyvanKootenCOM" id="rfb_fb_id" name="rfb_settings[fb_id]" value="<?php echo esc_attr($opts['fb_id']); ?>" required />
-						<small><a target="_blank" href="http://findmyfacebookid.com/"><?php _e('Use this tool to find the numeric ID of the Facebook page you want to fetch posts from', 'recent-facebook-posts'); ?></a></small>
-					</td>
-				</tr>
-			</table>
+					<tr valign="top" <?php if(empty($opts['app_secret'])) echo 'class="rfbp-row-error"'; ?>>
+						<th scope="row"><label for="rfb_app_secret"><?php _e('Facebook App Secret', 'recent-facebook-posts'); ?></label></th>
+						<td>
+							<input type="text" class="widefat" placeholder="Eg: 16vgrz4hk45wvh29k2puk45wvk2h29pu"  id="rfb_app_secret" name="rfb_settings[app_secret]" value="<?php echo esc_attr($opts['app_secret']); ?>" required />
+							<small class="help"><a href="https://developers.facebook.com/apps">get from developers.facebook.com/apps</a></small>
+						</td>
+					</tr>
+
+					<tr valign="top" <?php if(empty($opts['fb_id'])) echo 'class="rfbp-row-error"'; ?>>
+						<th scope="row"><label for="rfb_fb_id"><?php _e('Facebook Page ID or Slug', 'recent-facebook-posts'); ?></label></th>
+						<td>
+							<input type="text" class="widefat" placeholder="Eg: DannyvanKootenCOM" id="rfb_fb_id" name="rfb_settings[fb_id]" value="<?php echo esc_attr($opts['fb_id']); ?>" required />
+							<small><a target="_blank" href="http://findmyfacebookid.com/"><?php _e('Use this tool to find the numeric ID of the Facebook page you want to fetch posts from', 'recent-facebook-posts'); ?></a></small>
+						</td>
+					</tr>
+				</table>
+			</div>
 
 			<h3><?php _e('Appearance', 'recent-facebook-posts'); ?></h3>
 			<table class="form-table">
@@ -85,7 +90,7 @@
 				</tbody>
 				<tbody id="rfb_img_options" <?php if($opts['img_size'] == 'dont_show') echo 'style="display:none;"'; ?>>
 					<tr valign="top">
-						<th><?php _e('Image dimensions', 'recent-facebook-posts'); ?><br /><small>(in pixels)</small></th>
+						<th><?php _e('Image dimensions', 'recent-facebook-posts'); ?><br /><small>(in pixels, optional)</small></th>
 						<td>
 							<label style="float:left; margin-right:20px; ">
 								<?php _e('Max Width', 'recent-facebook-posts'); ?><br />
@@ -108,15 +113,20 @@
 
 		</form>
 
-		<?php if($ready) { ?>
-		<h3>Facebook Posts Cache</h3>
-		<p><?php _e('Because fetching posts from Facebook is slow the posts are cached for <strong>30 minutes</strong>. You can manually clear the cache using the button below.', 'recent-facebook-posts'); ?></p>
-		<p>
+		<?php if(rfbp_valid_config()) { ?>
+			<h3 class="rfbp-title">Test Configuration</h3>
+			<p><?php _e('Test your plugin configuration using the button below.', 'recent-facebook-posts'); ?></p>
 			<form action="<?php echo admin_url('options-general.php?page=rfbp'); ?>" method="post">
-				<input type="hidden" name="renew_cache" value="1" />
+				<input type="hidden" name="rfbp-test-config" value="1" />
+				<input type="submit" class="button-primary" value="<?php _e('Test Configuration', 'recent-facebook-posts'); ?>" />
+			</form>
+
+			<h3 class="rfbp-title">Facebook Posts Cache</h3>
+			<p><?php _e('Because fetching posts from Facebook is slow the posts are cached for <strong>30 minutes</strong>. You can manually clear the cache using the button below.', 'recent-facebook-posts'); ?></p>
+			<form action="<?php echo admin_url('options-general.php?page=rfbp'); ?>" method="post">
+				<input type="hidden" name="rfbp-clear-cache" value="1" />
 				<input type="submit" class="button-primary" value="<?php _e('Clear Cache', 'recent-facebook-posts'); ?>" />
 			</form>
-		</p>
 		<?php } ?>
 	</div>
 

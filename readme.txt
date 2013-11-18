@@ -57,7 +57,6 @@ This plugin requires a Facebook application to fetch posts from Facebook.
 1. Copy and paste your Facebook `App ID/API Key` and `App Secret` into the setting fields. 
 1. Find the numeric Facebook ID of your public Facebook page using [this website](http://findmyfacebookid.com/).
 1. Copy paste the ID in the `Facebook Page ID` field.
-1. Test if fetching posts works by clicking the "Renew Facebook Posts" button.
 1. Add `[recent_facebook_posts]` to the page where you would like to show a list of recent Facebook posts or use the widget.
 
 = Extra notes =
@@ -74,8 +73,8 @@ With this plugin you can show a list of the most recent Facebook posts of a publ
 = How to configure this plugin? =
 You need to create a Facebook application for this plugin to work. Have a **close** look at the [installation instructions](http://wordpress.org/plugins/recent-facebook-posts/installation/).
 
-= Do you have a working demo I can take a look at? =
-Sure, I use the plugin on my own [WordPress website](http://dannyvankooten.com/), in the middle footer widget.
+= No posts are showing.. =
+The plugin is only able to fetch posts from **public** pages with posts which are publicly available. Check your page its privacy settings and make sure you are using a page instead of a personal profile or group.
 
 = I want to apply custom styling to the Facebook posts. How do I go about this? =
 You can add custom CSS rules to your theme stylesheet. This file is usually located here in `/wp-content/themes/your-theme-name/style.css`.
@@ -146,6 +145,14 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 3. This is where you'll find your Facebook Page Slug on Facebook.com. 
 
 == Changelog ==
+
+= 1.8.4 - November 20, 2013 =
+* Improved: a cache renewal is no longer required after changing the image size
+* Improved: after changing important settings, cache will automatically be cleared
+* Improved: added a *test configuration* button which performs a simple ping to Facebook.
+* Improved: added an info message for new users
+* Improved: namespaced the trigger for renewing the cache
+* Improved: code clean-up
 
 = 1.8.3 - November 17, 2013 =
 * Fixed: removed weird character between comment count and timestamp

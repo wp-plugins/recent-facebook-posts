@@ -16,8 +16,7 @@ class RFBP_API {
 	public function get_posts()
 	{
 		$result = $this->call("{$this->fb_id}/posts", array(
-			'fields' => 'id,picture,type,from,message,status_type,object_id,picture,name,caption,description,link,created_time,comments.limit(1).summary(true),likes.limit(1).summary(true)',
-			'access_token' => "{$this->app_id}|{$this->app_secret}"
+			'fields' => 'id,picture,type,from,message,status_type,object_id,picture,name,caption,description,link,created_time,comments.limit(1).summary(true),likes.limit(1).summary(true)'
 		));
 		
 		if($result) {
@@ -32,11 +31,26 @@ class RFBP_API {
 		return false;
 	}
 
+	public function ping()
+	{
+		$result = $this->call("{$this->fb_id}/posts", array('fields' => 'name', 'limit' => 1) );
+
+		if($result) {
+			if(isset($result->data)) {
+				return true;
+			} else {
+				$this->error = $result->error;
+				return false;
+			}
+		}
+	}
+
 	private function call($endpoint, array $data = array())
 	{
 		if(empty($this->app_id) || empty($this->app_secret)) { return false; }
 
 		$url = "https://graph.facebook.com/{$endpoint}";
+		$data['access_token'] = "{$this->app_id}|{$this->app_secret}";
 
 		$url = add_query_arg($data, $url);
 

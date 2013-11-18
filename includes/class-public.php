@@ -85,7 +85,7 @@ class RFBP_Public {
 			// set post content and image
 			if ( $p->type == 'photo' ) {
 
-				$image = "//graph.facebook.com/". $p->object_id . '/picture?type=' . $opts['img_size'];
+				$image = "//graph.facebook.com/". $p->object_id . '/picture';
 				$post['image'] = $image;
 
 			} elseif ( $p->type == 'video' ) {
@@ -224,7 +224,7 @@ class RFBP_Public {
 					<p class="rfbp-image-wrap">
 						<a class="rfbp-image-link" target="<?php echo $link_target; ?>" href="<?php echo $p['url']; ?>" rel="external nofollow">
 							<?php $max_img_width = ( !empty( $opts['img_width'] ) ) ? $opts['img_width'].'px' : '100%'; $max_img_height = ( !empty( $opts['img_height'] ) ) ? $opts['img_height'].'px' : 'none'; ?>
-							<img class="rfbp-image" src="<?php echo $p['image']; ?>" style="max-width: <?php echo $max_img_width; ?>; max-height: <?php echo $max_img_height; ?>" alt="" />
+							<img class="rfbp-image" src="<?php echo esc_attr($p['image'] . '?type=' . $opts['img_size']); ?>" style="max-width: <?php echo $max_img_width; ?>; max-height: <?php echo $max_img_height; ?>" alt="" />
 						</a>
 					</p>
 					<?php } ?>

@@ -8,7 +8,7 @@ function rfbp_get_settings() {
 		$defaults = array(
 			'app_id' => '',
 			'app_secret' => '',
-			'fb_id' => 'DannyvanKootenCOM',
+			'fb_id' => '',
 			'load_css' => 1,
 			'page_link_text' => 'Find us on Facebook',
 			'link_new_window' => 0,
@@ -42,8 +42,7 @@ function rfbp_load_textdomain() {
 
 add_action('plugins_loaded', 'rfbp_load_textdomain');
 
-function rfbp_get_class()
-{
+function rfbp_get_class() {
 	static $class;
 
 	if(!$class) {
@@ -64,4 +63,10 @@ function rfbp_get_api() {
 	}
 
 	return $api;
+}
+
+function rfbp_valid_config() {
+	$opts = rfbp_get_settings();
+
+	return (!empty($opts['fb_id']) && !empty($opts['app_id']) && !empty($opts['app_secret']) );
 }

@@ -26,9 +26,21 @@
 	clear:both; 
 }
 
-.rfbp-row-error label{ 
-	color:red; 
+.rfbp-info {
+	padding:5px 15px;
+	color: #3a87ad;
+	background-color: #d9edf7;
+	border-color: #bce8f1;
 }
+
+.rfbp-alert { 
+	padding:5px 15px;
+	color: #c09853;
+	background-color: #fcf8e3;
+	border-color: #faebcc;
+}
+
+.rfbp-title{ margin-top: 2em; }
 
 @media(max-width: 919px) {
 	.rfbp-column{
