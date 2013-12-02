@@ -17,8 +17,6 @@ class RFBP_Public {
 
 		$opts = rfbp_get_settings();
 
-		add_filter( 'rfbp_content', 'wpautop' );
-
 		include_once RFBP_PLUGIN_DIR . 'includes/helper-functions.php';
 		include_once RFBP_PLUGIN_DIR . 'includes/template-functions.php';
 
@@ -28,6 +26,11 @@ class RFBP_Public {
 		if ( $opts['load_css'] ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'load_css' ) );
 		}
+
+		add_filter( 'rfbp_content', 'wptexturize' ) ;
+		add_filter( 'rfbp_content', 'convert_smilies' );
+		add_filter( 'rfbp_content', 'convert_chars' );
+		add_filter( 'rfbp_content', 'wpautop' );
 	}
 
 	public function load_css() {
@@ -70,9 +73,20 @@ class RFBP_Public {
 				continue;
 			}
 
-			// skip empty status updates and friend approvals
-			if ( $p->type == 'status' && ( !isset( $p->message ) || empty( $p->message ) ) ) { continue; }
+			// skip empty status updates
+			if ($p->type == 'status' && (!isset($p->message) || empty($p->message) ) ) {
+				continue;
+			} 
+
+			if ($p->type == 'link' && !isset($p->name) ) {
+				continue;
+			}
+
+			// skip friend approvals
 			if ( $p->type == 'status' && $p->status_type == 'approved_friend' ) { continue; }
+
+
+			
 
 			//split user and post ID (userID_postID)
 			$idArray = explode( "_", $p->id );
@@ -172,7 +186,7 @@ class RFBP_Public {
 
 			foreach ( $posts as $p ) {
 
-				$content = utf8_decode( $p['content'] );
+				$content = $p['content'];
 
 				$shortened = false;
 
@@ -190,7 +204,6 @@ class RFBP_Public {
 
 						<?php
 				$content = make_clickable( $content, $link_target );
-				$content = convert_smilies( $content );
 				$content = ( $shortened ) ? $content . apply_filters( 'rfbp_read_more', '..', $p['url'] ) : $content;
 				$content = apply_filters( 'rfbp_content', $content, $p['url'] );
 
@@ -202,7 +215,6 @@ class RFBP_Public {
 
 					<p class="rfbp-link-wrap">
 						<a class="rfbp-link" href="<?php echo $p['link_url']; ?>" rel="external nofollow" target="<?php echo $link_target; ?>">
-
 							<?php if ( !empty( $p['link_image'] ) && ( apply_filters( 'rfbp_show_link_images', true ) !== false ) ) { ?>
 							<span class="rfbp-link-image-wrap">
 								<img class="rfbp-link-image" src="<?php echo esc_attr( $p['link_image'] ); ?>" width="114" />
@@ -214,7 +226,6 @@ class RFBP_Public {
 								<?php if ( isset( $p['link_caption'] ) ) { ?><span class="rfbp-link-caption"><?php echo $p['link_caption']; ?></span><?php } ?>
 								<?php if ( isset( $p['link_description'] ) && !empty( $p['link_description'] ) ) { ?><span class="rfbp-link-description"><?php echo $p['link_description']; ?></span><?php } ?>
 							</span>
-
 						</a>
 					</p>
 

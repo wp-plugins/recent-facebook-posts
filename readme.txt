@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.1
 Tested up to: 3.7.1
-Stable tag: 1.8.3
+Stable tag: 1.8.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -146,12 +146,15 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 
 == Changelog ==
 
-= 1.8.4 - November 20, 2013 =
+= 1.8.4 - December 2, 2013 =
+* Fixed: Empty events won't show
 * Improved: a cache renewal is no longer required after changing the image size
 * Improved: after changing important settings, cache will automatically be cleared
 * Improved: added a *test configuration* button which performs a simple ping to Facebook.
 * Improved: added an info message for new users
+* Improved: filters are now added the "WordPress way", which means they can be disabled
 * Improved: namespaced the trigger for renewing the cache
+* Improved: added empty `index.php` files to prevent directory listings
 * Improved: code clean-up
 
 = 1.8.3 - November 17, 2013 =

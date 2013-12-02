@@ -1,3 +1,4 @@
+<?php defined("ABSPATH") or exit; ?>
 <div id="rfbp-options" class="wrap">
 	<div class="rfbp-container">
 		<div class="rfbp-column rfbp-primary">

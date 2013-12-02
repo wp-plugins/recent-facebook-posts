@@ -41,7 +41,7 @@ class RFBP_Admin {
 		}
 
 		// maybe renew cache file
-		if ( isset( $_POST['rfbp-renew-cache'] ) ) {
+		if ( isset( $_POST['rfbp-clear-cache'] ) ) {
 
 			delete_transient('rfbp_posts');
 			delete_transient('rfbp_posts_fallback');
