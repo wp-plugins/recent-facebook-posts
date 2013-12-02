@@ -78,7 +78,7 @@ class RFBP_Public {
 				continue;
 			} 
 
-			if ($p->type == 'link' && !isset($p->name) ) {
+			if ($p->type == 'link' && !isset($p->name) && (!isset($p->message) || empty($p->message))) {
 				continue;
 			}
 
