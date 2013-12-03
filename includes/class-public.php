@@ -78,15 +78,13 @@ class RFBP_Public {
 				continue;
 			} 
 
+			// skip empty links.
 			if ($p->type == 'link' && !isset($p->name) && (!isset($p->message) || empty($p->message))) {
 				continue;
 			}
 
 			// skip friend approvals
 			if ( $p->type == 'status' && $p->status_type == 'approved_friend' ) { continue; }
-
-
-			
 
 			//split user and post ID (userID_postID)
 			$idArray = explode( "_", $p->id );
@@ -186,7 +184,7 @@ class RFBP_Public {
 
 			foreach ( $posts as $p ) {
 
-				$content = $p['content'];
+				$content = utf8_decode($p['content']);
 
 				$shortened = false;
 

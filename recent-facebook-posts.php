@@ -3,7 +3,7 @@
 Plugin Name: Recent Facebook Posts
 Plugin URI: http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/
 Description: Lists most recent posts from a public Facebook page.
-Version: 1.8.4
+Version: 1.8.5
 Author: Danny van Kooten
 Author URI: http://dannyvankooten.com/
 Text Domain: recent-facebook-posts
@@ -31,7 +31,7 @@ if(! defined("ABSPATH") ) {
     exit;
 }
 
-define("RFBP_VERSION", "1.8.4");
+define("RFBP_VERSION", "1.8.5");
 define("RFBP_PLUGIN_DIR", plugin_dir_path(__FILE__)); 
 
 // define WP_CONTENT_DIR since we're using it..
