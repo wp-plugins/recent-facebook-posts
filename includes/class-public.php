@@ -10,7 +10,7 @@ class RFBP_Public {
 
 	public static function instance() 
 	{
-		if(!self::$instance) {
+		if( ! self::$instance ) {
 			self::$instance = new RFBP_Public();
 		}
 

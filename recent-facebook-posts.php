@@ -3,7 +3,7 @@
 Plugin Name: Recent Facebook Posts
 Plugin URI: http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/
 Description: Lists most recent posts from a public Facebook page.
-Version: 2.0
+Version: 2.0.1
 Author: Danny van Kooten
 Author URI: http://dannyvankooten.com/
 Text Domain: recent-facebook-posts
@@ -11,7 +11,7 @@ Domain Path: /languages/
 License: GPL3 or later
 
 Recent Facebook Posts Plugin
-Copyright (C) 2012-2013, Danny van Kooten, hi@dannyvankooten.com
+Copyright (C) 2012-2014, Danny van Kooten, hi@dannyvankooten.com
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,20 +32,30 @@ if( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin Constants
-define( 'RFBP_VERSION', '2.0' );
+define( 'RFBP_VERSION', '2.0.1' );
 define( 'RFBP_PLUGIN_DIR', dirname( __FILE__ ) . '/' );
 
-// Include Global code
-require RFBP_PLUGIN_DIR . 'includes/functions/global.php';
+/**
+ * Load the plugin files at `plugins_loaded:10`
+ */
+function __rfbp_bootstrap() {
 
-if( ! is_admin() ) {
+	// Include Global code
+	require RFBP_PLUGIN_DIR . 'includes/functions/global.php';
 
-    rfbp_get_class();
+	if( ! is_admin() ) {
 
-} elseif( ! defined("DOING_AJAX") || ! DOING_AJAX ) {
+		require RFBP_PLUGIN_DIR . 'includes/class-public.php';
+		new RFBP_Public();
 
-    require RFBP_PLUGIN_DIR . 'includes/class-admin.php';
-    new RFBP_Admin();
+	} elseif( ! defined("DOING_AJAX") || ! DOING_AJAX ) {
+
+		require RFBP_PLUGIN_DIR . 'includes/class-admin.php';
+		new RFBP_Admin();
+
+	}
 
 }
+
+add_action( 'plugins_loaded', '__rfbp_bootstrap' );
 

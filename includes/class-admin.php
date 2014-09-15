@@ -99,7 +99,7 @@ class RFBP_Admin {
 		$opts['fb_id'] = sanitize_text_field( $opts['fb_id'] );
 
 		// If FB configuration changed, delete transients with posts cache so they'll be renewed
-		if(($old_opts['fb_id'] !== $opts['fb_id']) ||  ($old_opts['app_id'] !== $opts['app_id']) || ($old_opts['app_secret'] !== $opts['app_secret'])) {
+		if( ( $old_opts['fb_id'] !== $opts['fb_id'] ) ||  ( $old_opts['app_id'] !== $opts['app_id']) || ( $old_opts['app_secret'] !== $opts['app_secret'] ) ) {
 
 			// delete cache transients
 			delete_transient('rfbp_posts');
@@ -185,9 +185,9 @@ class RFBP_Admin {
 		$ping = $api->ping();
 		
 		if( $ping ) {
-			add_settings_error('rfbp', 'rfbp-api-success', __( 'Your configuration seems to be okay and working! Nice work.', 'recent-facebook-posts' ), "updated");
+			add_settings_error('rfbp', 'rfbp-api-success', __( 'Your configuration seems to be okay and working. Nice work!.', 'recent-facebook-posts' ), "updated");
 		} else {
-			add_settings_error('rfbp', 'rfbp-api-error', __(' Facebook returned the following error when testing your configuration.', 'recent-facebook-posts' ) . '<pre>' . $api->get_error_message() . '</pre>');
+			add_settings_error('rfbp', 'rfbp-api-error', __('The following error was encountered when testing your configuration.', 'recent-facebook-posts' ) . '<br /><br />' . $api->get_error_message() );
 		}
 	}
 }

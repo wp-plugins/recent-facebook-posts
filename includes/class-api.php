@@ -47,8 +47,8 @@ class RFBP_API {
 		if( is_object( $result ) ) {
 			if( isset( $result->data ) ) {
 				return $this->format_data( $result->data );
-			} else {
-				$this->error = $result->error;
+			} elseif( isset( $result->error->message ) ) {
+				$this->error = __( 'Facebook error:', 'recent-facebook-posts' ) . ' <code>' . $result->error->message . '</code>';
 				return false;
 			}
 		} 
@@ -93,7 +93,7 @@ class RFBP_API {
 			$post['type'] = sanitize_text_field( $p->type );
 			$post['content'] = '';
 			$post['image'] = null;
-			
+
 			if( isset( $p->message ) ) {
 				// remove emoji's
 				$post['content'] = preg_replace( '/[\x{1F600}-\x{1F64F}]|[\x{1F300}-\x{1F5FF}]|[\x{1F680}-\x{1F6FF}]|[\x{1F1E0}-\x{1F1FF}]/u', '', $p->message );
@@ -157,13 +157,16 @@ class RFBP_API {
 		$result = $this->call("{$this->fb_id}/posts", array('fields' => 'name', 'limit' => 1) );
 
 		if( is_object( $result ) ) {
-			if(isset($result->data)) {
+
+			if( isset( $result->data ) ) {
 				return true;
-			} else {
-				$this->error = $result->error;
+			} elseif( isset( $result->error->message ) ) {
+				$this->error = __( 'Facebook error:', 'recent-facebook-posts' ) . ' <code>' . $result->error->message . '</code>';
 				return false;
 			}
 		}
+
+		return false;
 	}
 
 	/**
@@ -190,14 +193,14 @@ class RFBP_API {
 
 		$response = wp_remote_get($url, array( 
 			'timeout' => 10,
-			'headers' => array('Accept-Encoding' => ''),
+			'headers' => array( 'Accept-Encoding' => '' ),
 			'sslverify' => false
 			) 
 		); 
 
 		// Did the request succeed?
 		if( is_wp_error( $response ) ) {
-			$this->error = $response->get_error_message();
+			$this->error = __( 'Connection error:', 'recent-facebook-posts' ) . ' <code>' . $response->get_error_message() . '</code>';
 			return false;
 		} else {			
 			$body = wp_remote_retrieve_body($response);

@@ -8,7 +8,7 @@
 			<?php if( isset( $notice ) ) { ?>
 			<div id="setting-error-settings_updated" class="updated settings-error"> 
 				<p>
-					<?php echo $notice; ?>
+					<?php echo esc_html( $notice ); ?>
 				</p>
 			</div>
 			<?php } ?>
@@ -63,17 +63,17 @@
 			<table class="form-table">
 				<tbody>
 				<tr valign="top">
-					<th scope="row"><label for="rfb_page_link_text"><?php _e('Link text', 'recent-facebook-posts'); ?></label></th>
-					<td><input type="text" class="widefat" placeholder="Find us on Facebook" id="rfb_page_link_text" name="rfb_settings[page_link_text]" value="<?php echo esc_attr($opts['page_link_text']); ?>" /></td>
+					<th scope="row"><label for="rfb_page_link_text"><?php _e( 'Link text', 'recent-facebook-posts' ); ?></label></th>
+					<td><input type="text" class="widefat" placeholder="<?php _e( 'Find us on Facebook', 'recent-facebook-posts' ); ?>" id="rfb_page_link_text" name="rfb_settings[page_link_text]" value="<?php echo esc_attr($opts['page_link_text']); ?>" /></td>
 				</tr>
 
 				<tr valign="top">
-					<th scope="row"><label for="rfb_link_new_window"><?php _e('Open links in new window?', 'recent-facebook-posts'); ?></label></th>
+					<th scope="row"><label for="rfb_link_new_window"><?php _e( 'Open links in new window?', 'recent-facebook-posts' ); ?></label></th>
 					<td><input type="checkbox" id="rfb_link_new_window" name="rfb_settings[link_new_window]" value="1" <?php checked( $opts['link_new_window'], 1 ); ?> /></td>
 				</tr>
 
 				<tr valign="top">
-					<th scope="row"><label for="rfb_load_css"><?php _e('Load some default styles?', 'recent-facebook-posts'); ?></label></th>
+					<th scope="row"><label for="rfb_load_css"><?php _e( 'Load some default styles?', 'recent-facebook-posts' ); ?></label></th>
 					<td><input type="checkbox" id="rfb_load_css" name="rfb_settings[load_css]" value="1" <?php checked( $opts['load_css'], 1 ); ?> /></td>
 				</tr>
 				</tbody>
@@ -82,9 +82,9 @@
 						<th scope="row"><label for="rfb_img_size"><?php _e('Image size', 'recent-facebook-posts'); ?></label></th>
 						<td>
 							<select class="widefat" id="rfb_img_size" name="rfb_settings[img_size]">
-								<option value="dont_show" <?php if($opts['img_size'] == 'dont_show') { echo 'selected'; } ?>><?php _e("Don't show images", 'recent-facebook-posts'); ?></option>
-								<option value="thumbnail" <?php if($opts['img_size'] == 'thumbnail') { echo 'selected'; } ?>><?php _e('Thumbnail', 'recent-facebook-posts'); ?></option>
-								<option value="normal" <?php if($opts['img_size'] == 'normal') { echo 'selected'; } ?>><?php _e('Normal', 'recent-facebook-posts'); ?></option>
+								<option value="dont_show" <?php selected( $opts['img_size'], 'dont_show' ); ?>><?php _e("Don't show images", 'recent-facebook-posts'); ?></option>
+								<option value="thumbnail" <?php selected( $opts['img_size'], 'thumbnail' ); ?>><?php _e('Thumbnail', 'recent-facebook-posts'); ?></option>
+								<option value="normal" <?php selected( $opts['img_size'], 'normal' ); ?>><?php _e('Normal', 'recent-facebook-posts'); ?></option>
 							</select>
 						</td>
 					</tr>
@@ -124,7 +124,7 @@
 
 			<h3 class="rfbp-title">Facebook Posts Cache</h3>
 			<p><?php _e('Because fetching posts from Facebook is relatively slow the posts are cached for <strong>30 minutes</strong>. You can manually clear the cache using the button below.', 'recent-facebook-posts'); ?></p>
-			<form action="<?php echo admin_url('options-general.php?page=rfbp'); ?>" method="post">
+			<form action="<?php echo admin_url( 'options-general.php?page=rfbp' ); ?>" method="post">
 				<input type="hidden" name="rfbp-clear-cache" value="1" />
 				<input type="submit" class="button-primary" value="<?php _e('Clear Cache', 'recent-facebook-posts'); ?>" />
 			</form>
@@ -135,8 +135,8 @@
 	<div class="rfbp-column rfbp-secondary">
 
 		<div class="rfbp-box">
-			<h3 class="rfbp-title">Donate $10, $20 or $50</h3>
-			<p>I spent a lot of time developing this plugin and offering support for it. If you like it, consider supporting this plugin by donating a token of your appreciation.</p>
+			<h3 class="rfbp-title"><?php _e( 'Donate $10, $20 or $50', 'recent-facebook-posts' ); ?></h3>
+			<p><?php _e( 'I spent a lot of time developing this plugin and offering support for it. If you like it, consider supporting this plugin by donating a token of your appreciation.', 'recent-facebook-posts' ); ?></p>
 
 			<div class="rfbp-donate">
 				<form class="donate" action="https://www.paypal.com/cgi-bin/webscr" method="post">
@@ -147,31 +147,32 @@
 					<input type="hidden" name="item_number" value="Recent Facebook Posts">
 					<input type="hidden" name="currency_code" value="USD">
 					<input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHosted">
-					<button name="submit" class="button-primary">Donate with PayPal</button>
+					<button name="submit" class="button-primary"><?php esc_html_e( 'Donate with PayPal', 'recent-facebook-posts' ); ?></button>
 					<img alt="" border="0" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1">
 				</form>
 			</div>
 		
-			<p>Some other ways to support this plugin</p>
+			<p><?php _e( 'Some other ways to support this plugin', 'recent-facebook-posts' ); ?></p>
 			<ul class="ul-square">
-				<li><a href="http://wordpress.org/support/view/plugin-reviews/recent-facebook-posts?rate=5#postform" target="_blank">Leave a &#9733;&#9733;&#9733;&#9733;&#9733; review on WordPress.org</a></li>
-				<li><a href="http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/" target="_blank">Link to the plugin page from your blog</a></li>
-				<li><a href="http://twitter.com/?status=I%20show%20recent%20facebook%20posts%20on%20my%20%23WordPress%20site%20using%20Recent%20Facebook%20Posts%20by%20%40DannyvanKooten%20-%20love%20it!%20http%3A%2F%2Fwordpress.org%2Fplugins%2Frecent-facebook-posts%2F" target="_blank">Tweet about Recent Facebook Posts</a></li>
-				<li><a href="http://wordpress.org/plugins/recent-facebook-posts/#compatibility">Vote "works" on the WordPress.org plugin page</a></li>
+				<li><a href="http://wordpress.org/support/view/plugin-reviews/recent-facebook-posts?rate=5#postform" target="_blank"><?php printf( __( 'Leave a %s review on WordPress.org', 'recent-facebook-posts' ), '&#9733;&#9733;&#9733;&#9733;&#9733;' ); ?></a></li>
+				<li><a href="http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/" target="_blank"><?php _e( 'Write about the plugin from your blog.', 'recent-facebook-posts' ); ?></a></li>
+				<li><a href="http://twitter.com/?status=I%20show%20recent%20facebook%20posts%20on%20my%20%23WordPress%20site%20using%20Recent%20Facebook%20Posts%20by%20%40DannyvanKooten%20-%20love%20it!%20http%3A%2F%2Fwordpress.org%2Fplugins%2Frecent-facebook-posts%2F" target="_blank"><?php _e( 'Tweet about Recent Facebook Posts', 'recent-facebook-posts' ); ?></a></li>
+				<li><a href="http://wordpress.org/plugins/recent-facebook-posts/#compatibility"><?php _e( 'Vote "works" on the WordPress.org plugin page', 'recent-facebook-posts' ); ?></a></li>
 			</ul>
 		</div>
 
 		<div class="rfbp-box">
-			<h3 class="rfbp-title">Looking for support?</h3>
-			<p>Please use the <a href="http://wordpress.org/support/plugin/recent-facebook-posts">plugin support forums</a> on WordPress.org.</p>
-			<p>Take a close look at the <a href="http://wordpress.org/plugins/recent-facebook-posts/installation/">installation instructions</a> for help configuring the plugin and registering your own Facebook application, which is required to get this plugin to work.</p>
+			<h3 class="rfbp-title"><?php _e( 'Looking for support?', 'recent-facebook-posts' ); ?></h3>
+			<p><?php printf( __( 'Please use the <a href="%s">plugin support forums</a> on WordPress.org.', 'recent-facebook-posts' ), 'http://wordpress.org/support/plugin/recent-facebook-posts' ); ?></p>
+			<p><?php printf( __( 'Take a close look at the <a href="%s">installation instructions</a> for help configuring the plugin and registering your own Facebook application, which is required to get this plugin to work.', 'recent-facebook-posts' ), 'http://wordpress.org/plugins/recent-facebook-posts/installation/' ); ?></p>
 		</div>
 
 		<div class="rfbp-box">
-			<h3 class="rfbp-title">Other Useful plugins</h3>
+			<h3 class="rfbp-title"><?php _e( 'Other Useful plugins', 'recent-facebook-posts' ); ?></h3>
 			<ul class="ul-square">
 				<li><a href="http://wordpress.org/plugins/mailchimp-for-wp/">MailChimp for WordPress</a></li>
 				<li><a href="http://wordpress.org/plugins/scroll-triggered-boxes/">Scroll Triggered Boxes</a></li>
+				<li><a href="https://wordpress.org/plugins/dvk-social-sharing/">Social Sharing by Danny</a></li>
 				<li><a href="http://wordpress.org/plugins/wysiwyg-widgets/">WYSIWYG Widgets</a></li>
 			</ul>
 			</div>
