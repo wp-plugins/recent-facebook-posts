@@ -147,16 +147,20 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 == Changelog ==
 
 = 2.0 - September 15, 2014 =
+
 **Fixes**
+
 - Fixed an issue with Facebook statuses containing Emojis
 
 **Improvements**
+
 - Better sanitizing throughout the plugin, using native WP functions.
 - Improved inline code documentation
 - Prevent direct file access
 - Changing thumbnail sizes does not require a cache refresh to fetch new video images
 
 **Additions**
+
 - New FB configurations are now automatically tested.
 
 = 1.8.5 - December 3, 2013 =
