@@ -147,7 +147,6 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 == Changelog ==
 
 = 2.0 - September 15, 2014 =
-
 **Fixes**
 - Fixed an issue with Facebook statuses containing Emojis
 
@@ -334,14 +333,5 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 
 == Upgrade Notice ==
 
-= 1.8.5 =
-Fixed character encoding for Scandinavian characters plus many improvements to the configuration process.
-
-= 1.8.1 =
-Added link previews (like Facebook) and Dutch translations. Please update your settings after updating.
-
-= 1.8 =
-Added link previews (like Facebook) and Dutch translations. Please update your settings after updating.
-
-= 1.6 =
-CSS and HTML output have changed. If you're using custom CSS styles you will have to edit them after updating.
+= 2.0 =
+Fixed issue with Emojis breaking all posts. Various other code improvements.
