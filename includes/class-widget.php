@@ -1,5 +1,9 @@
 <?php
 
+if( ! defined( 'RFBP_VERSION' ) ) {
+	exit;
+}
+
 class RFBP_Widget extends WP_Widget {
 
 	private $defaults;

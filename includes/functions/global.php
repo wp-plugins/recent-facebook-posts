@@ -1,5 +1,9 @@
 <?php
 
+if( ! defined( 'RFBP_VERSION' ) ) {
+	exit;
+}
+
 function rfbp_get_settings() {
 	static $settings;
 
@@ -56,7 +60,7 @@ function rfbp_get_class() {
 function rfbp_get_api() {
 	static $api;
 
-	if(!$api) {
+	if( ! $api ) {
 		$opts = rfbp_get_settings();
 		require_once RFBP_PLUGIN_DIR . 'includes/class-api.php';
 		$api = new RFBP_API( $opts['app_id'], $opts['app_secret'], $opts['fb_id'] );
