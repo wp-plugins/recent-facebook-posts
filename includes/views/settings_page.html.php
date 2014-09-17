@@ -8,7 +8,7 @@
 			<?php if( isset( $notice ) ) { ?>
 			<div id="setting-error-settings_updated" class="updated settings-error"> 
 				<p>
-					<?php echo esc_html( $notice ); ?>
+					<?php echo trim( wp_kses_post( $notice ) ); ?>
 				</p>
 			</div>
 			<?php } ?>

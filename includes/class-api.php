@@ -41,9 +41,9 @@ class RFBP_API {
 	public function get_posts()
 	{
 		$result = $this->call("{$this->fb_id}/posts", array(
-			'fields' => 'id,picture,type,from,message,status_type,object_id,picture,name,caption,description,link,created_time,comments.limit(1).summary(true),likes.limit(1).summary(true)'
+			'fields' => 'id,picture,type,from,message,status_type,object_id,name,caption,description,link,created_time,comments.limit(1).summary(true),likes.limit(1).summary(true)'
 		));
-		
+
 		if( is_object( $result ) ) {
 			if( isset( $result->data ) ) {
 				return $this->format_data( $result->data );

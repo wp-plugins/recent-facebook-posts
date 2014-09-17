@@ -4,7 +4,7 @@ Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,9 +29,11 @@ Display a list of your most recent Facebook posts in your posts or pages using t
 * Translation ready!
 
 **Translations**
-English (en_US) - [Danny van Kooten](http://dannyvankooten.com/)
-Dutch (nl_NL) - [Danny van Kooten](http://dannyvankooten.com/)
-Looking for more translations..
+
+English (en_US) - [Danny van Kooten](http://dannyvankooten.com/)<br />
+Dutch (nl_NL) - [Danny van Kooten](http://dannyvankooten.com/)<br />
+
+_Looking for more translations.._
 
 If you have [created your own language pack](http://codex.wordpress.org/Translating_WordPress), you can send me the language files so that I can bundle it into the Recent Facebook Posts plugin. [You can download the latest PO file here](http://plugins.svn.wordpress.org/recent-facebook-posts/trunk/languages/recent-facebook-posts.po).
 
@@ -147,6 +149,12 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 3. This is where you'll find your Facebook Page Slug on Facebook.com. 
 
 == Changelog ==
+
+= 2.0.2 - September 17, 2014 =
+
+**Fixes**
+
+- Removed duplicate `picture` in call to Facebook API. Fixes a "Syntax error" in later API versions. Props [danielfharmonic](https://github.com/danielfharmonic).
 
 = 2.0.1 - September 15, 2014 =
 
