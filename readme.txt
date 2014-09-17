@@ -2,9 +2,9 @@
 Contributors: DvanKooten
 Donate link: http://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
-Requires at least: 3.1
-Tested up to: 3.7.1
-Stable tag: 1.8.5
+Requires at least: 3.5
+Tested up to: 4.0
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,16 +28,20 @@ Display a list of your most recent Facebook posts in your posts or pages using t
 * Easy Configuration, the plugin comes with a comprehensive [installation guide](http://wordpress.org/plugins/recent-facebook-posts/installation/) and [screenshots](http://wordpress.org/plugins/recent-facebook-posts/screenshots/).
 * Translation ready!
 
-**Demo**
+**Translations**
 
-There is a demo on [my own website](http://dannyvankooten.com/), I use the plugin to show my most recent Facebook post in the footer.
+English (en_US) - [Danny van Kooten](http://dannyvankooten.com/)<br />
+Dutch (nl_NL) - [Danny van Kooten](http://dannyvankooten.com/)<br />
+
+_Looking for more translations.._
+
+If you have [created your own language pack](http://codex.wordpress.org/Translating_WordPress), you can send me the language files so that I can bundle it into the Recent Facebook Posts plugin. [You can download the latest PO file here](http://plugins.svn.wordpress.org/recent-facebook-posts/trunk/languages/recent-facebook-posts.po).
 
 **Other Links**
 
-* [Recent Facebook Posts for WordPress](http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/)
-* Using MailChimp to send out email newsletters and looking to grow your lists? Try [MailChimp for WordPress](http://wordpress.org/plugins/mailchimp-for-wp/).
-* Check out more [WordPress plugins](http://dannyvankooten.com/wordpress-plugins/) by Danny van Kooten
-* You should follow [@DannyvanKooten](http://twitter.com/DannyvanKooten) on Twitter.
+* Using MailChimp to send out email newsletters? You should [try MailChimp for WordPress](http://wordpress.org/plugins/mailchimp-for-wp/).
+* Check out more [WordPress plugins](http://dannyvankooten.com/wordpress-plugins/) by the same author
+* Follow [@DannyvanKooten](http://twitter.com/DannyvanKooten) on Twitter.
 
 == Installation ==
 
@@ -145,6 +149,36 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 3. This is where you'll find your Facebook Page Slug on Facebook.com. 
 
 == Changelog ==
+
+= 2.0.2 - September 17, 2014 =
+
+**Fixes**
+
+- Removed duplicate `picture` in call to Facebook API. Fixes a "Syntax error" in later API versions. Props [danielfharmonic](https://github.com/danielfharmonic).
+
+= 2.0.1 - September 15, 2014 =
+
+**Improvements**
+
+- The plugin will now show a detailed error message if anything related to the connection to Facebook failed.
+- Updated Dutch translation
+
+= 2.0 - September 15, 2014 =
+
+**Fixes**
+
+- Fixed an issue with Facebook statuses containing Emojis
+
+**Improvements**
+
+- Better sanitizing throughout the plugin, using native WP functions.
+- Improved inline code documentation
+- Prevent direct file access
+- Changing thumbnail sizes does not require a cache refresh to fetch new video images
+
+**Additions**
+
+- New FB configurations are now automatically tested.
 
 = 1.8.5 - December 3, 2013 =
 * Fixed: Character encoding for scandinavian languages etc.
@@ -320,14 +354,8 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 
 == Upgrade Notice ==
 
-= 1.8.5 =
-Fixed character encoding for Scandinavian characters plus many improvements to the configuration process.
+= 2.0.1 =
+Fixed issue with Emojis in Facebook statuses, updated translations and various other improvements.
 
-= 1.8.1 =
-Added link previews (like Facebook) and Dutch translations. Please update your settings after updating.
-
-= 1.8 =
-Added link previews (like Facebook) and Dutch translations. Please update your settings after updating.
-
-= 1.6 =
-CSS and HTML output have changed. If you're using custom CSS styles you will have to edit them after updating.
+= 2.0 =
+Fixed issue with Emojis breaking all posts. Various other code improvements.
