@@ -1,5 +1,9 @@
 <?php
 
+if( ! defined( 'RFBP_VERSION' ) ) {
+	exit;
+}
+
 function rfbp_make_clickable($text, $target)
 {
 	$clickable_text = make_clickable($text);
