@@ -1,12 +1,12 @@
 Recent Facebook Posts
 ======================
 
-Here you can browse the source of the [Recent Facebook Posts Plugin for WordPress](http://wordpress.org/plugins/recent-facebook-posts/) project, find and discuss open issues or contribute yourself.
+Here you can browse the source of the [Recent Facebook Posts Plugin for WordPress](https://wordpress.org/plugins/recent-facebook-posts/) project, find and discuss open issues or contribute yourself.
 
 Installation
 ------------
 
-Here's a [guide on how to install the plugin in your WordPress site](http://wordpress.org/plugins/recent-facebook-posts/installation/).
+Here's a [guide on how to install the plugin in your WordPress site](https://wordpress.org/plugins/recent-facebook-posts/installation/).
 If you want to run the Git version, you have two options:
 
 * You can clone the GitHub repository: `https://github.com/dannyvankooten/wordpress-recent-facebook-posts.git`
@@ -31,3 +31,4 @@ Anyone is welcome to contribute to the plugin. There are various ways you can co
 * [Raise an issue](https://github.com/dannyvankooten/wordpress-recent-facebook-posts/issues) on GitHub.
 * Send us a Pull Request with your bug fixes and/or new features.
 * Provide feedback and [suggestions on enhancements](https://github.com/dannyvankooten/wordpress-recent-facebook-posts/issues?direction=desc&labels=Enhancement&page=1&sort=created&state=open).
+* Translate the plugin into your language. You can [download the latest .pot file here](https://github.com/dannyvankooten/wordpress-recent-facebook-posts/blob/master/languages/recent-facebook-posts.pot).

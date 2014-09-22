@@ -38,7 +38,8 @@ class RFBP_Public {
 	}
 
 	public function load_css() {
-		wp_register_style( 'recent-facebook-posts-css', plugins_url( 'recent-facebook-posts/assets/css/default.css' ), array(), RFBP_VERSION );
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		wp_register_style( 'recent-facebook-posts-css', plugins_url( 'recent-facebook-posts/assets/css/default' . $suffix . '.css' ), array(), RFBP_VERSION );
 		wp_enqueue_style( 'recent-facebook-posts-css' );
 	}
 

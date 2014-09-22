@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: DvanKooten
-Donate link: http://dannyvankooten.com/donate/
+Donate link: https://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,15 +30,17 @@ Display a list of your most recent Facebook posts in your posts or pages using t
 
 **Translations**
 
-English (en_US) - [Danny van Kooten](http://dannyvankooten.com/)<br />
-Dutch (nl_NL) - [Danny van Kooten](http://dannyvankooten.com/)<br />
+English (en_US) - [Danny van Kooten](https://dannyvankooten.com/)<br />
+Dutch (nl_NL) - [Danny van Kooten](https://dannyvankooten.com/)<br />
+Spanish (es_ES) - [Hermann Bravo](http://hbravo.com/)
 
 _Looking for more translations.._
 
-If you have [created your own language pack](http://codex.wordpress.org/Translating_WordPress), you can send me the language files so that I can bundle it into the Recent Facebook Posts plugin. [You can download the latest PO file here](http://plugins.svn.wordpress.org/recent-facebook-posts/trunk/languages/recent-facebook-posts.po).
+If you have [created your own language pack](http://codex.wordpress.org/Translating_WordPress), you can send me the language files so that I can bundle it into the Recent Facebook Posts plugin. [You can download the latest POT file here](http://plugins.svn.wordpress.org/recent-facebook-posts/trunk/languages/recent-facebook-posts.pot).
 
 **Other Links**
 
+* [Contribute to the Recent Facebook Posts plugin on GitHub](https://github.com/dannyvankooten/wordpress-recent-facebook-posts)
 * Using MailChimp to send out email newsletters? You should [try MailChimp for WordPress](http://wordpress.org/plugins/mailchimp-for-wp/).
 * Check out more [WordPress plugins](http://dannyvankooten.com/wordpress-plugins/) by the same author
 * Follow [@DannyvanKooten](http://twitter.com/DannyvanKooten) on Twitter.
@@ -67,7 +69,7 @@ This plugin requires a Facebook application to fetch posts from Facebook.
 * Take a look at the [screenshots](http://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/), they will tell you which values from Facebook you need.
 * The plugin works with personal profiles, but only to a certain extend. I am not actively supporting personal profiles because of many privacy settings related issues.
 
-Ran into an error? Have a look at the [FAQ](http://wordpress.org/plugins/recent-facebook-posts/faq/) for solutions to common problems.
+Ran into an error? Have a look at the [FAQ](http://wordpress.org/plugins/recent-facebook-posts/faq/) for solutions to common problems or [open an issue on GitHub](https://github.com/dannyvankooten/wordpress-recent-facebook-posts/issues).
 
 == Frequently Asked Questions ==
 
@@ -149,6 +151,12 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 3. This is where you'll find your Facebook Page Slug on Facebook.com. 
 
 == Changelog ==
+
+= 2.0.3 - September 22, 2014 =
+
+**Additions**
+
+- Added Spanish language, thanks [Hermann Bravo](http://hbravo.com/)
 
 = 2.0.2 - September 17, 2014 =
 

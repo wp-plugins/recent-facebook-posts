@@ -34,9 +34,11 @@
 
 				<table class="form-table">
 					<tr valign="top" <?php if( empty( $opts['app_id'] ) ) echo 'class="rfbp-row-error"'; ?>>
-						<th scope="row"><label for="rfb_app_id"><?php _e('Facebook App ID/API Key', 'recent-facebook-posts'); ?></label></th>
+						<th scope="row">
+							<label for="rfb_app_id"><?php _e('Facebook App ID/API Key', 'recent-facebook-posts'); ?></label>
+						</th>
 						<td>
-							<input type="text" class="widefat" placeholder="Eg: 123456789012345" id="rfb_app_id" name="rfb_settings[app_id]" value="<?php echo esc_attr($opts['app_id']); ?>" required />
+							<input type="text" class="widefat" placeholder="Eg: 123456789012345" id="rfb_app_id" name="rfb_settings[app_id]" value="<?php echo esc_attr( $opts['app_id'] ); ?>" required />
 							<p class="help"><?php printf( __( 'Get your App ID from %s.', 'recent-facebook-posts' ), '<a href="https://developers.facebook.com/apps">developers.facebook.com/apps</a>' ); ?></p>
 						</td>
 					</tr>
@@ -44,7 +46,7 @@
 					<tr valign="top" <?php if( empty( $opts['app_secret'] ) ) echo 'class="rfbp-row-error"'; ?>>
 						<th scope="row"><label for="rfb_app_secret"><?php _e('Facebook App Secret', 'recent-facebook-posts'); ?></label></th>
 						<td>
-							<input type="text" class="widefat" placeholder="Eg: 16vgrz4hk45wvh29k2puk45wvk2h29pu"  id="rfb_app_secret" name="rfb_settings[app_secret]" value="<?php echo esc_attr($opts['app_secret']); ?>" required />
+							<input type="text" class="widefat" placeholder="Eg: 16vgrz4hk45wvh29k2puk45wvk2h29pu"  id="rfb_app_secret" name="rfb_settings[app_secret]" value="<?php echo esc_attr( $opts['app_secret'] ); ?>" required />
 							<p class="help"><?php printf( __( 'Get your App Secret from %s.', 'recent-facebook-posts' ), '<a href="https://developers.facebook.com/apps">developers.facebook.com/apps</a>' ); ?></p>
 						</td>
 					</tr>
@@ -52,14 +54,14 @@
 					<tr valign="top" <?php if( empty( $opts['fb_id'] ) ) echo 'class="rfbp-row-error"'; ?>>
 						<th scope="row"><label for="rfb_fb_id"><?php _e('Facebook Page ID or Slug', 'recent-facebook-posts'); ?></label></th>
 						<td>
-							<input type="text" class="widefat" placeholder="Eg: DannyvanKootenCOM" id="rfb_fb_id" name="rfb_settings[fb_id]" value="<?php echo esc_attr($opts['fb_id']); ?>" required />
+							<input type="text" class="widefat" placeholder="Eg: DannyvanKootenCOM" id="rfb_fb_id" name="rfb_settings[fb_id]" value="<?php echo esc_attr( $opts['fb_id'] ); ?>" required />
 							<p class="help"><?php printf( __( 'Use <a href="%s">this tool</a> to find the numeric ID of your Facebook page.', 'recent-facebook-posts' ), 'http://findmyfacebookid.com' ); ?></p>
 						</td>
 					</tr>
 				</table>
 			</div>
 
-			<h3><?php _e('Appearance', 'recent-facebook-posts'); ?></h3>
+			<h3><?php _e( 'Appearance', 'recent-facebook-posts' ); ?></h3>
 			<table class="form-table">
 				<tbody>
 				<tr valign="top">
@@ -89,7 +91,7 @@
 						</td>
 					</tr>
 				</tbody>
-				<tbody id="rfb_img_options" <?php if($opts['img_size'] == 'dont_show') echo 'style="display:none;"'; ?>>
+				<tbody id="rfb_img_options" <?php if( $opts['img_size'] === 'dont_show' ) echo 'style="display:none;"'; ?>>
 					<tr valign="top">
 						<th><?php _e('Image dimensions', 'recent-facebook-posts'); ?><br /><small><?php _e( '(in pixels, optional)', 'recent-facebook-posts' ); ?></small></th>
 						<td>
@@ -102,31 +104,30 @@
 								<input type="number" min="0" max="1600" size="3" id="rfb_img_height" name="rfb_settings[img_height]" value="<?php echo esc_attr( $opts['img_height'] ); ?>" />
 							</label>
 							<br />
-							<small class="help"><?php _e('Leave empty for default sizing', 'recent-facebook-posts'); ?></small>
+							<small class="help"><?php _e( 'Leave empty for default sizing', 'recent-facebook-posts' ); ?></small>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 
-			<p class="submit">
-				<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
-			</p>
+			<?php submit_button(); ?>
 
 		</form>
 
 		<?php if(rfbp_valid_config()) { ?>
-			<h3 class="rfbp-title">Test Configuration</h3>
+			<h3 class="rfbp-title"><?php _e( 'Test Configuration', 'recent-facebook-posts' ); ?></h3>
 			<p><?php _e('Test your plugin configuration using the button below.', 'recent-facebook-posts'); ?></p>
 			<form action="<?php echo admin_url('options-general.php?page=rfbp'); ?>" method="post">
 				<input type="hidden" name="rfbp-test-config" value="1" />
-				<input type="submit" class="button-primary" value="<?php _e('Test Configuration', 'recent-facebook-posts'); ?>" />
+				<?php submit_button( __('Test Configuration', 'recent-facebook-posts') ); ?>
 			</form>
 
-			<h3 class="rfbp-title">Facebook Posts Cache</h3>
+			<h3 class="rfbp-title"><?php _e( 'Facebook Posts Cache', 'recent-facebook-posts' ); ?></h3>
 			<p><?php _e('Because fetching posts from Facebook is relatively slow the posts are cached for <strong>30 minutes</strong>. You can manually clear the cache using the button below.', 'recent-facebook-posts'); ?></p>
 			<form action="<?php echo admin_url( 'options-general.php?page=rfbp' ); ?>" method="post">
 				<input type="hidden" name="rfbp-clear-cache" value="1" />
-				<input type="submit" class="button-primary" value="<?php _e('Clear Cache', 'recent-facebook-posts'); ?>" />
+
+				<?php submit_button( __( 'Clear Cache', 'recent-facebook-posts' ) ); ?>
 			</form>
 		<?php } ?>
 	</div>
@@ -170,18 +171,18 @@
 		<div class="rfbp-box">
 			<h3 class="rfbp-title"><?php _e( 'Other Useful plugins', 'recent-facebook-posts' ); ?></h3>
 			<ul class="ul-square">
-				<li><a href="http://wordpress.org/plugins/mailchimp-for-wp/">MailChimp for WordPress</a></li>
-				<li><a href="http://wordpress.org/plugins/scroll-triggered-boxes/">Scroll Triggered Boxes</a></li>
+				<li><a href="https://wordpress.org/plugins/mailchimp-for-wp/">MailChimp for WordPress</a></li>
+				<li><a href="https://wordpress.org/plugins/scroll-triggered-boxes/">Scroll Triggered Boxes</a></li>
 				<li><a href="https://wordpress.org/plugins/dvk-social-sharing/">Social Sharing by Danny</a></li>
-				<li><a href="http://wordpress.org/plugins/wysiwyg-widgets/">WYSIWYG Widgets</a></li>
+				<li><a href="https://wordpress.org/plugins/wysiwyg-widgets/">WYSIWYG Widgets</a></li>
 			</ul>
 			</div>
 
 			<div class="rfbp-box">
-				<h3 class="rfbp-title">About <a href="http://dannyvankooten.com/">Danny van Kooten</a></h3>
+				<h3 class="rfbp-title">About <a href="https://dannyvankooten.com/">Danny van Kooten</a></h3>
 				<p>A twenty-something Dutch guy writing code and emails for a living.</p>
-				<p>I developed <a href="http://dannyvankooten.com/wordpress-plugins/">a few WordPress plugins</a> together totaling well over a million downloads, one of which you're using right now.</p>
-				<p>If you like to stay updated of what I'm doing, consider following <a href="http://twitter.com/dannyvankooten">@DannyvanKooten</a> on Twitter.</p>
+				<p>I developed <a href="https://dannyvankooten.com/wordpress-plugins/">a few WordPress plugins</a> together totaling well over a million downloads, one of which you're using right now.</p>
+				<p>If you like to stay updated of what I'm doing, consider following <a href="https://twitter.com/dannyvankooten">@DannyvanKooten</a> on Twitter.</p>
 				<p>Hope you enjoy the plugin!</p>
 			</div>
 		</div>

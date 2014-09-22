@@ -34,8 +34,8 @@ class RFBP_Widget extends WP_Widget {
 		$instance = array_merge( $this->defaults, $instance );
 		$opts = rfbp_get_settings();
 
-		if ( empty( $opts['app_id'] ) ) { ?>
- 			<p style="color:red;">You need to <a href="<?php echo admin_url( 'options-general.php?page=rfbp' ); ?>">configure Recent Facebook Posts</a> first.</p>
+		if ( ! rfbp_valid_config() ) { ?>
+ 			<p style="color:red;"><?php printf( __( 'You need to <a href="%s">configure Recent Facebook Posts</a> first.', 'recent-facebook-posts' ), admin_url( 'options-general.php?page=rfbp' ) ); ?></p>
  		<?php } ?>
 
 		<p>
@@ -91,7 +91,12 @@ class RFBP_Widget extends WP_Widget {
 	public function widget( $args, $instance = array() ) {
 
 		$instance = array_merge( $this->defaults, $instance );
+
+		// allow developer to filter the widget title
 		$title = apply_filters( 'widget_title', $instance['title'] );
+
+		// allow developers to filter ALL widget options
+		$instance = apply_filters( 'rfbp_widget_options', $instance );
 
 		echo $args['before_widget'];
 
