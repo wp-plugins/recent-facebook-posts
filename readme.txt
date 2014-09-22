@@ -154,9 +154,17 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 
 = 2.0.3 - September 22, 2014 =
 
+**Improvements**
+
+- Now loading minified asset (.css and .js) files by default
+- Added some missing text domains
+- Minor improvements to settings page and settings handling.
+
 **Additions**
 
 - Added Spanish language, thanks [Hermann Bravo](http://hbravo.com/)
+- Added `rfpb_widget_options` filter to filter all widget options. Closes [#3](https://github.com/dannyvankooten/wordpress-recent-facebook-posts/issues/3), thanks [KilukruMedia](https://github.com/KilukruMedia)
+- Added [languages/recent-facebook-posts.pot](http://plugins.svn.wordpress.org/recent-facebook-posts/trunk/languages/recent-facebook-posts.pot) file for easier translating. Please send in your language files (.po and .mo) if you created any.
 
 = 2.0.2 - September 17, 2014 =
 
