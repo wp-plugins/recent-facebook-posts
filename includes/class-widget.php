@@ -92,11 +92,11 @@ class RFBP_Widget extends WP_Widget {
 
 		$instance = array_merge( $this->defaults, $instance );
 
-		// allow developer to filter the widget title
-		$title = apply_filters( 'widget_title', $instance['title'] );
-
 		// allow developers to filter ALL widget options
 		$instance = apply_filters( 'rfbp_widget_options', $instance );
+
+		// allow developer to filter the widget title
+		$title = apply_filters( 'widget_title', $instance['title'] );
 
 		echo $args['before_widget'];
 

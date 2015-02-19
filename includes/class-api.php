@@ -138,7 +138,7 @@ class RFBP_API {
 			}
 
 			$post['timestamp'] = strtotime( $p->created_time );
-			$post['url'] = "http://www.facebook.com/". $this->fb_id . "/posts/" . $idArray[1];
+			$post['url'] = "https://www.facebook.com/". $this->fb_id . "/posts/" . $idArray[1];
 
 			// add to posts array
 			$posts[] = $post;

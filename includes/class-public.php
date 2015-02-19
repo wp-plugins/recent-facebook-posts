@@ -110,7 +110,7 @@ class RFBP_Public {
 
 		ob_start();
 ?>
-		<!-- Recent Facebook Posts v<?php echo RFBP_VERSION; ?> - http://wordpress.org/plugins/recent-facebook-posts/ -->
+		<!-- Recent Facebook Posts v<?php echo RFBP_VERSION; ?> - https://wordpress.org/plugins/recent-facebook-posts/ -->
 		<div class="recent-facebook-posts rfbp rfbp-container rfbp-<?php echo $atts['origin']; ?>">
 			<?php
 
@@ -209,7 +209,7 @@ class RFBP_Public {
 		} ?>
 
 			<?php if ( $atts['show_page_link'] ) { ?>
-				<p class="rfbp-page-link-wrap"><a class="rfbp-page-link" href="<?php echo esc_url( 'http://www.facebook.com/' . $opts['fb_id'] . '/' ); ?>" rel="external nofollow" target="<?php echo esc_attr( $link_target ); ?>"><?php echo esc_html( $opts['page_link_text'] ); ?></a></p>
+				<p class="rfbp-page-link-wrap"><a class="rfbp-page-link" href="<?php echo esc_url( 'https://www.facebook.com/' . $opts['fb_id'] . '/' ); ?>" rel="external nofollow" target="<?php echo esc_attr( $link_target ); ?>"><?php echo esc_html( $opts['page_link_text'] ); ?></a></p>
 			<?php } ?>
 
 			</div>

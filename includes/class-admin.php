@@ -6,10 +6,17 @@ if( ! defined( 'RFBP_VERSION' ) ) {
 
 class RFBP_Admin {
 
+	/**
+	 * @var bool
+	 */
 	private $cache_cleared = false;
 
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
 
+		add_action( 'init', array( $this, 'on_init' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_menu', array( $this, 'build_menu' ) );
 
@@ -21,7 +28,6 @@ class RFBP_Admin {
 			add_action( 'admin_enqueue_scripts', array( $this, 'load_css' ) );
 		}
 
-		add_action( 'init', array( $this, 'on_init' ) );
 	}
 
 	public function on_init() {
@@ -50,7 +56,7 @@ class RFBP_Admin {
 
 		// Only run if code is newer than stored DB version
 		$db_version = get_option( 'rfbp_version', 0 );
-		if( version_compare( RFBP_VERSION, $db_version, '>=' ) ) {
+		if( version_compare( $db_version, RFBP_VERSION, '>=' ) ) {
 			return;
 		}
 
@@ -160,13 +166,18 @@ class RFBP_Admin {
 	 * @return array The new array containing all the settings links
 	 */
 	public function add_settings_link( $links ) {
-		$settings_link = '<a href="options-general.php?page=rfbp">'. __('Settings', 'recent-facebook-posts') . '</a>';
+		$settings_link = '<a href="options-general.php?page=rfbp">'. __( 'Settings', 'recent-facebook-posts' ) . '</a>';
 		array_unshift( $links, $settings_link );
 		return $links;
 	}
 
 	/**
 	 * Ping the Facebook API for a quick test
+	 *
+	 * @param string $app_id
+	 * @param string $app_secret
+	 * @param string $page_id
+	 * @return bool
 	 */
 	public function test_facebook_api( $app_id = '', $app_secret = '', $page_id = '' )
 	{
@@ -193,5 +204,7 @@ class RFBP_Admin {
 		} else {
 			add_settings_error('rfbp', 'rfbp-api-error', __('The following error was encountered when testing your configuration.', 'recent-facebook-posts' ) . '<br /><br />' . $api->get_error_message() );
 		}
+
+		return $ping;
 	}
 }

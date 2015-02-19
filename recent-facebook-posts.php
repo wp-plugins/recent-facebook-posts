@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Recent Facebook Posts
-Plugin URI: http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/
+Plugin URI: https://dannyvankooten.com/donate/
 Description: Lists most recent posts from a public Facebook page.
-Version: 2.0.3
+Version: 2.0.4
 Author: Danny van Kooten
-Author URI: http://dannyvankooten.com/
+Author URI: https://dannyvankooten.com/
 Text Domain: recent-facebook-posts
 Domain Path: /languages/
 License: GPL3 or later
@@ -32,7 +32,7 @@ if( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin Constants
-define( 'RFBP_VERSION', '2.0.3' );
+define( 'RFBP_VERSION', '2.0.4' );
 define( 'RFBP_PLUGIN_DIR', dirname( __FILE__ ) . '/' );
 
 /**

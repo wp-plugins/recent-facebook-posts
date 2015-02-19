@@ -22,7 +22,7 @@ If you find an issue, [let us know here](https://github.com/dannyvankooten/wordp
 Support
 -------
 This is a developer's portal for the Recent Facebook Posts plugin and should not be used for support. Please visit the
-[plugin support forums on WordPress.org](http://wordpress.org/support/plugin/recent-facebook-posts).
+[plugin support forums on WordPress.org](https://wordpress.org/support/plugin/recent-facebook-posts).
 
 Contributions
 -------------
@@ -31,4 +31,4 @@ Anyone is welcome to contribute to the plugin. There are various ways you can co
 * [Raise an issue](https://github.com/dannyvankooten/wordpress-recent-facebook-posts/issues) on GitHub.
 * Send us a Pull Request with your bug fixes and/or new features.
 * Provide feedback and [suggestions on enhancements](https://github.com/dannyvankooten/wordpress-recent-facebook-posts/issues?direction=desc&labels=Enhancement&page=1&sort=created&state=open).
-* Translate the plugin into your language. You can [download the latest .pot file here](https://github.com/dannyvankooten/wordpress-recent-facebook-posts/blob/master/languages/recent-facebook-posts.pot).
+* Translate the plugin into your language. You can [download the latest .pot file here](https://raw.githubusercontent.com/dannyvankooten/wordpress-recent-facebook-posts/master/languages/recent-facebook-posts.pot).

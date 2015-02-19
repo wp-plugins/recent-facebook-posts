@@ -4,7 +4,7 @@ Donate link: https://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.5
 Tested up to: 4.1.1
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,14 +41,14 @@ If you have [created your own language pack](http://codex.wordpress.org/Translat
 **Other Links**
 
 * [Contribute to the Recent Facebook Posts plugin on GitHub](https://github.com/dannyvankooten/wordpress-recent-facebook-posts)
-* Using MailChimp to send out email newsletters? You should [try MailChimp for WordPress](http://wordpress.org/plugins/mailchimp-for-wp/).
-* Check out more [WordPress plugins](http://dannyvankooten.com/wordpress-plugins/) by the same author
-* Follow [@DannyvanKooten](http://twitter.com/DannyvanKooten) on Twitter.
+* Using MailChimp to send out email newsletters? You should [try MailChimp for WordPress](https://wordpress.org/plugins/mailchimp-for-wp/).
+* Check out more [WordPress plugins](https://dannyvankooten.com/wordpress-plugins/) by the same author
+* Follow [@DannyvanKooten](https://twitter.com/DannyvanKooten) on Twitter.
 
 == Installation ==
 
 = Installing the plugin =
-1. [Download the latest version of the plugin](http://downloads.wordpress.org/plugin/recent-facebook-posts.zip)
+1. [Download the latest version of the plugin](https://downloads.wordpress.org/plugin/recent-facebook-posts.zip)
 1. Upload the contents of the downloaded .zip-file to your WordPress plugin directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
@@ -66,18 +66,18 @@ This plugin requires a Facebook application to fetch posts from Facebook.
 1. Add `[recent_facebook_posts]` to the page where you would like to show a list of recent Facebook posts or use the widget.
 
 = Extra notes =
-* Take a look at the [screenshots](http://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/), they will tell you which values from Facebook you need.
+* Take a look at the [screenshots](https://wordpress.org/extend/plugins/recent-facebook-posts/screenshots/), they will tell you which values from Facebook you need.
 * The plugin works with personal profiles, but only to a certain extend. I am not actively supporting personal profiles because of many privacy settings related issues.
 
-Ran into an error? Have a look at the [FAQ](http://wordpress.org/plugins/recent-facebook-posts/faq/) for solutions to common problems or [open an issue on GitHub](https://github.com/dannyvankooten/wordpress-recent-facebook-posts/issues).
+Ran into an error? Have a look at the [FAQ](https://wordpress.org/plugins/recent-facebook-posts/faq/) for solutions to common problems or [open an issue on GitHub](https://github.com/dannyvankooten/wordpress-recent-facebook-posts/issues).
 
 == Frequently Asked Questions ==
 
 = What does Recent Facebook Posts do? =
-With this plugin you can show a list of the most recent Facebook posts of a public page. You can display these posts in pages, posts and widget areas by using a shortcode or widget. Have a look at my [own WordPress website](http://dannyvankooten.com/) for an example, I have a widget with my latest Facebook update in my footer.
+With this plugin you can show a list of the most recent Facebook posts of a public page. You can display these posts in pages, posts and widget areas by using a shortcode or widget. Have a look at my [own WordPress website](https://dannyvankooten.com/) for an example, I have a widget with my latest Facebook update in my footer.
 
 = How to configure this plugin? =
-You need to create a Facebook application for this plugin to work. Have a **close** look at the [installation instructions](http://wordpress.org/plugins/recent-facebook-posts/installation/).
+You need to create a Facebook application for this plugin to work. Have a **close** look at the [installation instructions](https://wordpress.org/plugins/recent-facebook-posts/installation/).
 
 = No posts are showing.. =
 The plugin is only able to fetch posts from **public** pages with posts which are publicly available. Check your page its privacy settings and make sure you are using a page instead of a personal profile or group.
@@ -151,6 +151,16 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 3. This is where you'll find your Facebook Page Slug on Facebook.com. 
 
 == Changelog ==
+
+= 2.0.4 - February 19, 2015 =
+
+**Fixes**
+
+- Issue where settings page would just load an empty screen. ([Issue #6](https://github.com/dannyvankooten/wordpress-recent-facebook-posts/issues/6))
+
+**Improvements**
+
+- Updated all links to use HTTPS protocol.
 
 = 2.0.3 - September 22, 2014 =
 

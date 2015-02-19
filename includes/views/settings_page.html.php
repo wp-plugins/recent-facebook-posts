@@ -27,7 +27,7 @@
 							<?php _e('Please fill in the Facebook Settings fields after creating your application.', 'recent-facebook-posts'); ?>
 						</p>
 						<p>
-							<?php printf(__('Not sure how to proceed? Please take a close look at the <a href="%s">installation instructions</a>.', 'recent-facebook-posts'), 'http://wordpress.org/plugins/recent-facebook-posts/installation/' ); ?>
+							<?php printf(__('Not sure how to proceed? Please take a close look at the <a href="%s">installation instructions</a>.', 'recent-facebook-posts'), 'https://wordpress.org/plugins/recent-facebook-posts/installation/' ); ?>
 						</p>
 					</div>
 				<?php } ?>
@@ -155,17 +155,17 @@
 		
 			<p><?php _e( 'Some other ways to support this plugin', 'recent-facebook-posts' ); ?></p>
 			<ul class="ul-square">
-				<li><a href="http://wordpress.org/support/view/plugin-reviews/recent-facebook-posts?rate=5#postform" target="_blank"><?php printf( __( 'Leave a %s review on WordPress.org', 'recent-facebook-posts' ), '&#9733;&#9733;&#9733;&#9733;&#9733;' ); ?></a></li>
-				<li><a href="http://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/" target="_blank"><?php _e( 'Write about the plugin from your blog.', 'recent-facebook-posts' ); ?></a></li>
-				<li><a href="http://twitter.com/?status=I%20show%20recent%20facebook%20posts%20on%20my%20%23WordPress%20site%20using%20Recent%20Facebook%20Posts%20by%20%40DannyvanKooten%20-%20love%20it!%20http%3A%2F%2Fwordpress.org%2Fplugins%2Frecent-facebook-posts%2F" target="_blank"><?php _e( 'Tweet about Recent Facebook Posts', 'recent-facebook-posts' ); ?></a></li>
-				<li><a href="http://wordpress.org/plugins/recent-facebook-posts/#compatibility"><?php _e( 'Vote "works" on the WordPress.org plugin page', 'recent-facebook-posts' ); ?></a></li>
+				<li><a href="https://wordpress.org/support/view/plugin-reviews/recent-facebook-posts?rate=5#postform" target="_blank"><?php printf( __( 'Leave a %s review on WordPress.org', 'recent-facebook-posts' ), '&#9733;&#9733;&#9733;&#9733;&#9733;' ); ?></a></li>
+				<li><a href="https://dannyvankooten.com/wordpress-plugins/recent-facebook-posts/" target="_blank"><?php _e( 'Write about the plugin from your blog.', 'recent-facebook-posts' ); ?></a></li>
+				<li><a href="https://twitter.com/?status=I%20show%20recent%20facebook%20posts%20on%20my%20%23WordPress%20site%20using%20Recent%20Facebook%20Posts%20by%20%40DannyvanKooten%20-%20love%20it!%20http%3A%2F%2Fwordpress.org%2Fplugins%2Frecent-facebook-posts%2F" target="_blank"><?php _e( 'Tweet about Recent Facebook Posts', 'recent-facebook-posts' ); ?></a></li>
+				<li><a href="https://wordpress.org/plugins/recent-facebook-posts/#compatibility"><?php _e( 'Vote "works" on the WordPress.org plugin page', 'recent-facebook-posts' ); ?></a></li>
 			</ul>
 		</div>
 
 		<div class="rfbp-box">
 			<h3 class="rfbp-title"><?php _e( 'Looking for support?', 'recent-facebook-posts' ); ?></h3>
-			<p><?php printf( __( 'Please use the <a href="%s">plugin support forums</a> on WordPress.org.', 'recent-facebook-posts' ), 'http://wordpress.org/support/plugin/recent-facebook-posts' ); ?></p>
-			<p><?php printf( __( 'Take a close look at the <a href="%s">installation instructions</a> for help configuring the plugin and registering your own Facebook application, which is required to get this plugin to work.', 'recent-facebook-posts' ), 'http://wordpress.org/plugins/recent-facebook-posts/installation/' ); ?></p>
+			<p><?php printf( __( 'Please use the <a href="%s">plugin support forums</a> on WordPress.org.', 'recent-facebook-posts' ), 'https://wordpress.org/support/plugin/recent-facebook-posts' ); ?></p>
+			<p><?php printf( __( 'Take a close look at the <a href="%s">installation instructions</a> for help configuring the plugin and registering your own Facebook application, which is required to get this plugin to work.', 'recent-facebook-posts' ), 'https://wordpress.org/plugins/recent-facebook-posts/installation/' ); ?></p>
 		</div>
 
 		<div class="rfbp-box">

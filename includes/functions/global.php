@@ -10,9 +10,10 @@ if( ! defined( 'RFBP_VERSION' ) ) {
  * @return array
  */
 function rfbp_get_settings() {
-	static $settings;
 
-	if ( ! $settings ) {
+	static $settings = null;
+
+	if ( is_null( $settings ) ) {
 
 		$defaults = array(
 			'app_id' => '',
@@ -28,12 +29,6 @@ function rfbp_get_settings() {
 
 		// get user options
 		$options = get_option( 'rfb_settings', array() );
-
-		// options did not exist yet, add option to database
-		if ( ! is_array( $options ) || count( $options ) === 0 ) {
-			add_option( 'rfb_settings', $defaults );
-		}
-
 		$settings = array_merge( $defaults, $options );
 	}
 
