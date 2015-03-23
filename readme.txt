@@ -2,9 +2,9 @@
 Contributors: DvanKooten
 Donate link: https://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
-Requires at least: 3.5
-Tested up to: 4.1.1
-Stable tag: 2.0.4
+Requires at least: 3.7
+Tested up to: 4.2
+Stable tag: 2.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -151,6 +151,12 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 3. This is where you'll find your Facebook Page Slug on Facebook.com. 
 
 == Changelog ==
+
+= 2.0.5 - March 23, 2015 =
+
+**Additions**
+
+- Added Swedish translations, thanks to [Robin Wellström](http://robinwellstrom.se/).
 
 = 2.0.4 - February 19, 2015 =
 

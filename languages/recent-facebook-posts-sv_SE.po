@@ -2,333 +2,346 @@
 # This file is distributed under the GPL3 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Recent Facebook Posts 2.0.5\n"
-"Report-Msgid-Bugs-To: "
-"https://wordpress.org/support/plugin/recent-facebook-posts\n"
-"POT-Creation-Date: 2015-03-23 13:12:15+00:00\n"
+"Project-Id-Version: Recent Facebook Posts 2.0.4\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/recent-facebook-"
+"posts\n"
+"POT-Creation-Date: 2015-02-19 05:46:22+00:00\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2015-02-24 20:21+0100\n"
 "Last-Translator: Danny van Kooten <hi@dannyvankooten.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"X-Generator: grunt-wp-i18n 0.4.4\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.7.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-Language: English\n"
-"X-Poedit-Country: UNITED STATES\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __;_e;_x:1,2c;_ex:1,2c;_n:1,2; "
-"_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_attr__; esc_html__;esc_attr_e; "
-"esc_html_e;esc_attr_x:1,2c; esc_html_x:1,2c;\n"
-"X-Poedit-Bookmarks: \n"
-"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-KeywordsList: __;_e;_x:1,2c;_ex:1,2c;_n:1,2; _nx:1,2,4c;_n_noop:1,2;"
+"_nx_noop:1,2,3c;esc_attr__; esc_html__;esc_attr_e; esc_html_e;"
+"esc_attr_x:1,2c; esc_html_x:1,2c\n"
 "X-Textdomain-Support: yes\n"
+"Language-Team: \n"
+"Language: sv\n"
+"X-Poedit-SearchPath-0: .\n"
 
 #: includes/class-admin.php:156
 msgid "<strong>Cache cleared!</strong> You succesfully cleared the cache."
-msgstr ""
+msgstr "<strong>Cachen rensad!</strong>"
 
 #: includes/class-admin.php:169
 msgid "Settings"
-msgstr ""
+msgstr "Inställningar"
 
 #: includes/class-admin.php:203
 msgid "Your configuration seems to be okay and working. Nice work!."
-msgstr ""
+msgstr "Din konfiguration verkar fungera. Bra jobbat!"
 
 #: includes/class-admin.php:205
 msgid "The following error was encountered when testing your configuration."
-msgstr ""
+msgstr "Följande error upptäcktes vid testet av din konfiguration"
 
 #: includes/class-api.php:51 includes/class-api.php:164
 msgid "Facebook error:"
-msgstr ""
+msgstr "Facebook error:"
 
 #: includes/class-api.php:203
 msgid "Connection error:"
-msgstr ""
+msgstr "Connection error:"
 
 #: includes/class-public.php:188
 msgid "likes"
-msgstr ""
+msgstr "likes"
 
 #: includes/class-public.php:189
 msgid "comments"
-msgstr ""
+msgstr "kommentarer"
 
 #: includes/class-public.php:191
 msgid "%1$s at %2$s"
-msgstr ""
+msgstr "vid"
 
 #: includes/class-public.php:205
 msgid "No recent Facebook posts to show"
-msgstr ""
+msgstr "Inga nya inlägg från Facebook att visa"
 
 #: includes/class-public.php:207
 msgid "Admins only notice"
-msgstr ""
+msgstr "Enbart admins"
 
 #: includes/class-public.php:207
 msgid "Did you <a href=\"%s\">configure the plugin</a> properly?"
-msgstr ""
+msgstr "Har du <a href=\"%s\">konfigurerat pluginet</a> korrekt?"
 
 #: includes/class-widget.php:18
 msgid "Lists a number of your most recent Facebook posts."
-msgstr ""
+msgstr "Lista ett antal av dina senaste inlägg från Facebook"
 
 #. Plugin Name of the plugin/theme
 msgid "Recent Facebook Posts"
-msgstr ""
+msgstr "Senaste inläggen från Facebook"
 
 #: includes/class-widget.php:38
 msgid "You need to <a href=\"%s\">configure Recent Facebook Posts</a> first."
-msgstr ""
+msgstr "Du behöver <a href=\"%s\">konfigurera pluginet</a> först."
 
 #: includes/class-widget.php:42
 msgid "Title:"
-msgstr ""
+msgstr "Titel:"
 
 #: includes/class-widget.php:47
 msgid "Number of posts:"
-msgstr ""
+msgstr "Antal inlägg:"
 
 #: includes/class-widget.php:52
 msgid "Excerpt length:"
-msgstr ""
+msgstr "Utdrag längd:"
 
 #: includes/class-widget.php:58
 msgid "Show like count?"
-msgstr ""
+msgstr "Visa antal likes?"
 
 #: includes/class-widget.php:63
 msgid "Show comment count?"
-msgstr ""
+msgstr "Visa antal kommentarer?"
 
 #: includes/class-widget.php:68
 msgid "Show link to Facebook page?"
-msgstr ""
+msgstr "Visa länk till Facebooksidan?"
 
 #: includes/class-widget.php:73
 msgid "Show link previews?"
-msgstr ""
+msgstr "Visa länks förhandsvisning?"
 
 #: includes/functions/global.php:23 includes/views/settings_page.html.php:69
 msgid "Find us on Facebook"
-msgstr ""
+msgstr "Hitta oss på Facebook"
 
-#: includes/functions/helpers.php:32
+#: includes/functions/helpers.php:23
 msgid "just now"
-msgstr ""
+msgstr "precis nu"
 
-#: includes/functions/helpers.php:51
+#: includes/functions/helpers.php:42
 msgid "1 year ago"
 msgid_plural "%d years ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 år sedan"
+msgstr[1] "%d år sedan"
 
-#: includes/functions/helpers.php:55
+#: includes/functions/helpers.php:46
 msgid "1 month ago"
 msgid_plural "%d months ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 månad sedan"
+msgstr[1] "%d månader sedan"
 
-#: includes/functions/helpers.php:59
+#: includes/functions/helpers.php:50
 msgid "1 week ago"
 msgid_plural "%d weeks ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 vecka sedan"
+msgstr[1] "%d veckor sedan"
 
-#: includes/functions/helpers.php:63
+#: includes/functions/helpers.php:54
 msgid "1 day ago"
 msgid_plural "%d days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 dag sedan"
+msgstr[1] "%d dagar sedan"
 
-#: includes/functions/helpers.php:67
+#: includes/functions/helpers.php:58
 msgid "1 hour ago"
 msgid_plural "%d hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 timme sedan"
+msgstr[1] "%d timmar sedan"
 
-#: includes/functions/helpers.php:71
+#: includes/functions/helpers.php:62
 msgid "1 minute ago"
 msgid_plural "%d minutes ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 minut sedan"
+msgstr[1] "%d minuter sedan"
 
-#: includes/functions/helpers.php:75
+#: includes/functions/helpers.php:66
 msgid "1 second ago"
 msgid_plural "%d seconds ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 sekund sedan"
+msgstr[1] "%d sekunder sedan"
 
-#: includes/functions/helpers.php:79
+#: includes/functions/helpers.php:70
 msgid "Some time ago"
-msgstr ""
+msgstr "Ett tag sedan"
 
 #: includes/views/settings_page.html.php:21
 msgid "Facebook Settings"
-msgstr ""
+msgstr "Facebook Inställningar"
 
 #: includes/views/settings_page.html.php:26
 msgid "This plugin needs a Facebook application to work."
-msgstr ""
+msgstr "Pluginet behöver en Facebook applikation för att fungera"
 
 #: includes/views/settings_page.html.php:27
-msgid "Please fill in the Facebook Settings fields after creating your application."
+msgid ""
+"Please fill in the Facebook Settings fields after creating your application."
 msgstr ""
+"Var god fyll i \"Facebook Inställningar\" fältet efter att du skapat din "
+"applikation"
 
 #: includes/views/settings_page.html.php:30
 msgid ""
-"Not sure how to proceed? Please take a close look at the <a "
-"href=\"%s\">installation instructions</a>."
+"Not sure how to proceed? Please take a close look at the <a href=\"%s"
+"\">installation instructions</a>."
 msgstr ""
+"Inte säker på hur du ska fortsätta? Vad god läs <a href=\"%s"
+"\">instruktionerna</a> noggrant."
 
 #: includes/views/settings_page.html.php:38
 msgid "Facebook App ID/API Key"
-msgstr ""
+msgstr "Facebook App ID/API Nyckel"
 
 #: includes/views/settings_page.html.php:42
 msgid "Get your App ID from %s."
-msgstr ""
+msgstr "Hämta ditt APP ID från %s."
 
 #: includes/views/settings_page.html.php:47
 msgid "Facebook App Secret"
-msgstr ""
+msgstr "Facebook App Secret"
 
 #: includes/views/settings_page.html.php:50
 msgid "Get your App Secret from %s."
-msgstr ""
+msgstr "Hämta din App Secret från %s."
 
 #: includes/views/settings_page.html.php:55
 msgid "Facebook Page ID or Slug"
-msgstr ""
+msgstr "Facebook Page ID eller Slug"
 
 #: includes/views/settings_page.html.php:58
 msgid ""
 "Use <a href=\"%s\">this tool</a> to find the numeric ID of your Facebook "
 "page."
 msgstr ""
+"Använd <a href=\"%s\">detta verktyg</a> för att hitta ett numeriskt ID för "
+"din Facebooksida."
 
 #: includes/views/settings_page.html.php:64
 msgid "Appearance"
-msgstr ""
+msgstr "Utseende"
 
 #: includes/views/settings_page.html.php:68
 msgid "Link text"
-msgstr ""
+msgstr "Länktext"
 
 #: includes/views/settings_page.html.php:73
 msgid "Open links in new window?"
-msgstr ""
+msgstr "Öppna länkar i nytt fönster?"
 
 #: includes/views/settings_page.html.php:78
 msgid "Load some default styles?"
-msgstr ""
+msgstr "Ladda standard stilmall?"
 
 #: includes/views/settings_page.html.php:84
 msgid "Image size"
-msgstr ""
+msgstr "Bildstorlek"
 
 #: includes/views/settings_page.html.php:87
 msgid "Don't show images"
-msgstr ""
+msgstr "Visa inte bilder"
 
 #: includes/views/settings_page.html.php:88
 msgid "Thumbnail"
-msgstr ""
+msgstr "Thumbnail"
 
 #: includes/views/settings_page.html.php:89
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: includes/views/settings_page.html.php:96
 msgid "Image dimensions"
-msgstr ""
+msgstr "Bilddimensioner"
 
 #: includes/views/settings_page.html.php:96
 msgid "(in pixels, optional)"
-msgstr ""
+msgstr "(i pixlar, frivilligt)"
 
 #: includes/views/settings_page.html.php:99
 msgid "Max Width"
-msgstr ""
+msgstr "Max bredd"
 
 #: includes/views/settings_page.html.php:103
 msgid "Max Height"
-msgstr ""
+msgstr "Max höjd"
 
 #: includes/views/settings_page.html.php:107
 msgid "Leave empty for default sizing"
-msgstr ""
+msgstr "Lämna tom för standard storlek"
 
 #: includes/views/settings_page.html.php:118
 #: includes/views/settings_page.html.php:122
 msgid "Test Configuration"
-msgstr ""
+msgstr "Testa konfiguration"
 
 #: includes/views/settings_page.html.php:119
 msgid "Test your plugin configuration using the button below."
-msgstr ""
+msgstr "Llicka på knappen nedan för att testa pluginets konfiguration."
 
 #: includes/views/settings_page.html.php:125
 msgid "Facebook Posts Cache"
-msgstr ""
+msgstr "Facebook Posts Cache"
 
 #: includes/views/settings_page.html.php:126
 msgid ""
-"Because fetching posts from Facebook is relatively slow the posts are "
-"cached for <strong>30 minutes</strong>. You can manually clear the cache "
-"using the button below."
+"Because fetching posts from Facebook is relatively slow the posts are cached "
+"for <strong>30 minutes</strong>. You can manually clear the cache using the "
+"button below."
 msgstr ""
+"Eftersom det är relativt långsamt att hämta inlägg från Facebook så är "
+"inläggen cachade i <strong>30 minuter</strong>. Du kan välja att rensa "
+"cachen manuellt genom att klicka på knappen nedan."
 
 #: includes/views/settings_page.html.php:130
 msgid "Clear Cache"
-msgstr ""
+msgstr "Rensa Cache"
 
 #: includes/views/settings_page.html.php:139
 msgid "Donate $10, $20 or $50"
-msgstr ""
+msgstr "Donera $10, $20 or $50"
 
 #: includes/views/settings_page.html.php:140
 msgid ""
-"I spent a lot of time developing this plugin and offering support for it. "
-"If you like it, consider supporting this plugin by donating a token of your "
+"I spent a lot of time developing this plugin and offering support for it. If "
+"you like it, consider supporting this plugin by donating a token of your "
 "appreciation."
 msgstr ""
+"Jag spenderade mycket tid för att utveckla detta plugin och även erbjuda "
+"support för det. Om du gillar det, var god stöd genom att donera genom "
+"knappen nedan."
 
 #: includes/views/settings_page.html.php:151
 msgid "Donate with PayPal"
-msgstr ""
+msgstr "Donera via PayPal"
 
 #: includes/views/settings_page.html.php:156
 msgid "Some other ways to support this plugin"
-msgstr ""
+msgstr "Andra sätt att visa uppskattning för detta plugin"
 
 #: includes/views/settings_page.html.php:158
 msgid "Leave a %s review on WordPress.org"
-msgstr ""
+msgstr "Lämna en %s recension på Wordpress.org"
 
 #: includes/views/settings_page.html.php:159
 msgid "Write about the plugin from your blog."
-msgstr ""
+msgstr "Skriv om pluginet på din blogg."
 
 #: includes/views/settings_page.html.php:160
 msgid "Tweet about Recent Facebook Posts"
-msgstr ""
+msgstr "Tweeta om pluginet"
 
 #: includes/views/settings_page.html.php:161
 msgid "Vote \"works\" on the WordPress.org plugin page"
-msgstr ""
+msgstr "Rösta \"works\" på Wordpress.org's pluginsida"
 
 #: includes/views/settings_page.html.php:166
 msgid "Looking for support?"
-msgstr ""
+msgstr "Söker du hjälp?"
 
 #: includes/views/settings_page.html.php:167
-msgid "Please use the <a href=\"%s\">plugin support forums</a> on WordPress.org."
+msgid ""
+"Please use the <a href=\"%s\">plugin support forums</a> on WordPress.org."
 msgstr ""
+"Var god använd <a href=\"%s\">pluginets support-forum</a> på WordPress.org."
 
 #: includes/views/settings_page.html.php:168
 msgid ""
@@ -336,10 +349,13 @@ msgid ""
 "help configuring the plugin and registering your own Facebook application, "
 "which is required to get this plugin to work."
 msgstr ""
+"Läs noggrant igenom <a href=\"%s\">installation instructions</a> för support "
+"om hur du konfigurerar pluginet och registrerar din egen Faceboook "
+"applikation. Detta måste göras för att pluginet ska fungera."
 
 #: includes/views/settings_page.html.php:172
 msgid "Other Useful plugins"
-msgstr ""
+msgstr "Andra användbara plugins"
 
 #. Plugin URI of the plugin/theme
 msgid "https://dannyvankooten.com/donate/"
@@ -347,7 +363,7 @@ msgstr ""
 
 #. Description of the plugin/theme
 msgid "Lists most recent posts from a public Facebook page."
-msgstr ""
+msgstr "Lista senaste inlägg från en publik Facebook-sida"
 
 #. Author of the plugin/theme
 msgid "Danny van Kooten"

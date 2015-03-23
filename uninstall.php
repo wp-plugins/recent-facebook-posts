@@ -5,7 +5,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit();
 }
 
-delete_transient('rfbp_posts');
-delete_transient('rfbp_posts_fallback');
+delete_transient( 'rfbp_posts' );
+delete_transient( 'rfbp_posts_fallback' );
 
-delete_option('rfb_settings');
+delete_option( 'rfb_settings' );

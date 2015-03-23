@@ -21,7 +21,6 @@ if( ! defined( 'RFBP_VERSION' ) ) {
  * @param array $args
  * @return void
  */
-function recent_facebook_posts( $args = array() )
-{
+function recent_facebook_posts( $args = array() ) {
 	echo RFBP_Public::instance()->output( $args );
 }

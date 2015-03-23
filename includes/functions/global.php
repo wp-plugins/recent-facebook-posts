@@ -43,7 +43,7 @@ function rfbp_register_widget() {
 	register_widget( "RFBP_Widget" );
 }
 
-add_action('widgets_init', 'rfbp_register_widget');
+add_action( 'widgets_init', 'rfbp_register_widget' );
 
 /**
  * Load plugin translations
@@ -58,9 +58,10 @@ add_action( 'init', 'rfbp_load_textdomain' );
  * @return RFBP_API
  */
 function rfbp_get_api() {
-	static $api;
 
-	if( ! $api ) {
+	static $api = null;
+
+	if( is_null( $api ) ) {
 		$opts = rfbp_get_settings();
 		require_once RFBP_PLUGIN_DIR . 'includes/class-api.php';
 		$api = new RFBP_API( $opts['app_id'], $opts['app_secret'], $opts['fb_id'] );
@@ -69,6 +70,9 @@ function rfbp_get_api() {
 	return $api;
 }
 
+/**
+ * @return bool
+ */
 function rfbp_valid_config() {
 	$opts = rfbp_get_settings();
 	return ( ! empty( $opts['fb_id'] ) && ! empty( $opts['app_id'] ) && ! empty( $opts['app_secret'] ) );
