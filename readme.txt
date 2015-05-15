@@ -4,7 +4,7 @@ Donate link: https://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.7
 Tested up to: 4.2.2
-Stable tag: 2.0.6
+Stable tag: 2.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,21 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 3. This is where you'll find your Facebook Page Slug on Facebook.com.
 
 == Changelog ==
+
+= 2.0.7 - May 15, 2015 =
+
+**Fixes**
+
+- Video posts were not showing correctly
+
+**Improvements**
+
+- Added play icon overlay to video's
+
+**Additions**
+
+- Added Italian translations, thanks to [Luigi Savini](https://github.com/gigiame)
+- Added Portugese translations, thanks to [Jonadabe](https://github.com/Jonadabe)
 
 = 2.0.6 - May 15, 2015 =
 

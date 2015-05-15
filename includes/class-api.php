@@ -93,6 +93,8 @@ class RFBP_API {
 			$post['type'] = sanitize_text_field( $p->type );
 			$post['content'] = '';
 			$post['image'] = null;
+			$post['name'] = '';
+			$post['post_link'] = '#';
 
 			if( isset( $p->message ) ) {
 				// remove emoji's
@@ -101,6 +103,10 @@ class RFBP_API {
 				// sanitize content
 				$post['content'] = sanitize_text_field( $post['content'] );
 			}
+
+			// set post name and url
+			if (isset($p->name)) $post['name'] = $p->name;
+			if (isset($p->link)) $post['post_link'] = $p->link;
 
 			// set type specific content
 			switch( $p->type ) {
