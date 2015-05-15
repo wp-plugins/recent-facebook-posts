@@ -30,11 +30,13 @@ Display a list of your most recent Facebook posts in your posts or pages using t
 
 **Translations**
 
-English (en_US) - [Danny van Kooten](https://dannyvankooten.com/)<br />
-Dutch (nl_NL) - [Danny van Kooten](https://dannyvankooten.com/)<br />
-Spanish (es_ES) - [Hermann Bravo](http://hbravo.com/)
-Swedish (sv_SE) - [Robin Wellström](http://robinwellstrom.se/)
-German (de_DE) - [Henrik Heller ](http://www.gmx.net/)
+- English (en_US) - [Danny van Kooten](https://dannyvankooten.com/)
+- Dutch (nl_NL) - [Danny van Kooten](https://dannyvankooten.com/)
+- Spanish (es_ES) - [Hermann Bravo](http://hbravo.com/)
+- Swedish (sv_SE) - [Robin Wellström](http://robinwellstrom.se/)
+- German (de_DE) - [Henrik Heller ](http://www.gmx.net/)
+- Italian (it_IT) - [Luigi Savini](https://github.com/gigiame)
+- Portugese (pt_PT) - [Jonadabe](https://github.com/Jonadabe)
 
 _Looking for more translations.._
 
@@ -159,29 +161,18 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 
 **Fixes**
 
-- Video posts were not showing correctly
+- Video posts were not showing correctly (props to [Luigi Savini](https://github.com/gigiame)!)
+- Hooks were double added when using the widget
 
 **Improvements**
 
 - Added play icon overlay to video's
+- Added a notice about using the shortcode to the plugin's settings page.
 
 **Additions**
 
 - Added Italian translations, thanks to [Luigi Savini](https://github.com/gigiame)
 - Added Portugese translations, thanks to [Jonadabe](https://github.com/Jonadabe)
-
-= 2.0.6 - May 15, 2015 =
-
-**Fixes**
-
-- Hooks were double added when using the widget
-
-**Improvements**
-
-- Added a notice about using the shortcode to the plugin's settings page.
-
-**Additions**
-
 - Added German translations, thanks to [Henrik Heller ](http://www.gmx.net/).
 
 = 2.0.5 - March 23, 2015 =
@@ -418,8 +409,6 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 
 == Upgrade Notice ==
 
-= 2.0.1 =
-Fixed issue with Emojis in Facebook statuses, updated translations and various other improvements.
+= 2.0.7 =
 
-= 2.0 =
-Fixed issue with Emojis breaking all posts. Various other code improvements.
+Fix for video posts not showing correctly, added Italian, Portugese and German translations.
