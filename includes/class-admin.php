@@ -12,10 +12,9 @@ class RFBP_Admin {
 	private $cache_cleared = false;
 
 	/**
-	 * Constructor
+	 * Add hooks
 	 */
-	public function __construct() {
-
+	public function add_hooks() {
 		add_action( 'init', array( $this, 'on_init' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_menu', array( $this, 'build_menu' ) );
@@ -27,7 +26,6 @@ class RFBP_Admin {
 			// load css
 			add_action( 'admin_enqueue_scripts', array( $this, 'load_css' ) );
 		}
-
 	}
 
 	public function on_init() {

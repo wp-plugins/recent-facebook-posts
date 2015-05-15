@@ -6,10 +6,17 @@ if( ! defined( 'RFBP_VERSION' ) ) {
 
 class RFBP_Public {
 
-	private static $instance = null;
+	/**
+	 * @var array
+	 */
+	protected $options;
 
-	public static function instance() 
-	{
+	protected static $instance;
+
+	/**
+	 * @return RFBP_Public
+	 */
+	public static function instance() {
 		if( ! self::$instance ) {
 			self::$instance = new RFBP_Public();
 		}
@@ -17,17 +24,21 @@ class RFBP_Public {
 		return self::$instance;
 	}
 
-	public function __construct() {
+	/**
+	 * Constructor
+	 */
+	private function __construct() {
+		$this->options = rfbp_get_settings();
+	}
 
-		$opts = rfbp_get_settings();
-
-		include_once RFBP_PLUGIN_DIR . 'includes/functions/helpers.php';
-		include_once RFBP_PLUGIN_DIR . 'includes/functions/template.php';
-
+	/**
+	 * Add hooks
+	 */
+	public function add_hooks() {
 		add_shortcode( 'recent_facebook_posts', array( $this, 'output' ) );
 		add_shortcode( 'recent-facebook-posts', array( $this, 'output' ) );
 
-		if ( $opts['load_css'] ) {
+		if ( $this->options['load_css'] ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'load_css' ) );
 		}
 
@@ -37,12 +48,20 @@ class RFBP_Public {
 		add_filter( 'rfbp_content', 'wpautop' );
 	}
 
+	/**
+	 * Load CSS
+	 */
 	public function load_css() {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		wp_register_style( 'recent-facebook-posts-css', plugins_url( 'recent-facebook-posts/assets/css/default' . $suffix . '.css' ), array(), RFBP_VERSION );
 		wp_enqueue_style( 'recent-facebook-posts-css' );
 	}
 
+	/**
+	 * Get posts
+	 *
+	 * @return array
+	 */
 	public function get_posts() {
 
 		// try to get posts from cache
@@ -87,7 +106,7 @@ class RFBP_Public {
 	 */
 	public function output( $atts = array() ) {
 
-		$opts = rfbp_get_settings();
+		$opts = $this->options;
 		$posts = $this->get_posts();
 
 		// upgrade from old `show_link` parameter.

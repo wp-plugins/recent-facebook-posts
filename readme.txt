@@ -3,19 +3,19 @@ Contributors: DvanKooten
 Donate link: https://dannyvankooten.com/donate/
 Tags: facebook,posts,fanpage,recent posts,fb,like box alternative,widget,facebook widget,widgets,facebook updates,like button,fb posts
 Requires at least: 3.7
-Tested up to: 4.2
-Stable tag: 2.0.5
+Tested up to: 4.2.2
+Stable tag: 2.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Lists most recent Facebook posts from public Facebook pages. A faster, prettier and more customizable alternative to Facebooks Like Box. 
+Lists most recent Facebook posts from public Facebook pages. A faster, prettier and more customizable alternative to Facebooks Like Box.
 
 == Description ==
 
 This plugin adds a widget, a shortcode `[recent_facebook_posts]` and a template function `recent_facebook_posts()` to your WordPress website which you can use to list your most recent Facebook posts. This plugin works with public pages and to a certain extent with personal profiles.
 
 = Facebook Posts Widget =
-Render a number of most recent Facebook page updates in any of your widget areas using the Recent Facebook Posts widget. 
+Render a number of most recent Facebook page updates in any of your widget areas using the Recent Facebook Posts widget.
 
 = Facebook Posts Shortcode =
 Display a list of your most recent Facebook posts in your posts or pages using the `[recent_facebook_posts]` shortcode. Optionally, specify some arguments to customize the output.
@@ -33,6 +33,8 @@ Display a list of your most recent Facebook posts in your posts or pages using t
 English (en_US) - [Danny van Kooten](https://dannyvankooten.com/)<br />
 Dutch (nl_NL) - [Danny van Kooten](https://dannyvankooten.com/)<br />
 Spanish (es_ES) - [Hermann Bravo](http://hbravo.com/)
+Swedish (sv_SE) - [Robin Wellström](http://robinwellstrom.se/)
+German (de_DE) - [Henrik Heller ](http://www.gmx.net/)
 
 _Looking for more translations.._
 
@@ -42,6 +44,7 @@ If you have [created your own language pack](http://codex.wordpress.org/Translat
 
 * [Contribute to the Recent Facebook Posts plugin on GitHub](https://github.com/dannyvankooten/wordpress-recent-facebook-posts)
 * Using MailChimp to send out email newsletters? You should [try MailChimp for WordPress](https://wordpress.org/plugins/mailchimp-for-wp/).
+* Want an unobtrusive conversion booster? Have a look at the [Scroll Triggered Boxes plugin](https://wordpress.org/plugins/scroll-triggered-boxes/).
 * Check out more [WordPress plugins](https://dannyvankooten.com/wordpress-plugins/) by the same author
 * Follow [@DannyvanKooten](https://twitter.com/DannyvanKooten) on Twitter.
 
@@ -60,7 +63,7 @@ This plugin requires a Facebook application to fetch posts from Facebook.
 
 = Configuring the plugin =
 1. Go to *Settings > Recent Facebook* posts in your WP Admin panel.
-1. Copy and paste your Facebook `App ID/API Key` and `App Secret` into the setting fields. 
+1. Copy and paste your Facebook `App ID/API Key` and `App Secret` into the setting fields.
 1. Find the numeric Facebook ID of your public Facebook page using [this website](http://findmyfacebookid.com/).
 1. Copy paste the ID in the `Facebook Page ID` field.
 1. Add `[recent_facebook_posts]` to the page where you would like to show a list of recent Facebook posts or use the widget.
@@ -148,9 +151,23 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 
 1. The Recent Facebook Posts settings screen.
 2. This is where you'll find your App ID / API Key and App Secret in your [Facebook App Settings](https://developers.facebook.com/apps/).
-3. This is where you'll find your Facebook Page Slug on Facebook.com. 
+3. This is where you'll find your Facebook Page Slug on Facebook.com.
 
 == Changelog ==
+
+= 2.0.6 - May 15, 2015
+
+**Fixes**
+
+- Hooks were double added when using the widget
+
+**Improvements**
+
+- Added a notice about using the shortcode to the plugin's settings page.
+
+**Additions**
+
+- Added German translations, thanks to [Henrik Heller ](http://www.gmx.net/).
 
 = 2.0.5 - March 23, 2015 =
 
@@ -337,7 +354,7 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 
 = 1.2 =
 * Fixed: Reverted back to 'posts' instead of 'feed', to exclude posts from others.
-* Fixed: undefined index 'count' when renewing cache file   
+* Fixed: undefined index 'count' when renewing cache file
 * Fixed: wrong comment or like count for some posts
 * Improved: calculation of cache file modification time to prevent unnecessary cache renewal
 * Improved: error message when cURL is not enabled
@@ -364,9 +381,9 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 * Fixed: FB API Error for unknown fields.
 * Added: Images from FB will now be shown too. Drop me a line if you think this should be optional.
 
-= 1.0.3 = 
+= 1.0.3 =
 * Improved the way the link to the actual status update is created (thanks Nepumuk84).
-* Improved: upped the limit of the call to Facebooks servers. 
+* Improved: upped the limit of the call to Facebooks servers.
 
 = 1.0.2 =
 * Fixed a PHP notice in the backend area when renewing cache and fetching shared status updates.

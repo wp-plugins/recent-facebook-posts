@@ -2,10 +2,10 @@
 # This file is distributed under the GPL3 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Recent Facebook Posts 2.0.5\n"
+"Project-Id-Version: Recent Facebook Posts 2.0.6\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/recent-facebook-posts\n"
-"POT-Creation-Date: 2015-03-23 13:12:15+00:00\n"
+"POT-Creation-Date: 2015-05-15 09:54:27+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,19 +25,19 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes\n"
 
-#: includes/class-admin.php:156
+#: includes/class-admin.php:154
 msgid "<strong>Cache cleared!</strong> You succesfully cleared the cache."
 msgstr ""
 
-#: includes/class-admin.php:169
+#: includes/class-admin.php:167
 msgid "Settings"
 msgstr ""
 
-#: includes/class-admin.php:203
+#: includes/class-admin.php:201
 msgid "Your configuration seems to be okay and working. Nice work!."
 msgstr ""
 
-#: includes/class-admin.php:205
+#: includes/class-admin.php:203
 msgid "The following error was encountered when testing your configuration."
 msgstr ""
 
@@ -49,27 +49,27 @@ msgstr ""
 msgid "Connection error:"
 msgstr ""
 
-#: includes/class-public.php:188
+#: includes/class-public.php:207
 msgid "likes"
 msgstr ""
 
-#: includes/class-public.php:189
+#: includes/class-public.php:208
 msgid "comments"
 msgstr ""
 
-#: includes/class-public.php:191
+#: includes/class-public.php:210
 msgid "%1$s at %2$s"
 msgstr ""
 
-#: includes/class-public.php:205
+#: includes/class-public.php:224
 msgid "No recent Facebook posts to show"
 msgstr ""
 
-#: includes/class-public.php:207
+#: includes/class-public.php:226
 msgid "Admins only notice"
 msgstr ""
 
-#: includes/class-public.php:207
+#: includes/class-public.php:226
 msgid "Did you <a href=\"%s\">configure the plugin</a> properly?"
 msgstr ""
 
@@ -287,58 +287,65 @@ msgstr ""
 msgid "Clear Cache"
 msgstr ""
 
+#: includes/views/settings_page.html.php:138
+msgid "Usage"
+msgstr ""
+
 #: includes/views/settings_page.html.php:139
-msgid "Donate $10, $20 or $50"
-msgstr ""
-
-#: includes/views/settings_page.html.php:140
 msgid ""
-"I spent a lot of time developing this plugin and offering support for it. "
-"If you like it, consider supporting this plugin by donating a token of your "
-"appreciation."
+"To show a list of your most recent facebook posts in your posts or pages, "
+"use the following shortcode."
 msgstr ""
 
-#: includes/views/settings_page.html.php:151
-msgid "Donate with PayPal"
+#: includes/views/settings_page.html.php:141
+msgid ""
+"The shortcode accepts various arguments, which are listed on the <a "
+"href=\"%s\">plugin FAQ</a>."
 msgstr ""
 
-#: includes/views/settings_page.html.php:156
-msgid "Some other ways to support this plugin"
+#: includes/views/settings_page.html.php:146
+msgid "Show your appreciation!"
 msgstr ""
 
-#: includes/views/settings_page.html.php:158
+#: includes/views/settings_page.html.php:147
+msgid ""
+"If you like this plugin, consider showing your consideration in one of the "
+"following ways."
+msgstr ""
+
+#: includes/views/settings_page.html.php:149
 msgid "Leave a %s review on WordPress.org"
 msgstr ""
 
-#: includes/views/settings_page.html.php:159
+#: includes/views/settings_page.html.php:150
 msgid "Write about the plugin from your blog."
 msgstr ""
 
-#: includes/views/settings_page.html.php:160
+#: includes/views/settings_page.html.php:151
 msgid "Tweet about Recent Facebook Posts"
 msgstr ""
 
-#: includes/views/settings_page.html.php:161
+#: includes/views/settings_page.html.php:152
 msgid "Vote \"works\" on the WordPress.org plugin page"
 msgstr ""
 
-#: includes/views/settings_page.html.php:166
+#: includes/views/settings_page.html.php:157
 msgid "Looking for support?"
 msgstr ""
 
-#: includes/views/settings_page.html.php:167
+#: includes/views/settings_page.html.php:158
 msgid "Please use the <a href=\"%s\">plugin support forums</a> on WordPress.org."
 msgstr ""
 
-#: includes/views/settings_page.html.php:168
+#: includes/views/settings_page.html.php:159
 msgid ""
 "Take a close look at the <a href=\"%s\">installation instructions</a> for "
 "help configuring the plugin and registering your own Facebook application, "
 "which is required to get this plugin to work."
 msgstr ""
 
-#: includes/views/settings_page.html.php:172
-msgid "Other Useful plugins"
+#: includes/views/settings_page.html.php:163
+msgid "Other plugins"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
