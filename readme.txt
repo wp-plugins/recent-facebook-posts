@@ -155,7 +155,7 @@ add_filter('rfbp_cache_time', 'my_rfbp_cache_time');
 
 == Changelog ==
 
-= 2.0.6 - May 15, 2015
+= 2.0.6 - May 15, 2015 =
 
 **Fixes**
 
