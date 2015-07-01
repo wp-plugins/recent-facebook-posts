@@ -11,6 +11,9 @@ class RFBP_Public {
 	 */
 	protected $options;
 
+	/**
+	 * @var
+	 */
 	protected static $instance;
 
 	/**
